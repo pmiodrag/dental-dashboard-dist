@@ -1,0 +1,11 @@
+<md-toolbar>     
+    <span class="text-primary"> Smiletime Dashboard</span>
+    <span flex></span>
+    <div class="user"> 
+        <a href="javascript:void(0)" *ngIf="loggedIn()" class="item" data-toggle="dropdown">             
+            <img [src]="picture"/>
+        </a>
+    </div>
+    <button md-raised-button class="md-raised" *ngIf="!loggedIn()" (click)="login()" aria-label="Login">Login</button>
+    <button md-raised-button class="md-raised" *ngIf="loggedIn()" (click)="logout()" aria-label="Logout">Logout</button> 
+</md-toolbar>

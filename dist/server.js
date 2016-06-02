@@ -1,0 +1,46 @@
+"use strict";
+var express = require('express');
+var path = require('path');
+var bodyParser = require('body-parser');
+var patients = require("./api/patient/controller");
+var treatments = require("./api/treatment/controller");
+var port = process.env.PORT || 3000;
+var app = express();
+//var router = express.Router();
+/* GET users listing. */
+//router.get('/', function(req, res, next) {
+//  res.send('respond with a resource');
+//});
+app.use('/app', express.static(path.resolve(__dirname, 'app')));
+app.use('/libs', express.static(path.resolve(__dirname, 'libs')));
+app.use('/assets', express.static(path.resolve(__dirname, 'assets')));
+app.use('/styles', express.static(path.resolve(__dirname, 'styles')));
+app.use('/fonts', express.static(path.resolve(__dirname, 'assets/fonts')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+var server = app.listen(port, function () {
+    var host = server.address().address;
+    var port = server.address().port;
+    console.log('This express app is listening on port:' + port);
+});
+//**** REST ****//
+// Patient
+app.get('/patient', patients.index);
+app.post('/patient', patients.create);
+app.put('/patient/:id', patients.update);
+app.get('/patient/:id', patients.show);
+app.delete('/patient/:id', patients.destroy);
+app.get('/patient/:id/:firstname/:lastname/treatments', treatments.index);
+app.get('/patient/:id/treatments', treatments.treatmentlist);
+// Treatment
+app.get('/treatments', treatments.list);
+app.post('/treatment', treatments.create);
+app.put('/treatment/:id', treatments.update);
+app.get('/treatment/:id', treatments.show);
+app.delete('/treatment/:id', treatments.destroy);
+var renderIndex = function (req, res) {
+    console.log("renderIndex __dirname", __dirname);
+    res.sendFile(path.resolve(__dirname, 'index.html'));
+};
+app.get('/*', renderIndex);
+//connection.end();
