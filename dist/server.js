@@ -4,7 +4,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var patients = require("./api/patient/controller");
 var treatments = require("./api/treatment/controller");
-var port = process.env.PORT || 8000;
+var port = process.env.PORT || 3000;
 var app = express();
 //var router = express.Router();
 /* GET users listing. */
@@ -31,9 +31,9 @@ app.put('/patient/:id', patients.update);
 app.get('/patient/:id', patients.show);
 app.delete('/patient/:id', patients.destroy);
 app.get('/patient/:id/:firstname/:lastname/treatments', treatments.index);
-app.get('/patient/:id/treatments', treatments.treatmentlist);
 // Treatment
-app.get('/treatments', treatments.list);
+//app.get('/patient/:id/treatments', treatments.index);
+app.get('/treatments', treatments.index);
 app.post('/treatment', treatments.create);
 app.put('/treatment/:id', treatments.update);
 app.get('/treatment/:id', treatments.show);

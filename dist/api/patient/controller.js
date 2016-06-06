@@ -35,22 +35,11 @@ exports.getPatientData = getPatientData;
 function create(req, res) {
     console.log("addPatient ", req.body);
     var newPatient = req.body;
-    //    var patient =  {
-    //  firstname: 'Miodrag',
-    //  lastname: 'Pavkovicc3',
-    //  middlename: '',
-    //  gender: 'M',
-    //  address: 'Kragujevacka 29',
-    //  place: '',
-    //  birthdate: '2016-04-06T12:23:00.000Z',
-    //  email: 'mpavkovic@gmail.com',
-    //  phone: '',
-    //  mobilephone: '' }
     db.db_connection.ready(function () {
         var patientTable = db.db_connection.table("patient");
         patientTable.save(newPatient).then(function (result) {
             console.log("New patient added: " + result.id);
-            res.sendStatus(200);
+            res.send(JSON.stringify(result));
         });
     });
 }
