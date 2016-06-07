@@ -4,6 +4,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var patients = require("./api/patient/controller");
 var treatments = require("./api/treatment/controller");
+var diagnoses = require("./api/diagnose/controller");
 var port = process.env.PORT || 3000;
 var app = express();
 //var router = express.Router();
@@ -38,6 +39,11 @@ app.post('/treatment', treatments.create);
 app.put('/treatment/:id', treatments.update);
 app.get('/treatment/:id', treatments.show);
 app.delete('/treatment/:id', treatments.destroy);
+//Diagnose
+app.get('/diagnose', diagnoses.index);
+app.post('/diagnose', diagnoses.create);
+app.put('/diagnose/:id', diagnoses.update);
+app.delete('/diagnose/:id', diagnoses.destroy);
 var renderIndex = function (req, res) {
     console.log("renderIndex __dirname", __dirname);
     res.sendFile(path.resolve(__dirname, 'index.html'));

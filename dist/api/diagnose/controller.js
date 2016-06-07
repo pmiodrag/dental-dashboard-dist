@@ -13,17 +13,6 @@ function index(req, res) {
     });
 }
 exports.index = index;
-function list(req, res) {
-    console.log("List diagnoses", req.params);
-    db.db_connection.ready(function () {
-        var diagnoseTable = db.db_connection.table("diagnose");
-        diagnoseTable.findAll().then(function (diagnoses) {
-            console.log("diagnoses = " + diagnoses);
-            res.send(JSON.stringify(diagnoses));
-        });
-    });
-}
-exports.list = list;
 function create(req, res) {
     console.log("Add diagnose ", req.body);
     var newDiagnose = req.body;
@@ -31,7 +20,7 @@ function create(req, res) {
         var diagnoseTable = db.db_connection.table("diagnose");
         diagnoseTable.save(newDiagnose).then(function (result) {
             console.log("New diagnose added: " + result.id);
-            res.sendStatus(200);
+            res.send(JSON.stringify(result));
         });
         diagnoseTable.find(4).then(function (diagnoses) {
             console.log("SELECT FROM diagnose results: " + JSON.stringify(diagnoses));
