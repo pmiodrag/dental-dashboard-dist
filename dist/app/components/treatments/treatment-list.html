@@ -1,46 +1,47 @@
- <div class="col-md-10">
-<md-toolbar>
-    <div class="md-toolbar-tools" *ngIf="!selection">
-        <span>Treatments</span>
-        <button md-fab class="md-mini blue-lighten-3" (click)="addTreatment()"   aria-label="Add treatment">
-            <i class="fa fa-user-plus"></i>
-        </button>
-        <a href="#" [routerLink]="['/patients']" router-params="">View all Pacients</a>
-        <div class="comment">  <a [routerLink]="['/dashboard']">Dashboard<span class="menu-icon fa fa-tachometer"></span></a></div>   
-    </div>
-    <div class="md-toolbar-tools selection" *ngIf="selection">
-        <span>{{count}} item{{count > 1 ? 's' : ''}} selected</span>
-        <span flex hide show-gt-md></span>
-        <span class="md-caption" hide show-gt-md>{{selection}}</span>
-    </div>
-</md-toolbar>
+<div class="col-md-12">
+    <md-toolbar class="md-primary">
+        <div class="md-toolbar-tools" *ngIf="!selection">
+            <span md-button class="md-icon-button white" layout  layout-align="center center">
+                <i class="material-icons">assignment</i>
+            </span>
+            <span>Treatments</span>
+            <a  md-button class="md-icon-button white" (click)="addTreatment()" >
+                <i class="material-icons">plus_one</i>                           
+            </a>        
+        </div>
+        <div class="md-toolbar-tools selection" *ngIf="selection">
+            <span>{{count}} item{{count > 1 ? 's' : ''}} selected</span>
+            <span flex hide show-gt-md></span>
+            <span class="md-caption" hide show-gt-md>{{selection}}</span>
+        </div>
+    </md-toolbar>
 
-<md-data-table  [selectable]="true" (onSelectableChange)="change($event)">
-    <thead>
-        <tr  md-data-table-header-selectable-row>
-            <th>Therapy</th>
-            <th>Diagnose</th>
-            <th>Price</th>
-            <th>Edit Treatment</th>
-            <th>Delete Treatment</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let treatment of treatmentStore.treatments | async"  md-data-table-selectable-row [selectable-value]="treatment.id">
-            <td>{{treatment.therapy}}</td>
-            <td>{{treatment.diagnose}}</td>   
-            <td>{{treatment.price}}</td> 
-            <td>  
-                <button md-fab class="md-mini orange" (click)="editTreatment(treatment);"  aria-label="Edit treatment">
-                    <i class="fa fa-pencil-square-o"></i>
-                </button>
-            </td>
-            <td>  
-                <button md-fab class="md-mini red" (click)="deleteTreatment(treatment);"  aria-label="Delete treatment">
-                   <i class="fa fa-recycle"></i>
-                </button>
-            </td>
-        </tr>
-    </tbody>
-</md-data-table>
- </div>
+    <md-data-table  [selectable]="true" (onSelectableChange)="change($event)">
+        <thead>
+            <tr  md-data-table-header-selectable-row>
+                <th class="md-text-cell">Therapy</th>
+                <th class="md-text-cell">Diagnose</th>
+                <th class="md-text-cell">Price</th>
+                <th class="md-text-cell">Edit Treatment</th>
+                <th class="md-text-cell">Delete Treatment</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let treatment of treatmentStore.treatments | async"  md-data-table-selectable-row [selectable-value]="treatment.id">
+                <td class="md-text-cell"><h6 class="text-teal">{{treatment.therapy}}</h6></td>
+                <td class="md-text-cell"><h6 class="text-teal">{{treatment.diagnose}}</h6></td>   
+                <td class="md-text-cell"><h6 class="text-teal">{{treatment.price}}</h6></td> 
+                <td class="md-text-cell"> 
+                    <a  md-button class="md-icon-button" (click)="editTreatment(treatment);" [ngClass]="iconClass" aria-label="Edit patient">
+                        <i class="material-icons">mode_edit</i>
+                    </a>
+                </td>
+                <td class="md-text-cell">  
+                    <a  md-button class="md-icon-button" (click)="deleteTreatment(treatment)" [ngClass]="iconClass"  aria-label="Remove patient">
+                        <i class="material-icons">delete</i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </md-data-table>
+</div>
