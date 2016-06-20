@@ -13,99 +13,96 @@ var testing_2 = require('@angular/compiler/testing');
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var progress_bar_1 = require('./progress-bar');
-function main() {
-    testing_1.describe('MdProgressBar', function () {
-        var builder;
-        testing_1.beforeEach(testing_1.inject([testing_2.TestComponentBuilder], function (tcb) {
-            builder = tcb;
-        }));
-        testing_1.it('should apply a mode of "determinate" if no mode is provided.', function (done) {
-            builder
-                .overrideTemplate(TestApp, '<md-progress-bar></md-progress-bar>')
-                .createAsync(TestApp)
-                .then(function (fixture) {
-                fixture.detectChanges();
-                var progressElement = fixture.debugElement.query(platform_browser_1.By.css('md-progress-bar'));
-                testing_1.expect(progressElement.componentInstance.mode).toBe('determinate');
-                done();
-            });
-        });
-        testing_1.it('should not modify the mode if a valid mode is provided.', function (done) {
-            builder
-                .overrideTemplate(TestApp, '<md-progress-bar mode="buffer"></md-progress-bar>')
-                .createAsync(TestApp)
-                .then(function (fixture) {
-                fixture.detectChanges();
-                var progressElement = fixture.debugElement.query(platform_browser_1.By.css('md-progress-bar'));
-                testing_1.expect(progressElement.componentInstance.mode).toBe('buffer');
-                done();
-            });
-        });
-        testing_1.it('should define default values for value and bufferValue attributes', function (done) {
-            builder
-                .overrideTemplate(TestApp, '<md-progress-bar></md-progress-bar>')
-                .createAsync(TestApp)
-                .then(function (fixture) {
-                fixture.detectChanges();
-                var progressElement = fixture.debugElement.query(platform_browser_1.By.css('md-progress-bar'));
-                testing_1.expect(progressElement.componentInstance.value).toBe(0);
-                testing_1.expect(progressElement.componentInstance.bufferValue).toBe(0);
-                done();
-            });
-        });
-        testing_1.it('should clamp value and bufferValue between 0 and 100', function (done) {
-            builder
-                .overrideTemplate(TestApp, '<md-progress-bar></md-progress-bar>')
-                .createAsync(TestApp)
-                .then(function (fixture) {
-                fixture.detectChanges();
-                var progressElement = fixture.debugElement.query(platform_browser_1.By.css('md-progress-bar'));
-                var progressComponent = progressElement.componentInstance;
-                progressComponent.value = 50;
-                testing_1.expect(progressComponent.value).toBe(50);
-                progressComponent.value = 999;
-                testing_1.expect(progressComponent.value).toBe(100);
-                progressComponent.value = -10;
-                testing_1.expect(progressComponent.value).toBe(0);
-                progressComponent.bufferValue = -29;
-                testing_1.expect(progressComponent.bufferValue).toBe(0);
-                progressComponent.bufferValue = 9;
-                testing_1.expect(progressComponent.bufferValue).toBe(9);
-                progressComponent.bufferValue = 1320;
-                testing_1.expect(progressComponent.bufferValue).toBe(100);
-                done();
-            });
-        });
-        testing_1.it('should return the transform attribute for bufferValue and mode', function (done) {
-            builder
-                .overrideTemplate(TestApp, '<md-progress-bar></md-progress-bar>')
-                .createAsync(TestApp)
-                .then(function (fixture) {
-                fixture.detectChanges();
-                var progressElement = fixture.debugElement.query(platform_browser_1.By.css('md-progress-bar'));
-                var progressComponent = progressElement.componentInstance;
-                testing_1.expect(progressComponent.primaryTransform()).toBe('scaleX(0)');
-                testing_1.expect(progressComponent.bufferTransform()).toBe(undefined);
-                progressComponent.value = 40;
-                testing_1.expect(progressComponent.primaryTransform()).toBe('scaleX(0.4)');
-                testing_1.expect(progressComponent.bufferTransform()).toBe(undefined);
-                progressComponent.value = 35;
-                progressComponent.bufferValue = 55;
-                testing_1.expect(progressComponent.primaryTransform()).toBe('scaleX(0.35)');
-                testing_1.expect(progressComponent.bufferTransform()).toBe(undefined);
-                progressComponent.mode = 'buffer';
-                testing_1.expect(progressComponent.primaryTransform()).toBe('scaleX(0.35)');
-                testing_1.expect(progressComponent.bufferTransform()).toBe('scaleX(0.55)');
-                progressComponent.value = 60;
-                progressComponent.bufferValue = 60;
-                testing_1.expect(progressComponent.primaryTransform()).toBe('scaleX(0.6)');
-                testing_1.expect(progressComponent.bufferTransform()).toBe('scaleX(0.6)');
-                done();
-            });
+testing_1.describe('MdProgressBar', function () {
+    var builder;
+    testing_1.beforeEach(testing_1.inject([testing_2.TestComponentBuilder], function (tcb) {
+        builder = tcb;
+    }));
+    testing_1.it('should apply a mode of "determinate" if no mode is provided.', function (done) {
+        builder
+            .overrideTemplate(TestApp, '<md-progress-bar></md-progress-bar>')
+            .createAsync(TestApp)
+            .then(function (fixture) {
+            fixture.detectChanges();
+            var progressElement = fixture.debugElement.query(platform_browser_1.By.css('md-progress-bar'));
+            testing_1.expect(progressElement.componentInstance.mode).toBe('determinate');
+            done();
         });
     });
-}
-exports.main = main;
+    testing_1.it('should not modify the mode if a valid mode is provided.', function (done) {
+        builder
+            .overrideTemplate(TestApp, '<md-progress-bar mode="buffer"></md-progress-bar>')
+            .createAsync(TestApp)
+            .then(function (fixture) {
+            fixture.detectChanges();
+            var progressElement = fixture.debugElement.query(platform_browser_1.By.css('md-progress-bar'));
+            testing_1.expect(progressElement.componentInstance.mode).toBe('buffer');
+            done();
+        });
+    });
+    testing_1.it('should define default values for value and bufferValue attributes', function (done) {
+        builder
+            .overrideTemplate(TestApp, '<md-progress-bar></md-progress-bar>')
+            .createAsync(TestApp)
+            .then(function (fixture) {
+            fixture.detectChanges();
+            var progressElement = fixture.debugElement.query(platform_browser_1.By.css('md-progress-bar'));
+            testing_1.expect(progressElement.componentInstance.value).toBe(0);
+            testing_1.expect(progressElement.componentInstance.bufferValue).toBe(0);
+            done();
+        });
+    });
+    testing_1.it('should clamp value and bufferValue between 0 and 100', function (done) {
+        builder
+            .overrideTemplate(TestApp, '<md-progress-bar></md-progress-bar>')
+            .createAsync(TestApp)
+            .then(function (fixture) {
+            fixture.detectChanges();
+            var progressElement = fixture.debugElement.query(platform_browser_1.By.css('md-progress-bar'));
+            var progressComponent = progressElement.componentInstance;
+            progressComponent.value = 50;
+            testing_1.expect(progressComponent.value).toBe(50);
+            progressComponent.value = 999;
+            testing_1.expect(progressComponent.value).toBe(100);
+            progressComponent.value = -10;
+            testing_1.expect(progressComponent.value).toBe(0);
+            progressComponent.bufferValue = -29;
+            testing_1.expect(progressComponent.bufferValue).toBe(0);
+            progressComponent.bufferValue = 9;
+            testing_1.expect(progressComponent.bufferValue).toBe(9);
+            progressComponent.bufferValue = 1320;
+            testing_1.expect(progressComponent.bufferValue).toBe(100);
+            done();
+        });
+    });
+    testing_1.it('should return the transform attribute for bufferValue and mode', function (done) {
+        builder
+            .overrideTemplate(TestApp, '<md-progress-bar></md-progress-bar>')
+            .createAsync(TestApp)
+            .then(function (fixture) {
+            fixture.detectChanges();
+            var progressElement = fixture.debugElement.query(platform_browser_1.By.css('md-progress-bar'));
+            var progressComponent = progressElement.componentInstance;
+            testing_1.expect(progressComponent.primaryTransform()).toEqual({ transform: 'scaleX(0)' });
+            testing_1.expect(progressComponent.bufferTransform()).toBe(undefined);
+            progressComponent.value = 40;
+            testing_1.expect(progressComponent.primaryTransform()).toEqual({ transform: 'scaleX(0.4)' });
+            testing_1.expect(progressComponent.bufferTransform()).toBe(undefined);
+            progressComponent.value = 35;
+            progressComponent.bufferValue = 55;
+            testing_1.expect(progressComponent.primaryTransform()).toEqual({ transform: 'scaleX(0.35)' });
+            testing_1.expect(progressComponent.bufferTransform()).toBe(undefined);
+            progressComponent.mode = 'buffer';
+            testing_1.expect(progressComponent.primaryTransform()).toEqual({ transform: 'scaleX(0.35)' });
+            testing_1.expect(progressComponent.bufferTransform()).toEqual({ transform: 'scaleX(0.55)' });
+            progressComponent.value = 60;
+            progressComponent.bufferValue = 60;
+            testing_1.expect(progressComponent.primaryTransform()).toEqual({ transform: 'scaleX(0.6)' });
+            testing_1.expect(progressComponent.bufferTransform()).toEqual({ transform: 'scaleX(0.6)' });
+            done();
+        });
+    });
+});
 /** Test component that contains an MdButton. */
 var TestApp = (function () {
     function TestApp() {
@@ -119,4 +116,4 @@ var TestApp = (function () {
     ], TestApp);
     return TestApp;
 }());
-//# sourceMappingURL=progress-bar.spec.js.map
+//# sourceMappingURL=/usr/local/google/home/jelbourn/material2/tmp/broccoli_type_script_compiler-input_base_path-OxHzApZr.tmp/0/components/progress-bar/progress-bar.spec.js.map

@@ -1,42 +1,49 @@
 {
   "_args": [
     [
-      "@angular2-material/checkbox@^2.0.0-alpha.4",
-      "c:\\development\\TWINSOFT\\git\\dental-dashboard-rc-1"
+      {
+        "name": "@angular2-material/checkbox",
+        "raw": "@angular2-material/checkbox@2.0.0-alpha.5-2",
+        "rawSpec": "2.0.0-alpha.5-2",
+        "scope": "@angular2-material",
+        "spec": "2.0.0-alpha.5-2",
+        "type": "version"
+      },
+      "C:\\development\\TWINSOFT\\git\\dental-dashboard-rc-1"
     ]
   ],
-  "_from": "@angular2-material/checkbox@>=2.0.0-alpha.4 <3.0.0",
-  "_id": "@angular2-material/checkbox@2.0.0-alpha.4",
+  "_from": "@angular2-material/checkbox@2.0.0-alpha.5-2",
+  "_id": "@angular2-material/checkbox@2.0.0-alpha.5-2",
   "_inCache": true,
   "_installable": true,
   "_location": "/@angular2-material/checkbox",
-  "_nodeVersion": "5.10.0",
+  "_nodeVersion": "5.7.0",
   "_npmOperationalInternal": {
     "host": "packages-12-west.internal.npmjs.com",
-    "tmp": "tmp/checkbox-2.0.0-alpha.4.tgz_1462344257253_0.07052212790586054"
+    "tmp": "tmp/checkbox-2.0.0-alpha.5-2.tgz_1464814625896_0.11895398539490998"
   },
   "_npmUser": {
     "email": "angular-core+npm@google.com",
     "name": "angular2-material"
   },
-  "_npmVersion": "3.8.3",
+  "_npmVersion": "3.7.5",
   "_phantomChildren": {},
   "_requested": {
     "name": "@angular2-material/checkbox",
-    "raw": "@angular2-material/checkbox@^2.0.0-alpha.4",
-    "rawSpec": "^2.0.0-alpha.4",
+    "raw": "@angular2-material/checkbox@2.0.0-alpha.5-2",
+    "rawSpec": "2.0.0-alpha.5-2",
     "scope": "@angular2-material",
-    "spec": ">=2.0.0-alpha.4 <3.0.0",
-    "type": "range"
+    "spec": "2.0.0-alpha.5-2",
+    "type": "version"
   },
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/@angular2-material/checkbox/-/checkbox-2.0.0-alpha.4.tgz",
-  "_shasum": "b9e023245ec02b42a5003408b098ff883f45705b",
+  "_resolved": "https://registry.npmjs.org/@angular2-material/checkbox/-/checkbox-2.0.0-alpha.5-2.tgz",
+  "_shasum": "cc568c10b5cab9a682846acc4e76cbbb038a396d",
   "_shrinkwrap": null,
-  "_spec": "@angular2-material/checkbox@^2.0.0-alpha.4",
-  "_where": "c:\\development\\TWINSOFT\\git\\dental-dashboard-rc-1",
+  "_spec": "@angular2-material/checkbox@2.0.0-alpha.5-2",
+  "_where": "C:\\development\\TWINSOFT\\git\\dental-dashboard-rc-1",
   "bugs": {
     "url": "https://github.com/angular/material2/issues"
   },
@@ -45,8 +52,8 @@
   "devDependencies": {},
   "directories": {},
   "dist": {
-    "shasum": "b9e023245ec02b42a5003408b098ff883f45705b",
-    "tarball": "https://registry.npmjs.org/@angular2-material/checkbox/-/checkbox-2.0.0-alpha.4.tgz"
+    "shasum": "cc568c10b5cab9a682846acc4e76cbbb038a396d",
+    "tarball": "https://registry.npmjs.org/@angular2-material/checkbox/-/checkbox-2.0.0-alpha.5-2.tgz"
   },
   "homepage": "https://github.com/angular/material2#readme",
   "keywords": [
@@ -67,8 +74,7 @@
   "name": "@angular2-material/checkbox",
   "optionalDependencies": {},
   "peerDependencies": {
-    "@angular2-material/core": "2.0.0-alpha.4",
-    "angular2": "^2.0.0-beta.8"
+    "@angular2-material/core": "2.0.0-alpha.5-2"
   },
   "readme": "ERROR: No README data found!",
   "repository": {
@@ -77,5 +83,5 @@
   },
   "scripts": {},
   "typings": "./checkbox.d.ts",
-  "version": "2.0.0-alpha.4"
+  "version": "2.0.0-alpha.5-2"
 }

@@ -22,7 +22,7 @@ exports.MdGridListColsError = MdGridListColsError;
 var MdGridTileTooWideError = (function (_super) {
     __extends(MdGridTileTooWideError, _super);
     function MdGridTileTooWideError(cols, listLength) {
-        _super.call(this, "Tile with colspan " + cols + " is wider than grid with cols=\"" + listLength + "\".");
+        _super.call(this, "md-grid-list: tile with colspan " + cols + " is wider than grid with cols=\"" + listLength + "\".");
     }
     return MdGridTileTooWideError;
 }(error_1.MdError));
@@ -38,4 +38,4 @@ var MdGridListBadRatioError = (function (_super) {
     return MdGridListBadRatioError;
 }(error_1.MdError));
 exports.MdGridListBadRatioError = MdGridListBadRatioError;
-//# sourceMappingURL=grid-list-errors.js.map
+//# sourceMappingURL=/usr/local/google/home/jelbourn/material2/tmp/broccoli_type_script_compiler-input_base_path-OxHzApZr.tmp/0/components/grid-list/grid-list-errors.js.map

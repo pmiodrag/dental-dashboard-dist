@@ -13,77 +13,74 @@ var testing_2 = require('@angular/compiler/testing');
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var live_announcer_1 = require('./live-announcer');
-function main() {
-    testing_1.describe('MdLiveAnnouncer', function () {
-        var live;
-        var builder;
-        var liveEl;
-        testing_1.beforeEachProviders(function () { return [live_announcer_1.MdLiveAnnouncer]; });
-        testing_1.beforeEach(testing_1.inject([testing_2.TestComponentBuilder, live_announcer_1.MdLiveAnnouncer], function (tcb, _live) {
-            builder = tcb;
-            live = _live;
-            liveEl = getLiveElement();
-        }));
-        afterEach(function () {
-            // In our tests we always remove the current live element, because otherwise we would have
-            // multiple live elements due multiple service instantiations.
-            liveEl.parentNode.removeChild(liveEl);
-        });
-        testing_1.it('should correctly update the announce text', fakeAsyncTest(function () {
-            var appFixture = null;
-            builder.createAsync(TestApp).then(function (fixture) {
-                appFixture = fixture;
-            });
-            testing_1.flushMicrotasks();
-            var buttonElement = appFixture.debugElement
-                .query(platform_browser_1.By.css('button')).nativeElement;
-            buttonElement.click();
-            // This flushes our 100ms timeout for the screenreaders.
-            testing_1.tick(100);
-            testing_1.expect(liveEl.textContent).toBe('Test');
-        }));
-        testing_1.it('should correctly update the politeness attribute', fakeAsyncTest(function () {
-            var appFixture = null;
-            builder.createAsync(TestApp).then(function (fixture) {
-                appFixture = fixture;
-            });
-            testing_1.flushMicrotasks();
-            live.announce('Hey Google', 'assertive');
-            // This flushes our 100ms timeout for the screenreaders.
-            testing_1.tick(100);
-            testing_1.expect(liveEl.textContent).toBe('Hey Google');
-            testing_1.expect(liveEl.getAttribute('aria-live')).toBe('assertive');
-        }));
-        testing_1.it('should apply the aria-live value polite by default', fakeAsyncTest(function () {
-            var appFixture = null;
-            builder.createAsync(TestApp).then(function (fixture) {
-                appFixture = fixture;
-            });
-            testing_1.flushMicrotasks();
-            live.announce('Hey Google');
-            // This flushes our 100ms timeout for the screenreaders.
-            testing_1.tick(100);
-            testing_1.expect(liveEl.textContent).toBe('Hey Google');
-            testing_1.expect(liveEl.getAttribute('aria-live')).toBe('polite');
-        }));
-        testing_1.it('should allow to use a custom live element', fakeAsyncTest(function () {
-            var customLiveEl = document.createElement('div');
-            // We need to reset our test injector here, because it is already instantiated above.
-            testing_1.getTestInjector().reset();
-            testing_1.getTestInjector().addProviders([
-                core_1.provide(live_announcer_1.LIVE_ANNOUNCER_ELEMENT_TOKEN, { useValue: customLiveEl }),
-                live_announcer_1.MdLiveAnnouncer
-            ]);
-            var injector = testing_1.getTestInjector().createInjector();
-            var liveService = injector.get(live_announcer_1.MdLiveAnnouncer);
-            liveService.announce('Custom Element');
-            // This flushes our 100ms timeout for the screenreaders.
-            testing_1.tick(100);
-            testing_1.expect(customLiveEl.textContent).toBe('Custom Element');
-        }));
+testing_1.describe('MdLiveAnnouncer', function () {
+    var live;
+    var builder;
+    var liveEl;
+    testing_1.beforeEachProviders(function () { return [live_announcer_1.MdLiveAnnouncer]; });
+    testing_1.beforeEach(testing_1.inject([testing_2.TestComponentBuilder, live_announcer_1.MdLiveAnnouncer], function (tcb, _live) {
+        builder = tcb;
+        live = _live;
+        liveEl = getLiveElement();
+    }));
+    afterEach(function () {
+        // In our tests we always remove the current live element, because otherwise we would have
+        // multiple live elements due multiple service instantiations.
+        liveEl.parentNode.removeChild(liveEl);
     });
-}
-exports.main = main;
+    testing_1.it('should correctly update the announce text', fakeAsyncTest(function () {
+        var appFixture = null;
+        builder.createAsync(TestApp).then(function (fixture) {
+            appFixture = fixture;
+        });
+        testing_1.flushMicrotasks();
+        var buttonElement = appFixture.debugElement
+            .query(platform_browser_1.By.css('button')).nativeElement;
+        buttonElement.click();
+        // This flushes our 100ms timeout for the screenreaders.
+        testing_1.tick(100);
+        testing_1.expect(liveEl.textContent).toBe('Test');
+    }));
+    testing_1.it('should correctly update the politeness attribute', fakeAsyncTest(function () {
+        var appFixture = null;
+        builder.createAsync(TestApp).then(function (fixture) {
+            appFixture = fixture;
+        });
+        testing_1.flushMicrotasks();
+        live.announce('Hey Google', 'assertive');
+        // This flushes our 100ms timeout for the screenreaders.
+        testing_1.tick(100);
+        testing_1.expect(liveEl.textContent).toBe('Hey Google');
+        testing_1.expect(liveEl.getAttribute('aria-live')).toBe('assertive');
+    }));
+    testing_1.it('should apply the aria-live value polite by default', fakeAsyncTest(function () {
+        var appFixture = null;
+        builder.createAsync(TestApp).then(function (fixture) {
+            appFixture = fixture;
+        });
+        testing_1.flushMicrotasks();
+        live.announce('Hey Google');
+        // This flushes our 100ms timeout for the screenreaders.
+        testing_1.tick(100);
+        testing_1.expect(liveEl.textContent).toBe('Hey Google');
+        testing_1.expect(liveEl.getAttribute('aria-live')).toBe('polite');
+    }));
+    testing_1.it('should allow to use a custom live element', fakeAsyncTest(function () {
+        var customLiveEl = document.createElement('div');
+        // We need to reset our test injector here, because it is already instantiated above.
+        testing_1.getTestInjector().reset();
+        testing_1.getTestInjector().addProviders([
+            core_1.provide(live_announcer_1.LIVE_ANNOUNCER_ELEMENT_TOKEN, { useValue: customLiveEl }),
+            live_announcer_1.MdLiveAnnouncer
+        ]);
+        var injector = testing_1.getTestInjector().createInjector();
+        var liveService = injector.get(live_announcer_1.MdLiveAnnouncer);
+        liveService.announce('Custom Element');
+        // This flushes our 100ms timeout for the screenreaders.
+        testing_1.tick(100);
+        testing_1.expect(customLiveEl.textContent).toBe('Custom Element');
+    }));
+});
 function fakeAsyncTest(fn) {
     return testing_1.inject([], testing_1.fakeAsync(fn));
 }
@@ -107,4 +104,4 @@ var TestApp = (function () {
     ], TestApp);
     return TestApp;
 }());
-//# sourceMappingURL=live-announcer.spec.js.map
+//# sourceMappingURL=/usr/local/google/home/jelbourn/material2/tmp/broccoli_type_script_compiler-input_base_path-OxHzApZr.tmp/0/core/live-announcer/live-announcer.spec.js.map

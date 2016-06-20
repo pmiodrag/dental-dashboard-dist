@@ -1,3 +1,22 @@
+/**
+ * Mixin that creates a new stacking context.
+ * see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context
+ */
+/**
+ * This mixin hides an element visually.
+ * That means it's still accessible for screen-readers but not visible in view.
+ */
+/**
+ * Forces an element to grow to fit floated contents; used as as an alternative to
+ * `overflow: hidden;` because it doesn't cut off contents.
+ */
+/**
+ * A mixin, which generates temporary ink ripple on a given component.
+ * When $bindToParent is set to true, it will check for the focused class on the same selector as you included
+ * that mixin.
+ * It is also possible to specify the color palette of the temporary ripple. By default it uses the
+ * accent palette for its background.
+ */
 md-radio-button {
   display: inline-block; }
 
@@ -13,26 +32,6 @@ md-radio-button {
   position: relative;
   top: 2px;
   width: 20px; }
-
-.md-ink-ripple {
-  background-color: #9c27b0;
-  border-radius: 50%;
-  height: 48px;
-  left: 10px;
-  opacity: 0;
-  pointer-events: none;
-  position: absolute;
-  top: 10px;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  -webkit-transition: opacity ease 0.28s, background-color ease 0.28s;
-  transition: opacity ease 0.28s, background-color ease 0.28s;
-  width: 48px;
-  overflow: hidden; }
-  .md-radio-focused .md-ink-ripple {
-    opacity: 0.1; }
-  .md-radio-disabled .md-ink-ripple {
-    background: #000; }
 
 .md-radio-outer-circle {
   border-color: rgba(0, 0, 0, 0.54);
@@ -85,16 +84,37 @@ md-radio-button {
     padding-left: 0; }
 
 .md-radio-input {
-  position: absolute;
-  width: 0;
-  height: 0;
-  margin: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
   padding: 0;
-  opacity: 0;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  border: none; }
+  position: absolute;
+  text-transform: none;
+  width: 1px; }
 
 .md-radio-disabled, .md-radio-disabled .md-radio-label {
   cursor: default; }
+
+.md-ink-ripple {
+  border-radius: 50%;
+  opacity: 0;
+  height: 48px;
+  left: 50%;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-transition: opacity ease 0.28s, background-color ease 0.28s;
+  transition: opacity ease 0.28s, background-color ease 0.28s;
+  width: 48px; }
+
+.md-radio-focused .md-ink-ripple {
+  opacity: 1;
+  background-color: rgba(156, 39, 176, 0.26); }
+
+.md-radio-disabled .md-ink-ripple {
+  background-color: #000; }

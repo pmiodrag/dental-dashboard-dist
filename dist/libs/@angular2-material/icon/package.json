@@ -1,19 +1,26 @@
 {
   "_args": [
     [
-      "@angular2-material/icon@^2.0.0-alpha.4",
+      {
+        "name": "@angular2-material/icon",
+        "raw": "@angular2-material/icon@^2.0.0-alpha.5-2",
+        "rawSpec": "^2.0.0-alpha.5-2",
+        "scope": "@angular2-material",
+        "spec": ">=2.0.0-alpha.5-2 <3.0.0",
+        "type": "range"
+      },
       "C:\\development\\TWINSOFT\\git\\dental-dashboard-rc-1"
     ]
   ],
-  "_from": "@angular2-material/icon@>=2.0.0-alpha.4 <3.0.0",
-  "_id": "@angular2-material/icon@2.0.0-alpha.5",
+  "_from": "@angular2-material/icon@>=2.0.0-alpha.5-2 <3.0.0",
+  "_id": "@angular2-material/icon@2.0.0-alpha.5-2",
   "_inCache": true,
   "_installable": true,
   "_location": "/@angular2-material/icon",
   "_nodeVersion": "5.7.0",
   "_npmOperationalInternal": {
-    "host": "packages-16-east.internal.npmjs.com",
-    "tmp": "tmp/icon-2.0.0-alpha.5.tgz_1464223439552_0.39492367720231414"
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/icon-2.0.0-alpha.5-2.tgz_1464814640464_0.8831404927186668"
   },
   "_npmUser": {
     "email": "angular-core+npm@google.com",
@@ -23,19 +30,19 @@
   "_phantomChildren": {},
   "_requested": {
     "name": "@angular2-material/icon",
-    "raw": "@angular2-material/icon@^2.0.0-alpha.4",
-    "rawSpec": "^2.0.0-alpha.4",
+    "raw": "@angular2-material/icon@^2.0.0-alpha.5-2",
+    "rawSpec": "^2.0.0-alpha.5-2",
     "scope": "@angular2-material",
-    "spec": ">=2.0.0-alpha.4 <3.0.0",
+    "spec": ">=2.0.0-alpha.5-2 <3.0.0",
     "type": "range"
   },
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/@angular2-material/icon/-/icon-2.0.0-alpha.5.tgz",
-  "_shasum": "762859ad0544dcb123357de4d02e900b26022141",
+  "_resolved": "https://registry.npmjs.org/@angular2-material/icon/-/icon-2.0.0-alpha.5-2.tgz",
+  "_shasum": "f5480f10ddc5ea7cd4581f0e0563577700dad71f",
   "_shrinkwrap": null,
-  "_spec": "@angular2-material/icon@^2.0.0-alpha.4",
+  "_spec": "@angular2-material/icon@^2.0.0-alpha.5-2",
   "_where": "C:\\development\\TWINSOFT\\git\\dental-dashboard-rc-1",
   "bugs": {
     "url": "https://github.com/angular/material2/issues"
@@ -45,8 +52,8 @@
   "devDependencies": {},
   "directories": {},
   "dist": {
-    "shasum": "762859ad0544dcb123357de4d02e900b26022141",
-    "tarball": "https://registry.npmjs.org/@angular2-material/icon/-/icon-2.0.0-alpha.5.tgz"
+    "shasum": "f5480f10ddc5ea7cd4581f0e0563577700dad71f",
+    "tarball": "https://registry.npmjs.org/@angular2-material/icon/-/icon-2.0.0-alpha.5-2.tgz"
   },
   "homepage": "https://github.com/angular/material2#readme",
   "keywords": [
@@ -68,7 +75,7 @@
   "optionalDependencies": {},
   "peerDependencies": {
     "@angular/http": "2.0.0-rc.1",
-    "@angular2-material/core": "2.0.0-alpha.5"
+    "@angular2-material/core": "2.0.0-alpha.5-2"
   },
   "readme": "ERROR: No README data found!",
   "repository": {
@@ -77,5 +84,5 @@
   },
   "scripts": {},
   "typings": "./icon.d.ts",
-  "version": "2.0.0-alpha.5"
+  "version": "2.0.0-alpha.5-2"
 }

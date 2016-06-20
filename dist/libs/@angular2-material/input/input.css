@@ -7,16 +7,26 @@
  * That means it's still accessible for screen-readers but not visible in view.
  */
 /**
+ * Forces an element to grow to fit floated contents; used as as an alternative to
+ * `overflow: hidden;` because it doesn't cut off contents.
+ */
+/**
+ * A mixin, which generates temporary ink ripple on a given component.
+ * When $bindToParent is set to true, it will check for the focused class on the same selector as you included
+ * that mixin.
+ * It is also possible to specify the color palette of the temporary ripple. By default it uses the
+ * accent palette for its background.
+ */
+/** 
+ * Undo the red box-shadow glow added by Firefox on invalid inputs.
+ * See https://developer.mozilla.org/en-US/docs/Web/CSS/:-moz-ui-invalid
+ */
+:-moz-ui-invalid {
+  box-shadow: none; }
+
+/**
  * Applies a floating placeholder above the input itself.
  */
-:host .md-input-placeholder.md-float:not(.md-empty), :host .md-input-placeholder.md-float.md-focused, :host input:-webkit-autofill + .md-input-placeholder {
-  visibility: visible;
-  padding-bottom: 5px;
-  -webkit-transform: translateY(-100%) scale(0.75);
-          transform: translateY(-100%) scale(0.75); }
-  :host .md-input-placeholder.md-float:not(.md-empty) .md-placeholder-required, :host .md-input-placeholder.md-float.md-focused .md-placeholder-required, :host input:-webkit-autofill + .md-input-placeholder .md-placeholder-required {
-    color: #9c27b0; }
-
 :host {
   display: inline-block;
   position: relative;
@@ -35,6 +45,7 @@
       display: table-cell; }
   :host .md-input-element {
     font: inherit;
+    background: transparent;
     border: none;
     outline: none;
     padding: 0;
@@ -68,12 +79,26 @@
     :host .md-input-placeholder.md-empty {
       visibility: visible;
       cursor: text; }
+    :host .md-input-placeholder.md-float:not(.md-empty), :host .md-input-placeholder.md-float.md-focused {
+      visibility: visible;
+      padding-bottom: 5px;
+      -webkit-transform: translateY(-100%) scale(0.75);
+              transform: translateY(-100%) scale(0.75); }
+      :host .md-input-placeholder.md-float:not(.md-empty) .md-placeholder-required, :host .md-input-placeholder.md-float.md-focused .md-placeholder-required {
+        color: #9c27b0; }
     :host .md-input-placeholder.md-focused {
       color: #009688; }
       :host .md-input-placeholder.md-focused.md-accent {
         color: #9c27b0; }
       :host .md-input-placeholder.md-focused.md-warn {
         color: #f44336; }
+  :host input:-webkit-autofill + .md-input-placeholder {
+    visibility: visible;
+    padding-bottom: 5px;
+    -webkit-transform: translateY(-100%) scale(0.75);
+            transform: translateY(-100%) scale(0.75); }
+    :host input:-webkit-autofill + .md-input-placeholder .md-placeholder-required {
+      color: #9c27b0; }
   :host .md-input-underline {
     position: absolute;
     height: 1px;

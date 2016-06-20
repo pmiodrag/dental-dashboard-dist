@@ -1,3 +1,22 @@
+/**
+ * Mixin that creates a new stacking context.
+ * see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context
+ */
+/**
+ * This mixin hides an element visually.
+ * That means it's still accessible for screen-readers but not visible in view.
+ */
+/**
+ * Forces an element to grow to fit floated contents; used as as an alternative to
+ * `overflow: hidden;` because it doesn't cut off contents.
+ */
+/**
+ * A mixin, which generates temporary ink ripple on a given component.
+ * When $bindToParent is set to true, it will check for the focused class on the same selector as you included
+ * that mixin.
+ * It is also possible to specify the color palette of the temporary ripple. By default it uses the
+ * accent palette for its background.
+ */
 /** The width/height of the checkbox element. */
 /** The width of the line used to draw the checkmark / mixedmark. */
 /** The width of the checkbox border shown when the checkbox is unchecked. */
@@ -260,10 +279,8 @@
   box-sizing: border-box;
   pointer-events: none; }
 
-md-checkbox {
+md-checkbox, md-checkbox label {
   cursor: pointer; }
-  md-checkbox:focus {
-    outline: none; }
 
 .md-checkbox-layout {
   -webkit-box-align: baseline;
@@ -293,7 +310,7 @@ md-checkbox {
     margin-left: 8px;
     margin-right: auto; }
 
-.md-checkbox-layout label {
+.md-checkbox-layout .md-checkbox-label {
   line-height: 24px; }
 
 .md-checkbox-frame {
@@ -433,3 +450,36 @@ md-checkbox {
 .md-checkbox-anim-indeterminate-unchecked .md-checkbox-mixedmark {
   -webkit-animation: 300ms linear 0s md-checkbox-indeterminate-unchecked-mixedmark;
           animation: 300ms linear 0s md-checkbox-indeterminate-unchecked-mixedmark; }
+
+.md-checkbox-input {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  text-transform: none;
+  width: 1px; }
+
+.md-ink-ripple {
+  border-radius: 50%;
+  opacity: 0;
+  height: 48px;
+  left: 50%;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-transition: opacity ease 0.28s, background-color ease 0.28s;
+  transition: opacity ease 0.28s, background-color ease 0.28s;
+  width: 48px; }
+
+.md-checkbox-focused .md-ink-ripple {
+  opacity: 1;
+  background-color: rgba(156, 39, 176, 0.26); }
+
+.md-checkbox-disabled .md-ink-ripple {
+  background-color: #000; }

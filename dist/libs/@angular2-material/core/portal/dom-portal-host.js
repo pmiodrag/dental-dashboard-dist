@@ -14,18 +14,19 @@ var portal_errors_1 = require('./portal-errors');
  */
 var DomPortalHost = (function (_super) {
     __extends(DomPortalHost, _super);
-    function DomPortalHost(_hostDomElement, _componentLoader) {
+    function DomPortalHost(_hostDomElement, _componentResolver) {
         _super.call(this);
         this._hostDomElement = _hostDomElement;
-        this._componentLoader = _componentLoader;
+        this._componentResolver = _componentResolver;
     }
-    /** Attach the given ComponentPortal to DOM element using the DynamicComponentLoader. */
+    /** Attach the given ComponentPortal to DOM element using the ComponentResolver. */
     DomPortalHost.prototype.attachComponentPortal = function (portal) {
         var _this = this;
         if (portal.viewContainerRef == null) {
             throw new portal_errors_1.MdComponentPortalAttachedToDomWithoutOriginError();
         }
-        return this._componentLoader.loadNextToLocation(portal.component, portal.viewContainerRef).then(function (ref) {
+        return this._componentResolver.resolveComponent(portal.component).then(function (componentFactory) {
+            var ref = portal.viewContainerRef.createComponent(componentFactory, portal.viewContainerRef.length, portal.viewContainerRef.parentInjector);
             var hostView = ref.hostView;
             _this._hostDomElement.appendChild(hostView.rootNodes[0]);
             _this.setDisposeFn(function () { return ref.destroy(); });
@@ -55,4 +56,4 @@ var DomPortalHost = (function (_super) {
     return DomPortalHost;
 }(portal_1.BasePortalHost));
 exports.DomPortalHost = DomPortalHost;
-//# sourceMappingURL=dom-portal-host.js.map
+//# sourceMappingURL=/usr/local/google/home/jelbourn/material2/tmp/broccoli_type_script_compiler-input_base_path-OxHzApZr.tmp/0/core/portal/dom-portal-host.js.map

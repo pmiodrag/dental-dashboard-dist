@@ -16,12 +16,12 @@ var TileStyler = (function () {
      * because these properties haven't been calculated by that point.
      * @internal
      * */
-    TileStyler.prototype.init = function (_gutterSize, tracker, cols, dir) {
+    TileStyler.prototype.init = function (_gutterSize, tracker, cols, direction) {
         this._gutterSize = normalizeUnits(_gutterSize);
         this._rows = tracker.rowCount;
         this._rowspan = tracker.rowspan;
         this._cols = cols;
-        this._dir = dir;
+        this._direction = direction;
     };
     /**
      * Computes the amount of space a single 1x1 tile would take up (width or height).
@@ -81,19 +81,31 @@ var TileStyler = (function () {
         var baseTileWidth = this.getBaseTileSize(percentWidth, gutterWidth);
         // The width and horizontal position of each tile is always calculated the same way, but the
         // height and vertical position depends on the rowMode.
-        var side = this._dir.value === 'ltr' ? 'left' : 'right';
+        var side = this._direction === 'ltr' ? 'left' : 'right';
         tile.setStyle(side, this.getTilePosition(baseTileWidth, colIndex));
         tile.setStyle('width', calc(this.getTileSize(baseTileWidth, tile.colspan)));
     };
-    /** Sets the vertical placement of the tile in the list.
-     * This method will be implemented by each type of TileStyler.
+    /** Calculates the total size taken up by gutters across one axis of a list.
      * @internal
      */
+    TileStyler.prototype.getGutterSpan = function () {
+        return this._gutterSize + " * (" + this._rowspan + " - 1)";
+    };
+    /** Calculates the total size taken up by tiles across one axis of a list.
+     * @internal
+     */
+    TileStyler.prototype.getTileSpan = function (tileHeight) {
+        return this._rowspan + " * " + this.getTileSize(tileHeight, 1);
+    };
+    /** Sets the vertical placement of the tile in the list.
+    * This method will be implemented by each type of TileStyler.
+  * @internal
+  */
     TileStyler.prototype.setRowStyles = function (tile, rowIndex, percentWidth, gutterWidth) { };
     /** Calculates the computed height and returns the correct style property to set.
-     * This method will be implemented by each type of TileStyler.
-     * @internal
-     */
+    * This method will be implemented by each type of TileStyler.
+  * @internal
+  */
     TileStyler.prototype.getComputedHeight = function () { return null; };
     return TileStyler;
 }());
@@ -107,8 +119,8 @@ var FixedTileStyler = (function (_super) {
         this.fixedRowHeight = fixedRowHeight;
     }
     /** @internal */
-    FixedTileStyler.prototype.init = function (gutterSize, tracker, cols, dir) {
-        _super.prototype.init.call(this, gutterSize, tracker, cols, dir);
+    FixedTileStyler.prototype.init = function (gutterSize, tracker, cols, direction) {
+        _super.prototype.init.call(this, gutterSize, tracker, cols, direction);
         this.fixedRowHeight = normalizeUnits(this.fixedRowHeight);
     };
     /** @internal */
@@ -118,7 +130,9 @@ var FixedTileStyler = (function (_super) {
     };
     /** @internal */
     FixedTileStyler.prototype.getComputedHeight = function () {
-        return ['height', calc(this._rowspan + " * " + this.getTileSize(this.fixedRowHeight, 1))];
+        return [
+            'height', calc(this.getTileSpan(this.fixedRowHeight) + " + " + this.getGutterSpan())
+        ];
     };
     return FixedTileStyler;
 }(TileStyler));
@@ -144,7 +158,7 @@ var RatioTileStyler = (function (_super) {
     /** @internal */
     RatioTileStyler.prototype.getComputedHeight = function () {
         return [
-            'paddingBottom', calc(this._rowspan + " * " + this.getTileSize(this.baseTileHeight, 1))
+            'paddingBottom', calc(this.getTileSpan(this.baseTileHeight) + " + " + this.getGutterSpan())
         ];
     };
     /** @internal */
@@ -190,4 +204,4 @@ function calc(exp) { return "calc(" + exp + ")"; }
 function normalizeUnits(value) {
     return (value.match(/px|em|rem/)) ? value : value + 'px';
 }
-//# sourceMappingURL=tile-styler.js.map
+//# sourceMappingURL=/usr/local/google/home/jelbourn/material2/tmp/broccoli_type_script_compiler-input_base_path-OxHzApZr.tmp/0/components/grid-list/tile-styler.js.map

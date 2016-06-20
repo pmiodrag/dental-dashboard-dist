@@ -3,6 +3,7 @@ var mysql = require('mysql'); // node-mysql module
 var path = require('path');
 var db = require("../connection/db");
 var bodyParser = require('body-parser');
+var multer = require("multer");
 function index(req, res) {
     console.log("getPatients");
     db.db_connection.ready(function () {
@@ -68,3 +69,11 @@ function destroy(req, res) {
     });
 }
 exports.destroy = destroy;
+function uploadFile(req, res) {
+    // We are able to access req.files.file thanks to
+    // the multiparty middleware
+    //upload.single(req.file);
+    console.log("Patient param: " + req.param);
+    res.status(204).end("Profile image uploaded");
+}
+exports.uploadFile = uploadFile;

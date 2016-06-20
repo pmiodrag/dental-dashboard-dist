@@ -1,4 +1,4 @@
-<div class="md-input-wrapper" (click)="input.focus()">
+<div class="md-input-wrapper">
   <div class="md-input-table">
     <div class="md-input-prefix"><ng-content select="[md-prefix]"></ng-content></div>
 
@@ -12,19 +12,29 @@
              [attr.aria-disabled]="ariaDisabled"
              [attr.aria-required]="ariaRequired"
              [attr.aria-invalid]="ariaInvalid"
-             [id]="id"
+             [attr.autocomplete]="autoComplete"
+             [autofocus]="autoFocus"
              [disabled]="disabled"
-             [required]="required"
-             [spellcheck]="spellcheck"
+             [id]="inputId"
+             [attr.list]="list"
+             [attr.max]="max"
              [attr.maxlength]="maxLength"
+             [attr.min]="min"
+             [attr.minlength]="minLength"
+             [readonly]="readOnly"
+             [required]="required"
+             [spellcheck]="spellCheck"
+             [attr.step]="step"
+             [attr.tabindex]="tabIndex"
              [type]="type"
-             (focus)="onFocus()"
-             (blur)="onBlur()"
+             [attr.name]="name"
+             (focus)="handleFocus($event)"
+             (blur)="handleBlur($event)"
              [(ngModel)]="value"
-             (change)="onChange($event)">
+             (change)="handleChange($event)">
 
       <label class="md-input-placeholder"
-             [attr.for]="id"
+             [attr.for]="inputId"
              [class.md-empty]="empty"
              [class.md-focused]="focused"
              [class.md-float]="floatingPlaceholder"

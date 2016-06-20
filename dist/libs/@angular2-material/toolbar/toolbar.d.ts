@@ -6,6 +6,7 @@ export declare class MdToolbar {
     private _color;
     constructor(elementRef: ElementRef, renderer: Renderer);
     color: string;
-    _updateColor(newColor: string): void;
-    _setElementColor(color: string, isAdd: boolean): void;
+    private _updateColor(newColor);
+    private _setElementColor(color, isAdd);
 }
+export declare const MD_TOOLBAR_DIRECTIVES: typeof MdToolbar[];

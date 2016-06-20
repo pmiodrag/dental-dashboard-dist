@@ -16,6 +16,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
 var field_value_1 = require('@angular2-material/core/annotations/field-value');
+var error_1 = require('@angular2-material/core/errors/error');
+var Observable_1 = require('rxjs/Observable');
 var noop = function () { };
 var MD_INPUT_CONTROL_VALUE_ACCESSOR = new core_1.Provider(common_1.NG_VALUE_ACCESSOR, {
     useExisting: core_1.forwardRef(function () { return MdInput; }),
@@ -34,7 +36,7 @@ var MdInputPlaceholderConflictError = (function (_super) {
         _super.call(this, 'Placeholder attribute and child element were both specified.');
     }
     return MdInputPlaceholderConflictError;
-}(Error));
+}(error_1.MdError));
 exports.MdInputPlaceholderConflictError = MdInputPlaceholderConflictError;
 var MdInputUnsupportedTypeError = (function (_super) {
     __extends(MdInputUnsupportedTypeError, _super);
@@ -42,7 +44,7 @@ var MdInputUnsupportedTypeError = (function (_super) {
         _super.call(this, "Input type \"" + type + "\" isn't supported by md-input.");
     }
     return MdInputUnsupportedTypeError;
-}(Error));
+}(error_1.MdError));
 exports.MdInputUnsupportedTypeError = MdInputUnsupportedTypeError;
 var MdInputDuplicatedHintError = (function (_super) {
     __extends(MdInputDuplicatedHintError, _super);
@@ -50,7 +52,7 @@ var MdInputDuplicatedHintError = (function (_super) {
         _super.call(this, "A hint was already declared for 'align=\"" + align + "\"'.");
     }
     return MdInputDuplicatedHintError;
-}(Error));
+}(error_1.MdError));
 exports.MdInputDuplicatedHintError = MdInputDuplicatedHintError;
 /**
  * The placeholder directive. The content can declare this to implement more
@@ -68,9 +70,7 @@ var MdPlaceholder = (function () {
     return MdPlaceholder;
 }());
 exports.MdPlaceholder = MdPlaceholder;
-/**
- * The hint directive, used to tag content as hint labels (going under the input).
- */
+/** The hint directive, used to tag content as hint labels (going under the input). */
 var MdHint = (function () {
     function MdHint() {
         // Whether to align the hint label at the start or end of the line.
@@ -110,14 +110,26 @@ var MdInput = (function () {
          */
         this.align = 'start';
         this.dividerColor = 'primary';
-        this.disabled = false;
         this.floatingPlaceholder = true;
         this.hintLabel = '';
+        this.autoFocus = false;
+        this.disabled = false;
         this.id = "md-input-" + nextUniqueId++;
-        this.maxLength = -1;
+        this.list = null;
+        this.max = null;
+        this.maxLength = null;
+        this.min = null;
+        this.minLength = null;
+        this.placeholder = null;
+        this.readOnly = false;
         this.required = false;
-        this.spellcheck = false;
+        this.spellCheck = false;
+        this.step = null;
+        this.tabIndex = null;
         this.type = 'text';
+        this.name = null;
+        this._blurEmitter = new core_1.EventEmitter();
+        this._focusEmitter = new core_1.EventEmitter();
     }
     Object.defineProperty(MdInput.prototype, "focused", {
         /** Readonly properties. */
@@ -133,6 +145,25 @@ var MdInput = (function () {
     Object.defineProperty(MdInput.prototype, "characterCount", {
         get: function () {
             return this.empty ? 0 : ('' + this._value).length;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MdInput.prototype, "inputId", {
+        get: function () { return this.id + "-input"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MdInput.prototype, "onBlur", {
+        get: function () {
+            return this._blurEmitter.asObservable();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MdInput.prototype, "onFocus", {
+        get: function () {
+            return this._focusEmitter.asObservable();
         },
         enumerable: true,
         configurable: true
@@ -158,36 +189,52 @@ var MdInput = (function () {
         enumerable: true,
         configurable: true
     });
-    /** @internal */
-    MdInput.prototype.onFocus = function () {
-        this._focused = true;
+    /** Set focus on input */
+    MdInput.prototype.focus = function () {
+        this._inputElement.nativeElement.focus();
     };
     /** @internal */
-    MdInput.prototype.onBlur = function () {
+    MdInput.prototype.handleFocus = function (event) {
+        this._focused = true;
+        this._focusEmitter.emit(event);
+    };
+    /** @internal */
+    MdInput.prototype.handleBlur = function (event) {
         this._focused = false;
         this._onTouchedCallback();
+        this._blurEmitter.emit(event);
     };
     /** @internal */
-    MdInput.prototype.onChange = function (ev) {
-        this.value = ev.target.value;
+    MdInput.prototype.handleChange = function (event) {
+        this.value = event.target.value;
         this._onTouchedCallback();
     };
     /** @internal */
     MdInput.prototype.hasPlaceholder = function () {
         return !!this.placeholder || this._placeholderChild != null;
     };
-    /** Implemented as part of ControlValueAccessor. */
+    /**
+     * Implemented as part of ControlValueAccessor.
+     * TODO: internal
+     */
     MdInput.prototype.writeValue = function (value) {
         this._value = value;
     };
-    /** Implemented as part of ControlValueAccessor. */
+    /**
+     * Implemented as part of ControlValueAccessor.
+     * TODO: internal
+     */
     MdInput.prototype.registerOnChange = function (fn) {
         this._onChangeCallback = fn;
     };
-    /** Implemented as part of ControlValueAccessor. */
+    /**
+     * Implemented as part of ControlValueAccessor.
+     * TODO: internal
+     */
     MdInput.prototype.registerOnTouched = function (fn) {
         this._onTouchedCallback = fn;
     };
+    /** TODO: internal */
     MdInput.prototype.ngAfterContentInit = function () {
         var _this = this;
         this._validateConstraints();
@@ -196,6 +243,7 @@ var MdInput = (function () {
             _this._validateConstraints();
         });
     };
+    /** TODO: internal */
     MdInput.prototype.ngOnChanges = function (changes) {
         this._validateConstraints();
     };
@@ -291,11 +339,6 @@ var MdInput = (function () {
         core_1.Input(),
         field_value_1.BooleanFieldValue(), 
         __metadata('design:type', Boolean)
-    ], MdInput.prototype, "disabled", void 0);
-    __decorate([
-        core_1.Input(),
-        field_value_1.BooleanFieldValue(), 
-        __metadata('design:type', Boolean)
     ], MdInput.prototype, "floatingPlaceholder", void 0);
     __decorate([
         core_1.Input(), 
@@ -304,7 +347,29 @@ var MdInput = (function () {
     __decorate([
         core_1.Input(), 
         __metadata('design:type', String)
+    ], MdInput.prototype, "autoComplete", void 0);
+    __decorate([
+        core_1.Input(),
+        field_value_1.BooleanFieldValue(), 
+        __metadata('design:type', Boolean)
+    ], MdInput.prototype, "autoFocus", void 0);
+    __decorate([
+        core_1.Input(),
+        field_value_1.BooleanFieldValue(), 
+        __metadata('design:type', Boolean)
+    ], MdInput.prototype, "disabled", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', String)
     ], MdInput.prototype, "id", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', String)
+    ], MdInput.prototype, "list", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', String)
+    ], MdInput.prototype, "max", void 0);
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Number)
@@ -312,7 +377,20 @@ var MdInput = (function () {
     __decorate([
         core_1.Input(), 
         __metadata('design:type', String)
+    ], MdInput.prototype, "min", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Number)
+    ], MdInput.prototype, "minLength", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', String)
     ], MdInput.prototype, "placeholder", void 0);
+    __decorate([
+        core_1.Input(),
+        field_value_1.BooleanFieldValue(), 
+        __metadata('design:type', Boolean)
+    ], MdInput.prototype, "readOnly", void 0);
     __decorate([
         core_1.Input(),
         field_value_1.BooleanFieldValue(), 
@@ -322,11 +400,31 @@ var MdInput = (function () {
         core_1.Input(),
         field_value_1.BooleanFieldValue(), 
         __metadata('design:type', Boolean)
-    ], MdInput.prototype, "spellcheck", void 0);
+    ], MdInput.prototype, "spellCheck", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Number)
+    ], MdInput.prototype, "step", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Number)
+    ], MdInput.prototype, "tabIndex", void 0);
     __decorate([
         core_1.Input(), 
         __metadata('design:type', String)
     ], MdInput.prototype, "type", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', String)
+    ], MdInput.prototype, "name", void 0);
+    __decorate([
+        core_1.Output('blur'), 
+        __metadata('design:type', Observable_1.Observable)
+    ], MdInput.prototype, "onBlur", null);
+    __decorate([
+        core_1.Output('focus'), 
+        __metadata('design:type', Observable_1.Observable)
+    ], MdInput.prototype, "onFocus", null);
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Object)
@@ -335,21 +433,23 @@ var MdInput = (function () {
         core_1.HostBinding('attr.align'), 
         __metadata('design:type', Object)
     ], MdInput.prototype, "_align", null);
+    __decorate([
+        core_1.ViewChild('input'), 
+        __metadata('design:type', core_1.ElementRef)
+    ], MdInput.prototype, "_inputElement", void 0);
     MdInput = __decorate([
         core_1.Component({
+            moduleId: module.id,
             selector: 'md-input',
-            template: "\n              <div class=\"md-input-wrapper\" (click)=\"input.focus()\">\n                <div class=\"md-input-table\">\n                  <div class=\"md-input-prefix\"><ng-content select=\"[md-prefix]\"></ng-content></div>\n\n                  <div class=\"md-input-infix\">\n                    <input #input\n                           aria-target\n                           class=\"md-input-element\"\n                           [class.md-end]=\"align == 'end'\"\n                           [attr.aria-label]=\"ariaLabel\"\n                           [attr.aria-labelledby]=\"ariaLabelledBy\"\n                           [attr.aria-disabled]=\"ariaDisabled\"\n                           [attr.aria-required]=\"ariaRequired\"\n                           [attr.aria-invalid]=\"ariaInvalid\"\n                           [id]=\"id\"\n                           [disabled]=\"disabled\"\n                           [required]=\"required\"\n                           [spellcheck]=\"spellcheck\"\n                           [attr.maxlength]=\"maxLength\"\n                           [type]=\"type\"\n                           (focus)=\"onFocus()\"\n                           (blur)=\"onBlur()\"\n                           [(ngModel)]=\"value\"\n                           (change)=\"onChange($event)\">\n\n                    <label class=\"md-input-placeholder\"\n                           [attr.for]=\"id\"\n                           [class.md-empty]=\"empty\"\n                           [class.md-focused]=\"focused\"\n                           [class.md-float]=\"floatingPlaceholder\"\n                           [class.md-accent]=\"dividerColor == 'accent'\"\n                           [class.md-warn]=\"dividerColor == 'warn'\"\n                           *ngIf=\"hasPlaceholder()\">\n                      <ng-content select=\"md-placeholder\"></ng-content>\n                      {{placeholder}}\n                      <span class=\"md-placeholder-required\" *ngIf=\"required\">*</span>\n                    </label>\n                  </div>\n\n                  <div class=\"md-input-suffix\"><ng-content select=\"[md-suffix]\"></ng-content></div>\n                </div>\n\n                <div class=\"md-input-underline\"\n                     [class.md-disabled]=\"disabled\">\n                  <span class=\"md-input-ripple\"\n                        [class.md-focused]=\"focused\"\n                        [class.md-accent]=\"dividerColor == 'accent'\"\n                        [class.md-warn]=\"dividerColor == 'warn'\"></span>\n                </div>\n\n                <div *ngIf=\"hintLabel != ''\" class=\"md-hint\">{{hintLabel}}</div>\n                <ng-content select=\"md-hint\"></ng-content>\n              </div>\n            ",
-            styles: ["\n              /**\n               * Mixin that creates a new stacking context.\n               * see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context\n               */\n              /**\n               * This mixin hides an element visually.\n               * That means it's still accessible for screen-readers but not visible in view.\n               */\n              /**\n               * Applies a floating placeholder above the input itself.\n               */\n              :host .md-input-placeholder.md-float:not(.md-empty), :host .md-input-placeholder.md-float.md-focused, :host input:-webkit-autofill + .md-input-placeholder {\n                visibility: visible;\n                padding-bottom: 5px;\n                -webkit-transform: translateY(-100%) scale(0.75);\n                        transform: translateY(-100%) scale(0.75); }\n                :host .md-input-placeholder.md-float:not(.md-empty) .md-placeholder-required, :host .md-input-placeholder.md-float.md-focused .md-placeholder-required, :host input:-webkit-autofill + .md-input-placeholder .md-placeholder-required {\n                  color: #9c27b0; }\n\n              :host {\n                display: inline-block;\n                position: relative;\n                font-family: Roboto, \"Helvetica Neue\", sans-serif;\n                text-align: left; }\n                :host .md-input-wrapper {\n                  margin: 16px 0; }\n                :host .md-input-table {\n                  display: inline-table;\n                  -webkit-flex-flow: column;\n                      -ms-flex-flow: column;\n                          flex-flow: column;\n                  vertical-align: bottom;\n                  width: 100%; }\n                  :host .md-input-table > * {\n                    display: table-cell; }\n                :host .md-input-element {\n                  font: inherit;\n                  border: none;\n                  outline: none;\n                  padding: 0;\n                  width: 100%; }\n                  :host .md-input-element.md-end {\n                    text-align: right; }\n                :host .md-input-infix {\n                  position: relative; }\n                :host .md-input-placeholder {\n                  position: absolute;\n                  left: 0;\n                  top: 0;\n                  visibility: hidden;\n                  font-size: 100%;\n                  pointer-events: none;\n                  color: rgba(0, 0, 0, 0.38);\n                  z-index: 1;\n                  width: 100%;\n                  display: block;\n                  white-space: nowrap;\n                  text-overflow: ellipsis;\n                  overflow-x: hidden;\n                  -webkit-transform: translateY(0);\n                          transform: translateY(0);\n                  -webkit-transform-origin: bottom left;\n                          transform-origin: bottom left;\n                  -webkit-transition: scale 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);\n                  transition: scale 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);\n                  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), scale 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);\n                  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), scale 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }\n                  :host .md-input-placeholder.md-empty {\n                    visibility: visible;\n                    cursor: text; }\n                  :host .md-input-placeholder.md-focused {\n                    color: #009688; }\n                    :host .md-input-placeholder.md-focused.md-accent {\n                      color: #9c27b0; }\n                    :host .md-input-placeholder.md-focused.md-warn {\n                      color: #f44336; }\n                :host .md-input-underline {\n                  position: absolute;\n                  height: 1px;\n                  width: 100%;\n                  margin-top: 4px;\n                  border-top: 1px solid rgba(0, 0, 0, 0.38); }\n                  :host .md-input-underline.md-disabled {\n                    border-top: 0;\n                    background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.26) 0%, rgba(0, 0, 0, 0.26) 33%, transparent 0%);\n                    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.26) 0%, rgba(0, 0, 0, 0.26) 33%, transparent 0%);\n                    background-position: 0;\n                    background-size: 4px 1px;\n                    background-repeat: repeat-x; }\n                  :host .md-input-underline .md-input-ripple {\n                    position: absolute;\n                    height: 2px;\n                    z-index: 1;\n                    background-color: #009688;\n                    top: -1px;\n                    width: 100%;\n                    -webkit-transform-origin: top;\n                            transform-origin: top;\n                    opacity: 0;\n                    -webkit-transform: scaleY(0);\n                            transform: scaleY(0);\n                    -webkit-transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);\n                    transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);\n                    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);\n                    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }\n                    :host .md-input-underline .md-input-ripple.md-accent {\n                      background-color: #9c27b0; }\n                    :host .md-input-underline .md-input-ripple.md-warn {\n                      background-color: #f44336; }\n                    :host .md-input-underline .md-input-ripple.md-focused {\n                      opacity: 1;\n                      -webkit-transform: scaleY(1);\n                              transform: scaleY(1); }\n                :host .md-hint {\n                  position: absolute;\n                  font-size: 75%;\n                  bottom: -0.5em; }\n                  :host .md-hint.md-right {\n                    right: 0; }\n\n              :host-context([dir=\"rtl\"]) {\n                text-align: right; }\n                :host-context([dir=\"rtl\"]) .md-input-placeholder {\n                  -webkit-transform-origin: bottom right;\n                          transform-origin: bottom right; }\n                :host-context([dir=\"rtl\"]) .md-input-element.md-end {\n                  text-align: left; }\n                :host-context([dir=\"rtl\"]) .md-hint {\n                  right: 0;\n                  left: auto; }\n                  :host-context([dir=\"rtl\"]) .md-hint.md-right {\n                    right: auto;\n                    left: 0; }\n            "],
+            template: "<div class=\"md-input-wrapper\"> <div class=\"md-input-table\"> <div class=\"md-input-prefix\"><ng-content select=\"[md-prefix]\"></ng-content></div> <div class=\"md-input-infix\"> <input #input aria-target class=\"md-input-element\" [class.md-end]=\"align == 'end'\" [attr.aria-label]=\"ariaLabel\" [attr.aria-labelledby]=\"ariaLabelledBy\" [attr.aria-disabled]=\"ariaDisabled\" [attr.aria-required]=\"ariaRequired\" [attr.aria-invalid]=\"ariaInvalid\" [attr.autocomplete]=\"autoComplete\" [autofocus]=\"autoFocus\" [disabled]=\"disabled\" [id]=\"inputId\" [attr.list]=\"list\" [attr.max]=\"max\" [attr.maxlength]=\"maxLength\" [attr.min]=\"min\" [attr.minlength]=\"minLength\" [readonly]=\"readOnly\" [required]=\"required\" [spellcheck]=\"spellCheck\" [attr.step]=\"step\" [attr.tabindex]=\"tabIndex\" [type]=\"type\" [attr.name]=\"name\" (focus)=\"handleFocus($event)\" (blur)=\"handleBlur($event)\" [(ngModel)]=\"value\" (change)=\"handleChange($event)\"> <label class=\"md-input-placeholder\" [attr.for]=\"inputId\" [class.md-empty]=\"empty\" [class.md-focused]=\"focused\" [class.md-float]=\"floatingPlaceholder\" [class.md-accent]=\"dividerColor == 'accent'\" [class.md-warn]=\"dividerColor == 'warn'\" *ngIf=\"hasPlaceholder()\"> <ng-content select=\"md-placeholder\"></ng-content> {{placeholder}} <span class=\"md-placeholder-required\" *ngIf=\"required\">*</span> </label> </div> <div class=\"md-input-suffix\"><ng-content select=\"[md-suffix]\"></ng-content></div> </div> <div class=\"md-input-underline\" [class.md-disabled]=\"disabled\"> <span class=\"md-input-ripple\" [class.md-focused]=\"focused\" [class.md-accent]=\"dividerColor == 'accent'\" [class.md-warn]=\"dividerColor == 'warn'\"></span> </div> <div *ngIf=\"hintLabel != ''\" class=\"md-hint\">{{hintLabel}}</div> <ng-content select=\"md-hint\"></ng-content> </div> ",
+            styles: ["/** * Mixin that creates a new stacking context. * see https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context */ /** * This mixin hides an element visually. * That means it's still accessible for screen-readers but not visible in view. */ /** * Forces an element to grow to fit floated contents; used as as an alternative to * `overflow: hidden;` because it doesn't cut off contents. */ /** * A mixin, which generates temporary ink ripple on a given component. * When $bindToParent is set to true, it will check for the focused class on the same selector as you included * that mixin. * It is also possible to specify the color palette of the temporary ripple. By default it uses the * accent palette for its background. */ /**  * Undo the red box-shadow glow added by Firefox on invalid inputs. * See https://developer.mozilla.org/en-US/docs/Web/CSS/:-moz-ui-invalid */ :-moz-ui-invalid { box-shadow: none; } /** * Applies a floating placeholder above the input itself. */ :host { display: inline-block; position: relative; font-family: Roboto, \"Helvetica Neue\", sans-serif; text-align: left; } :host .md-input-wrapper { margin: 16px 0; } :host .md-input-table { display: inline-table; -webkit-flex-flow: column; -ms-flex-flow: column; flex-flow: column; vertical-align: bottom; width: 100%; } :host .md-input-table > * { display: table-cell; } :host .md-input-element { font: inherit; background: transparent; border: none; outline: none; padding: 0; width: 100%; } :host .md-input-element.md-end { text-align: right; } :host .md-input-infix { position: relative; } :host .md-input-placeholder { position: absolute; left: 0; top: 0; visibility: hidden; font-size: 100%; pointer-events: none; color: rgba(0, 0, 0, 0.38); z-index: 1; width: 100%; display: block; white-space: nowrap; text-overflow: ellipsis; overflow-x: hidden; -webkit-transform: translateY(0); transform: translateY(0); -webkit-transform-origin: bottom left; transform-origin: bottom left; -webkit-transition: scale 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); transition: scale 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), scale 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), scale 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); } :host .md-input-placeholder.md-empty { visibility: visible; cursor: text; } :host .md-input-placeholder.md-float:not(.md-empty), :host .md-input-placeholder.md-float.md-focused { visibility: visible; padding-bottom: 5px; -webkit-transform: translateY(-100%) scale(0.75); transform: translateY(-100%) scale(0.75); } :host .md-input-placeholder.md-float:not(.md-empty) .md-placeholder-required, :host .md-input-placeholder.md-float.md-focused .md-placeholder-required { color: #9c27b0; } :host .md-input-placeholder.md-focused { color: #009688; } :host .md-input-placeholder.md-focused.md-accent { color: #9c27b0; } :host .md-input-placeholder.md-focused.md-warn { color: #f44336; } :host input:-webkit-autofill + .md-input-placeholder { visibility: visible; padding-bottom: 5px; -webkit-transform: translateY(-100%) scale(0.75); transform: translateY(-100%) scale(0.75); } :host input:-webkit-autofill + .md-input-placeholder .md-placeholder-required { color: #9c27b0; } :host .md-input-underline { position: absolute; height: 1px; width: 100%; margin-top: 4px; border-top: 1px solid rgba(0, 0, 0, 0.38); } :host .md-input-underline.md-disabled { border-top: 0; background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0.26) 0%, rgba(0, 0, 0, 0.26) 33%, transparent 0%); background-image: linear-gradient(to right, rgba(0, 0, 0, 0.26) 0%, rgba(0, 0, 0, 0.26) 33%, transparent 0%); background-position: 0; background-size: 4px 1px; background-repeat: repeat-x; } :host .md-input-underline .md-input-ripple { position: absolute; height: 2px; z-index: 1; background-color: #009688; top: -1px; width: 100%; -webkit-transform-origin: top; transform-origin: top; opacity: 0; -webkit-transform: scaleY(0); transform: scaleY(0); -webkit-transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); } :host .md-input-underline .md-input-ripple.md-accent { background-color: #9c27b0; } :host .md-input-underline .md-input-ripple.md-warn { background-color: #f44336; } :host .md-input-underline .md-input-ripple.md-focused { opacity: 1; -webkit-transform: scaleY(1); transform: scaleY(1); } :host .md-hint { position: absolute; font-size: 75%; bottom: -0.5em; } :host .md-hint.md-right { right: 0; } :host-context([dir=\"rtl\"]) { text-align: right; } :host-context([dir=\"rtl\"]) .md-input-placeholder { -webkit-transform-origin: bottom right; transform-origin: bottom right; } :host-context([dir=\"rtl\"]) .md-input-element.md-end { text-align: left; } :host-context([dir=\"rtl\"]) .md-hint { right: 0; left: auto; } :host-context([dir=\"rtl\"]) .md-hint.md-right { right: auto; left: 0; } "],
             providers: [MD_INPUT_CONTROL_VALUE_ACCESSOR],
+            host: { '(click)': 'focus()' }
         }), 
         __metadata('design:paramtypes', [])
     ], MdInput);
     return MdInput;
 }());
 exports.MdInput = MdInput;
-exports.MD_INPUT_DIRECTIVES = [
-    MdPlaceholder,
-    MdInput,
-    MdHint,
-];
-//# sourceMappingURL=input.js.map
+exports.MD_INPUT_DIRECTIVES = [MdPlaceholder, MdInput, MdHint];
+//# sourceMappingURL=/usr/local/google/home/jelbourn/material2/tmp/broccoli_type_script_compiler-input_base_path-OxHzApZr.tmp/0/components/input/input.js.map

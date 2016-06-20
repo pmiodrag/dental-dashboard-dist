@@ -13,33 +13,30 @@ var testing_1 = require('@angular/core/testing');
 var testing_2 = require('@angular/compiler/testing');
 var platform_browser_1 = require('@angular/platform-browser');
 var toolbar_1 = require('./toolbar');
-function main() {
-    testing_1.describe('MdToolbar', function () {
-        var builder;
-        testing_1.beforeEach(testing_1.inject([testing_2.TestComponentBuilder], function (tcb) {
-            builder = tcb;
-        }));
-        testing_1.it('should apply class based on color attribute', function (done) {
-            return builder.createAsync(TestApp).then(function (fixture) {
-                var testComponent = fixture.debugElement.componentInstance;
-                var toolbarDebugElement = fixture.debugElement.query(platform_browser_1.By.css('md-toolbar'));
-                testComponent.toolbarColor = 'primary';
-                fixture.detectChanges();
-                testing_1.expect(toolbarDebugElement.nativeElement.classList.contains('md-primary')).toBe(true);
-                testComponent.toolbarColor = 'accent';
-                fixture.detectChanges();
-                testing_1.expect(toolbarDebugElement.nativeElement.classList.contains('md-primary')).toBe(false);
-                testing_1.expect(toolbarDebugElement.nativeElement.classList.contains('md-accent')).toBe(true);
-                testComponent.toolbarColor = 'warn';
-                fixture.detectChanges();
-                testing_1.expect(toolbarDebugElement.nativeElement.classList.contains('md-accent')).toBe(false);
-                testing_1.expect(toolbarDebugElement.nativeElement.classList.contains('md-warn')).toBe(true);
-                done();
-            });
+testing_1.describe('MdToolbar', function () {
+    var builder;
+    testing_1.beforeEach(testing_1.inject([testing_2.TestComponentBuilder], function (tcb) {
+        builder = tcb;
+    }));
+    testing_1.it('should apply class based on color attribute', function (done) {
+        return builder.createAsync(TestApp).then(function (fixture) {
+            var testComponent = fixture.debugElement.componentInstance;
+            var toolbarDebugElement = fixture.debugElement.query(platform_browser_1.By.css('md-toolbar'));
+            testComponent.toolbarColor = 'primary';
+            fixture.detectChanges();
+            testing_1.expect(toolbarDebugElement.nativeElement.classList.contains('md-primary')).toBe(true);
+            testComponent.toolbarColor = 'accent';
+            fixture.detectChanges();
+            testing_1.expect(toolbarDebugElement.nativeElement.classList.contains('md-primary')).toBe(false);
+            testing_1.expect(toolbarDebugElement.nativeElement.classList.contains('md-accent')).toBe(true);
+            testComponent.toolbarColor = 'warn';
+            fixture.detectChanges();
+            testing_1.expect(toolbarDebugElement.nativeElement.classList.contains('md-accent')).toBe(false);
+            testing_1.expect(toolbarDebugElement.nativeElement.classList.contains('md-warn')).toBe(true);
+            done();
         });
     });
-}
-exports.main = main;
+});
 var TestApp = (function () {
     function TestApp() {
     }
@@ -53,4 +50,4 @@ var TestApp = (function () {
     ], TestApp);
     return TestApp;
 }());
-//# sourceMappingURL=toolbar.spec.js.map
+//# sourceMappingURL=/usr/local/google/home/jelbourn/material2/tmp/broccoli_type_script_compiler-input_base_path-OxHzApZr.tmp/0/components/toolbar/toolbar.spec.js.map

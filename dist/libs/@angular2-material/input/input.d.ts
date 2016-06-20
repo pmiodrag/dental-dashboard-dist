@@ -1,12 +1,14 @@
 import { AfterContentInit, SimpleChange, OnChanges } from '@angular/core';
 import { ControlValueAccessor } from '@angular/common';
-export declare class MdInputPlaceholderConflictError extends Error {
+import { MdError } from '@angular2-material/core/errors/error';
+import { Observable } from 'rxjs/Observable';
+export declare class MdInputPlaceholderConflictError extends MdError {
     constructor();
 }
-export declare class MdInputUnsupportedTypeError extends Error {
+export declare class MdInputUnsupportedTypeError extends MdError {
     constructor(type: string);
 }
-export declare class MdInputDuplicatedHintError extends Error {
+export declare class MdInputDuplicatedHintError extends MdError {
     constructor(align: string);
 }
 /**
@@ -15,9 +17,7 @@ export declare class MdInputDuplicatedHintError extends Error {
  */
 export declare class MdPlaceholder {
 }
-/**
- * The hint directive, used to tag content as hint labels (going under the input).
- */
+/** The hint directive, used to tag content as hint labels (going under the input). */
 export declare class MdHint {
     align: 'start' | 'end';
 }
@@ -49,37 +49,58 @@ export declare class MdInput implements ControlValueAccessor, AfterContentInit, 
     focused: boolean;
     empty: boolean;
     characterCount: number;
+    inputId: string;
     /**
      * Bindings.
      */
     align: 'start' | 'end';
     dividerColor: 'primary' | 'accent' | 'warn';
-    disabled: boolean;
     floatingPlaceholder: boolean;
     hintLabel: string;
+    autoComplete: string;
+    autoFocus: boolean;
+    disabled: boolean;
     id: string;
+    list: string;
+    max: string;
     maxLength: number;
+    min: string;
+    minLength: number;
     placeholder: string;
+    readOnly: boolean;
     required: boolean;
-    spellcheck: boolean;
+    spellCheck: boolean;
+    step: number;
+    tabIndex: number;
     type: string;
+    name: string;
+    private _blurEmitter;
+    private _focusEmitter;
+    onBlur: Observable<FocusEvent>;
+    onFocus: Observable<FocusEvent>;
     value: any;
     private _align;
-    /** @internal */
-    onFocus(): void;
-    /** @internal */
-    onBlur(): void;
-    /** @internal */
-    onChange(ev: Event): void;
-    /** @internal */
-    hasPlaceholder(): boolean;
-    /** Implemented as part of ControlValueAccessor. */
+    private _inputElement;
+    /** Set focus on input */
+    focus(): void;
+    /**
+     * Implemented as part of ControlValueAccessor.
+     * TODO: internal
+     */
     writeValue(value: any): void;
-    /** Implemented as part of ControlValueAccessor. */
+    /**
+     * Implemented as part of ControlValueAccessor.
+     * TODO: internal
+     */
     registerOnChange(fn: any): void;
-    /** Implemented as part of ControlValueAccessor. */
+    /**
+     * Implemented as part of ControlValueAccessor.
+     * TODO: internal
+     */
     registerOnTouched(fn: any): void;
+    /** TODO: internal */
     ngAfterContentInit(): void;
+    /** TODO: internal */
     ngOnChanges(changes: {
         [key: string]: SimpleChange;
     }): void;
@@ -101,4 +122,4 @@ export declare class MdInput implements ControlValueAccessor, AfterContentInit, 
      */
     private _validateConstraints();
 }
-export declare const MD_INPUT_DIRECTIVES: any[];
+export declare const MD_INPUT_DIRECTIVES: typeof MdPlaceholder[];

@@ -1,4 +1,4 @@
-import { ElementRef, Renderer } from '@angular/core';
+import { ElementRef, Renderer, Type } from '@angular/core';
 export declare class MdButton {
     private elementRef;
     private renderer;
@@ -9,11 +9,8 @@ export declare class MdButton {
     isMouseDown: boolean;
     constructor(elementRef: ElementRef, renderer: Renderer);
     color: string;
-    setMousedown(): void;
     _updateColor(newColor: string): void;
     _setElementColor(color: string, isAdd: boolean): void;
-    setKeyboardFocus($event: any): void;
-    removeKeyboardFocus(): void;
 }
 export declare class MdAnchor extends MdButton {
     _disabled: boolean;
@@ -21,5 +18,5 @@ export declare class MdAnchor extends MdButton {
     tabIndex: number;
     isAriaDisabled: string;
     disabled: boolean;
-    haltDisabledEvents(event: Event): void;
 }
+export declare const MD_BUTTON_DIRECTIVES: Type[];

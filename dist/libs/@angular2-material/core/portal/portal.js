@@ -27,7 +27,7 @@ var Portal = (function () {
     Portal.prototype.detach = function () {
         var host = this._attachedHost;
         if (host == null) {
-            throw new portal_errors_1.MdNoPortalAttachedErron();
+            throw new portal_errors_1.MdNoPortalAttachedError();
         }
         this._attachedHost = null;
         return host.detach();
@@ -130,7 +130,7 @@ var BasePortalHost = (function () {
             this._attachedPortal = portal;
             return this.attachTemplatePortal(portal);
         }
-        throw new portal_errors_1.MdUnknownPortalTypeErron();
+        throw new portal_errors_1.MdUnknownPortalTypeError();
     };
     BasePortalHost.prototype.detach = function () {
         this._attachedPortal.setAttachedHost(null);
@@ -153,4 +153,10 @@ var BasePortalHost = (function () {
     return BasePortalHost;
 }());
 exports.BasePortalHost = BasePortalHost;
-//# sourceMappingURL=portal.js.map
+var portal_directives_1 = require('./portal-directives');
+exports.PORTAL_DIRECTIVES = portal_directives_1.PORTAL_DIRECTIVES;
+exports.TemplatePortalDirective = portal_directives_1.TemplatePortalDirective;
+exports.PortalHostDirective = portal_directives_1.PortalHostDirective;
+var dom_portal_host_1 = require('./dom-portal-host');
+exports.DomPortalHost = dom_portal_host_1.DomPortalHost;
+//# sourceMappingURL=/usr/local/google/home/jelbourn/material2/tmp/broccoli_type_script_compiler-input_base_path-OxHzApZr.tmp/0/core/portal/portal.js.map

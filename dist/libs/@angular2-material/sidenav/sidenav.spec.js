@@ -29,7 +29,9 @@ function createFixture(appType, builder, template, style) {
         styles: [style],
         directives: [sidenav_1.MdSidenav],
     }))
-        .createAsync(appType).then(function (f) { fixture = f; });
+        .createAsync(appType).then(function (f) {
+        fixture = f;
+    });
     testing_1.tick();
     return fixture;
 }
@@ -41,156 +43,187 @@ function endSidenavTransition(fixture) {
     });
     fixture.detectChanges();
 }
-function main() {
-    testing_1.describe('MdSidenav', function () {
-        var template;
-        var style;
-        var builder;
-        /**
-         * We need to get the template and styles for the sidenav in an Async test.
-         * FakeAsync would block indefinitely on the XHR if we were to create the component async-ly.
-         * See https://github.com/angular/angular/issues/5601.
-         * We do some style verification so styles have to match.
-         * But we remove the transitions so we only set the regular `sidenav.css` styling.
-         */
-        testing_1.beforeEach(testing_1.injectAsync([testing_2.TestComponentBuilder, compiler_1.XHR], function (tcb, xhr) {
-            builder = tcb;
-            return Promise.all([
-                xhr.get('./components/sidenav/sidenav.html').then(function (t) { template = t; }),
-                xhr.get('./components/sidenav/sidenav.css').then(function (css) { style = css; })
-            ]).catch(function (err) {
-                console.error(err);
-            });
-        }));
-        testing_1.describe('methods', function () {
-            testing_1.it('should be able to open and close', fakeAsyncAdaptor(function () {
-                var fixture = createFixture(BasicTestApp, builder, template, style);
-                var testComponent = fixture.debugElement.componentInstance;
-                var openButtonElement = fixture.debugElement.query(platform_browser_1.By.css('.open'));
-                openButtonElement.nativeElement.click();
-                fixture.detectChanges();
-                testing_1.tick();
-                testing_1.expect(testComponent.openStartCount).toBe(1);
-                testing_1.expect(testComponent.openCount).toBe(0);
-                endSidenavTransition(fixture);
-                testing_1.tick();
-                testing_1.expect(testComponent.openStartCount).toBe(1);
-                testing_1.expect(testComponent.openCount).toBe(1);
-                testing_1.expect(testComponent.closeStartCount).toBe(0);
-                testing_1.expect(testComponent.closeCount).toBe(0);
-                var sidenavElement = fixture.debugElement.query(platform_browser_1.By.css('md-sidenav'));
-                var sidenavBackdropElement = fixture.debugElement.query(platform_browser_1.By.css('.md-sidenav-backdrop'));
-                testing_1.expect(getComputedStyle(sidenavElement.nativeElement).visibility).toEqual('visible');
-                testing_1.expect(getComputedStyle(sidenavBackdropElement.nativeElement).visibility)
-                    .toEqual('visible');
-                // Close it.
-                var closeButtonElement = fixture.debugElement.query(platform_browser_1.By.css('.close'));
-                closeButtonElement.nativeElement.click();
-                fixture.detectChanges();
-                testing_1.tick();
-                testing_1.expect(testComponent.openStartCount).toBe(1);
-                testing_1.expect(testComponent.openCount).toBe(1);
-                testing_1.expect(testComponent.closeStartCount).toBe(1);
-                testing_1.expect(testComponent.closeCount).toBe(0);
-                endSidenavTransition(fixture);
-                testing_1.tick();
-                testing_1.expect(testComponent.openStartCount).toBe(1);
-                testing_1.expect(testComponent.openCount).toBe(1);
-                testing_1.expect(testComponent.closeStartCount).toBe(1);
-                testing_1.expect(testComponent.closeCount).toBe(1);
-                testing_1.expect(getComputedStyle(sidenavElement.nativeElement).visibility).toEqual('hidden');
-                testing_1.expect(getComputedStyle(sidenavBackdropElement.nativeElement).visibility).toEqual('hidden');
-            }));
-            testing_1.it('open/close() return a promise that resolves after animation end', fakeAsyncAdaptor(function () {
-                var fixture = createFixture(BasicTestApp, builder, template, style);
-                var sidenav = fixture.debugElement
-                    .query(platform_browser_1.By.directive(sidenav_1.MdSidenav)).componentInstance;
-                var called = false;
-                sidenav.open().then(function () {
-                    called = true;
-                });
-                testing_1.expect(called).toBe(false);
-                endSidenavTransition(fixture);
-                testing_1.tick();
-                testing_1.expect(called).toBe(true);
-                called = false;
-                sidenav.close().then(function () {
-                    called = true;
-                });
-                testing_1.expect(called).toBe(false);
-                endSidenavTransition(fixture);
-                testing_1.tick();
-                testing_1.expect(called).toBe(true);
-            }));
-            testing_1.it('open/close() twice returns the same promise', fakeAsyncAdaptor(function () {
-                var fixture = createFixture(BasicTestApp, builder, template, style);
-                var sidenav = fixture.debugElement
-                    .query(platform_browser_1.By.directive(sidenav_1.MdSidenav)).componentInstance;
-                var promise = sidenav.open();
-                testing_1.expect(sidenav.open()).toBe(promise);
-                fixture.detectChanges();
-                testing_1.tick();
-                promise = sidenav.close();
-                testing_1.expect(sidenav.close()).toBe(promise);
-                testing_1.tick();
-            }));
-            testing_1.it('open() then close() cancel animations when called too fast', fakeAsyncAdaptor(function () {
-                var fixture = createFixture(BasicTestApp, builder, template, style);
-                var sidenav = fixture.debugElement
-                    .query(platform_browser_1.By.directive(sidenav_1.MdSidenav)).componentInstance;
-                var openCalled = false;
-                var openCancelled = false;
-                var closeCalled = false;
-                sidenav.open().then(function () { openCalled = true; }, function () { openCancelled = true; });
-                // We do not call transition end, close directly.
-                sidenav.close().then(function () { closeCalled = true; });
-                endSidenavTransition(fixture);
-                testing_1.tick();
-                testing_1.expect(openCalled).toBe(false);
-                testing_1.expect(openCancelled).toBe(true);
-                testing_1.expect(closeCalled).toBe(true);
-                testing_1.tick();
-            }));
-            testing_1.it('close() then open() cancel animations when called too fast', fakeAsyncAdaptor(function () {
-                var fixture = createFixture(BasicTestApp, builder, template, style);
-                var sidenav = fixture.debugElement
-                    .query(platform_browser_1.By.directive(sidenav_1.MdSidenav)).componentInstance;
-                var closeCalled = false;
-                var closeCancelled = false;
-                var openCalled = false;
-                // First, open the sidenav completely.
-                sidenav.open();
-                endSidenavTransition(fixture);
-                testing_1.tick();
-                // Then close and check behavior.
-                sidenav.close().then(function () { closeCalled = true; }, function () { closeCancelled = true; });
-                // We do not call transition end, open directly.
-                sidenav.open().then(function () { openCalled = true; });
-                endSidenavTransition(fixture);
-                testing_1.tick();
-                testing_1.expect(closeCalled).toBe(false);
-                testing_1.expect(closeCancelled).toBe(true);
-                testing_1.expect(openCalled).toBe(true);
-                testing_1.tick();
-            }));
-            testing_1.it('does not throw when created without a sidenav', fakeAsyncAdaptor(function () {
-                testing_1.expect(function () {
-                    var fixture = createFixture(SidenavLayoutNoSidenavTestApp, builder, template, style);
-                    fixture.detectChanges();
-                    testing_1.tick();
-                }).not.toThrow();
-            }));
-            testing_1.it('does throw when created with two sidenav on the same side', fakeAsyncAdaptor(function () {
-                testing_1.expect(function () {
-                    var fixture = createFixture(SidenavLayoutTwoSidenavTestApp, builder, template, style);
-                    fixture.detectChanges();
-                    testing_1.tick();
-                }).toThrow();
-            }));
+testing_1.describe('MdSidenav', function () {
+    var template;
+    var style;
+    var builder;
+    /**
+     * We need to get the template and styles for the sidenav in an Async test.
+     * FakeAsync would block indefinitely on the XHR if we were to create the component async-ly.
+     * See https://github.com/angular/angular/issues/5601.
+     * We do some style verification so styles have to match.
+     * But we remove the transitions so we only set the regular `sidenav.css` styling.
+     */
+    testing_1.beforeEach(testing_1.injectAsync([testing_2.TestComponentBuilder, compiler_1.XHR], function (tcb, xhr) {
+        builder = tcb;
+        return Promise.all([
+            xhr.get('./components/sidenav/sidenav.html').then(function (t) {
+                template = t;
+            }),
+            xhr.get('./components/sidenav/sidenav.css').then(function (css) {
+                style = css;
+            })
+        ]).catch(function (err) {
+            console.error(err);
         });
+    }));
+    testing_1.describe('methods', function () {
+        testing_1.it('should be able to open and close', fakeAsyncAdaptor(function () {
+            var fixture = createFixture(BasicTestApp, builder, template, style);
+            var testComponent = fixture.debugElement.componentInstance;
+            var openButtonElement = fixture.debugElement.query(platform_browser_1.By.css('.open'));
+            openButtonElement.nativeElement.click();
+            fixture.detectChanges();
+            testing_1.tick();
+            testing_1.expect(testComponent.openStartCount).toBe(1);
+            testing_1.expect(testComponent.openCount).toBe(0);
+            endSidenavTransition(fixture);
+            testing_1.tick();
+            testing_1.expect(testComponent.openStartCount).toBe(1);
+            testing_1.expect(testComponent.openCount).toBe(1);
+            testing_1.expect(testComponent.closeStartCount).toBe(0);
+            testing_1.expect(testComponent.closeCount).toBe(0);
+            var sidenavElement = fixture.debugElement.query(platform_browser_1.By.css('md-sidenav'));
+            var sidenavBackdropElement = fixture.debugElement.query(platform_browser_1.By.css('.md-sidenav-backdrop'));
+            testing_1.expect(getComputedStyle(sidenavElement.nativeElement).visibility).toEqual('visible');
+            testing_1.expect(getComputedStyle(sidenavBackdropElement.nativeElement).visibility)
+                .toEqual('visible');
+            // Close it.
+            var closeButtonElement = fixture.debugElement.query(platform_browser_1.By.css('.close'));
+            closeButtonElement.nativeElement.click();
+            fixture.detectChanges();
+            testing_1.tick();
+            testing_1.expect(testComponent.openStartCount).toBe(1);
+            testing_1.expect(testComponent.openCount).toBe(1);
+            testing_1.expect(testComponent.closeStartCount).toBe(1);
+            testing_1.expect(testComponent.closeCount).toBe(0);
+            endSidenavTransition(fixture);
+            testing_1.tick();
+            testing_1.expect(testComponent.openStartCount).toBe(1);
+            testing_1.expect(testComponent.openCount).toBe(1);
+            testing_1.expect(testComponent.closeStartCount).toBe(1);
+            testing_1.expect(testComponent.closeCount).toBe(1);
+            testing_1.expect(getComputedStyle(sidenavElement.nativeElement).visibility).toEqual('hidden');
+            testing_1.expect(getComputedStyle(sidenavBackdropElement.nativeElement).visibility).toEqual('hidden');
+        }));
+        testing_1.it('open/close() return a promise that resolves after animation end', fakeAsyncAdaptor(function () {
+            var fixture = createFixture(BasicTestApp, builder, template, style);
+            var sidenav = fixture.debugElement
+                .query(platform_browser_1.By.directive(sidenav_1.MdSidenav)).componentInstance;
+            var called = false;
+            sidenav.open().then(function () {
+                called = true;
+            });
+            testing_1.expect(called).toBe(false);
+            endSidenavTransition(fixture);
+            testing_1.tick();
+            testing_1.expect(called).toBe(true);
+            called = false;
+            sidenav.close().then(function () {
+                called = true;
+            });
+            testing_1.expect(called).toBe(false);
+            endSidenavTransition(fixture);
+            testing_1.tick();
+            testing_1.expect(called).toBe(true);
+        }));
+        testing_1.it('open/close() twice returns the same promise', fakeAsyncAdaptor(function () {
+            var fixture = createFixture(BasicTestApp, builder, template, style);
+            var sidenav = fixture.debugElement
+                .query(platform_browser_1.By.directive(sidenav_1.MdSidenav)).componentInstance;
+            var promise = sidenav.open();
+            testing_1.expect(sidenav.open()).toBe(promise);
+            fixture.detectChanges();
+            testing_1.tick();
+            promise = sidenav.close();
+            testing_1.expect(sidenav.close()).toBe(promise);
+            testing_1.tick();
+        }));
+        testing_1.it('open() then close() cancel animations when called too fast', fakeAsyncAdaptor(function () {
+            var fixture = createFixture(BasicTestApp, builder, template, style);
+            var sidenav = fixture.debugElement
+                .query(platform_browser_1.By.directive(sidenav_1.MdSidenav)).componentInstance;
+            var openCalled = false;
+            var openCancelled = false;
+            var closeCalled = false;
+            sidenav.open().then(function () {
+                openCalled = true;
+            }, function () {
+                openCancelled = true;
+            });
+            // We do not call transition end, close directly.
+            sidenav.close().then(function () {
+                closeCalled = true;
+            });
+            endSidenavTransition(fixture);
+            testing_1.tick();
+            testing_1.expect(openCalled).toBe(false);
+            testing_1.expect(openCancelled).toBe(true);
+            testing_1.expect(closeCalled).toBe(true);
+            testing_1.tick();
+        }));
+        testing_1.it('close() then open() cancel animations when called too fast', fakeAsyncAdaptor(function () {
+            var fixture = createFixture(BasicTestApp, builder, template, style);
+            var sidenav = fixture.debugElement
+                .query(platform_browser_1.By.directive(sidenav_1.MdSidenav)).componentInstance;
+            var closeCalled = false;
+            var closeCancelled = false;
+            var openCalled = false;
+            // First, open the sidenav completely.
+            sidenav.open();
+            endSidenavTransition(fixture);
+            testing_1.tick();
+            // Then close and check behavior.
+            sidenav.close().then(function () {
+                closeCalled = true;
+            }, function () {
+                closeCancelled = true;
+            });
+            // We do not call transition end, open directly.
+            sidenav.open().then(function () {
+                openCalled = true;
+            });
+            endSidenavTransition(fixture);
+            testing_1.tick();
+            testing_1.expect(closeCalled).toBe(false);
+            testing_1.expect(closeCancelled).toBe(true);
+            testing_1.expect(openCalled).toBe(true);
+            testing_1.tick();
+        }));
+        testing_1.it('does not throw when created without a sidenav', fakeAsyncAdaptor(function () {
+            testing_1.expect(function () {
+                var fixture = createFixture(SidenavLayoutNoSidenavTestApp, builder, template, style);
+                fixture.detectChanges();
+                testing_1.tick();
+            }).not.toThrow();
+        }));
+        testing_1.it('does throw when created with two sidenav on the same side', fakeAsyncAdaptor(function () {
+            testing_1.expect(function () {
+                var fixture = createFixture(SidenavLayoutTwoSidenavTestApp, builder, template, style);
+                fixture.detectChanges();
+                testing_1.tick();
+            }).toThrow();
+        }));
     });
-}
-exports.main = main;
+    testing_1.describe('attributes', function () {
+        testing_1.it('should correctly parse opened="false"', fakeAsyncAdaptor(function () {
+            var newBuilder = builder.overrideTemplate(BasicTestApp, "\n          <md-sidenav-layout>\n            <md-sidenav #sidenav mode=\"side\" opened=\"false\">\n              Closed Sidenav.\n            </md-sidenav>\n          </md-sidenav-layout>");
+            var fixture = createFixture(BasicTestApp, newBuilder, template, style);
+            fixture.detectChanges();
+            var sidenavEl = fixture.debugElement.query(platform_browser_1.By.css('md-sidenav')).nativeElement;
+            testing_1.expect(sidenavEl.classList).toContain('md-sidenav-closed');
+            testing_1.expect(sidenavEl.classList).not.toContain('md-sidenav-opened');
+        }));
+        testing_1.it('should correctly parse opened="true"', fakeAsyncAdaptor(function () {
+            var newBuilder = builder.overrideTemplate(BasicTestApp, "\n          <md-sidenav-layout>\n            <md-sidenav #sidenav mode=\"side\" opened=\"true\">\n              Closed Sidenav.\n            </md-sidenav>\n          </md-sidenav-layout>");
+            var fixture = createFixture(BasicTestApp, newBuilder, template, style);
+            fixture.detectChanges();
+            var sidenavEl = fixture.debugElement.query(platform_browser_1.By.css('md-sidenav')).nativeElement;
+            testing_1.expect(sidenavEl.classList).not.toContain('md-sidenav-closed');
+            testing_1.expect(sidenavEl.classList).toContain('md-sidenav-opened');
+        }));
+    });
+});
 /** Test component that contains an MdSidenavLayout but no MdSidenav. */
 var SidenavLayoutNoSidenavTestApp = (function () {
     function SidenavLayoutNoSidenavTestApp() {
@@ -249,4 +282,4 @@ var BasicTestApp = (function () {
     ], BasicTestApp);
     return BasicTestApp;
 }());
-//# sourceMappingURL=sidenav.spec.js.map
+//# sourceMappingURL=/usr/local/google/home/jelbourn/material2/tmp/broccoli_type_script_compiler-input_base_path-OxHzApZr.tmp/0/components/sidenav/sidenav.spec.js.map

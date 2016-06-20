@@ -1,10 +1,9 @@
-import { Dir } from '@angular2-material/core/rtl/dir';
 export declare class TileStyler {
     _gutterSize: string;
     _rows: number;
     _rowspan: number;
     _cols: number;
-    _dir: Dir;
+    _direction: string;
 }
 export declare class FixedTileStyler extends TileStyler {
     fixedRowHeight: string;

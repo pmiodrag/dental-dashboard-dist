@@ -13,65 +13,62 @@ var testing_2 = require('@angular/compiler/testing');
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var progress_circle_1 = require('./progress-circle');
-function main() {
-    testing_1.describe('MdProgressCircular', function () {
-        var builder;
-        testing_1.beforeEach(testing_1.inject([testing_2.TestComponentBuilder], function (tcb) {
-            builder = tcb;
-        }));
-        testing_1.it('should apply a mode of "determinate" if no mode is provided.', function (done) {
-            builder
-                .overrideTemplate(TestApp, '<md-progress-circle></md-progress-circle>')
-                .createAsync(TestApp)
-                .then(function (fixture) {
-                fixture.detectChanges();
-                var progressElement = getChildDebugElement(fixture.debugElement, 'md-progress-circle');
-                testing_1.expect(progressElement.componentInstance.mode).toBe('determinate');
-                done();
-            });
-        });
-        testing_1.it('should not modify the mode if a valid mode is provided.', function (done) {
-            builder
-                .overrideTemplate(TestApp, '<md-progress-circle mode="indeterminate"></md-progress-circle>')
-                .createAsync(TestApp)
-                .then(function (fixture) {
-                fixture.detectChanges();
-                var progressElement = getChildDebugElement(fixture.debugElement, 'md-progress-circle');
-                testing_1.expect(progressElement.componentInstance.mode).toBe('indeterminate');
-                done();
-            });
-        });
-        testing_1.it('should define a default value for the value attribute', function (done) {
-            builder
-                .overrideTemplate(TestApp, '<md-progress-circle></md-progress-circle>')
-                .createAsync(TestApp)
-                .then(function (fixture) {
-                fixture.detectChanges();
-                var progressElement = getChildDebugElement(fixture.debugElement, 'md-progress-circle');
-                testing_1.expect(progressElement.componentInstance.value).toBe(0);
-                done();
-            });
-        });
-        testing_1.it('should clamp the value of the progress between 0 and 100', function (done) {
-            builder
-                .overrideTemplate(TestApp, '<md-progress-circle></md-progress-circle>')
-                .createAsync(TestApp)
-                .then(function (fixture) {
-                fixture.detectChanges();
-                var progressElement = getChildDebugElement(fixture.debugElement, 'md-progress-circle');
-                var progressComponent = progressElement.componentInstance;
-                progressComponent.value = 50;
-                testing_1.expect(progressComponent.value).toBe(50);
-                progressComponent.value = 999;
-                testing_1.expect(progressComponent.value).toBe(100);
-                progressComponent.value = -10;
-                testing_1.expect(progressComponent.value).toBe(0);
-                done();
-            });
+testing_1.describe('MdProgressCircular', function () {
+    var builder;
+    testing_1.beforeEach(testing_1.inject([testing_2.TestComponentBuilder], function (tcb) {
+        builder = tcb;
+    }));
+    testing_1.it('should apply a mode of "determinate" if no mode is provided.', function (done) {
+        builder
+            .overrideTemplate(TestApp, '<md-progress-circle></md-progress-circle>')
+            .createAsync(TestApp)
+            .then(function (fixture) {
+            fixture.detectChanges();
+            var progressElement = getChildDebugElement(fixture.debugElement, 'md-progress-circle');
+            testing_1.expect(progressElement.componentInstance.mode).toBe('determinate');
+            done();
         });
     });
-}
-exports.main = main;
+    testing_1.it('should not modify the mode if a valid mode is provided.', function (done) {
+        builder
+            .overrideTemplate(TestApp, '<md-progress-circle mode="indeterminate"></md-progress-circle>')
+            .createAsync(TestApp)
+            .then(function (fixture) {
+            fixture.detectChanges();
+            var progressElement = getChildDebugElement(fixture.debugElement, 'md-progress-circle');
+            testing_1.expect(progressElement.componentInstance.mode).toBe('indeterminate');
+            done();
+        });
+    });
+    testing_1.it('should define a default value for the value attribute', function (done) {
+        builder
+            .overrideTemplate(TestApp, '<md-progress-circle></md-progress-circle>')
+            .createAsync(TestApp)
+            .then(function (fixture) {
+            fixture.detectChanges();
+            var progressElement = getChildDebugElement(fixture.debugElement, 'md-progress-circle');
+            testing_1.expect(progressElement.componentInstance.value).toBe(0);
+            done();
+        });
+    });
+    testing_1.it('should clamp the value of the progress between 0 and 100', function (done) {
+        builder
+            .overrideTemplate(TestApp, '<md-progress-circle></md-progress-circle>')
+            .createAsync(TestApp)
+            .then(function (fixture) {
+            fixture.detectChanges();
+            var progressElement = getChildDebugElement(fixture.debugElement, 'md-progress-circle');
+            var progressComponent = progressElement.componentInstance;
+            progressComponent.value = 50;
+            testing_1.expect(progressComponent.value).toBe(50);
+            progressComponent.value = 999;
+            testing_1.expect(progressComponent.value).toBe(100);
+            progressComponent.value = -10;
+            testing_1.expect(progressComponent.value).toBe(0);
+            done();
+        });
+    });
+});
 /** Gets a child DebugElement by tag name. */
 function getChildDebugElement(parent, selector) {
     return parent.query(platform_browser_1.By.css(selector));
@@ -89,4 +86,4 @@ var TestApp = (function () {
     ], TestApp);
     return TestApp;
 }());
-//# sourceMappingURL=progress-circle.spec.js.map
+//# sourceMappingURL=/usr/local/google/home/jelbourn/material2/tmp/broccoli_type_script_compiler-input_base_path-OxHzApZr.tmp/0/components/progress-circle/progress-circle.spec.js.map

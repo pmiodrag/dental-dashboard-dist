@@ -48,9 +48,9 @@ exports.TemplatePortalDirective = TemplatePortalDirective;
  */
 var PortalHostDirective = (function (_super) {
     __extends(PortalHostDirective, _super);
-    function PortalHostDirective(_dynamicComponentLoader, _viewContainerRef) {
+    function PortalHostDirective(_componentResolver, _viewContainerRef) {
         _super.call(this);
-        this._dynamicComponentLoader = _dynamicComponentLoader;
+        this._componentResolver = _componentResolver;
         this._viewContainerRef = _viewContainerRef;
     }
     Object.defineProperty(PortalHostDirective.prototype, "portal", {
@@ -63,7 +63,7 @@ var PortalHostDirective = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    /** Attach the given ComponentPortal to this PortlHost using the DynamicComponentLoader. */
+    /** Attach the given ComponentPortal to this PortlHost using the ComponentResolver. */
     PortalHostDirective.prototype.attachComponentPortal = function (portal) {
         var _this = this;
         portal.setAttachedHost(this);
@@ -72,9 +72,8 @@ var PortalHostDirective = (function (_super) {
         var viewContainerRef = portal.viewContainerRef != null ?
             portal.viewContainerRef :
             this._viewContainerRef;
-        // Typecast is necessary for Dart transpilation.
-        return this._dynamicComponentLoader.loadNextToLocation(portal.component, viewContainerRef)
-            .then(function (ref) {
+        return this._componentResolver.resolveComponent(portal.component).then(function (componentFactory) {
+            var ref = viewContainerRef.createComponent(componentFactory, viewContainerRef.length, viewContainerRef.parentInjector);
             _this.setDisposeFn(function () { return ref.destroy(); });
             return ref;
         });
@@ -104,9 +103,10 @@ var PortalHostDirective = (function (_super) {
             selector: '[portalHost]',
             inputs: ['portal: portalHost']
         }), 
-        __metadata('design:paramtypes', [core_1.DynamicComponentLoader, core_1.ViewContainerRef])
+        __metadata('design:paramtypes', [core_1.ComponentResolver, core_1.ViewContainerRef])
     ], PortalHostDirective);
     return PortalHostDirective;
 }(portal_1.BasePortalHost));
 exports.PortalHostDirective = PortalHostDirective;
-//# sourceMappingURL=portal-directives.js.map
+exports.PORTAL_DIRECTIVES = [TemplatePortalDirective, PortalHostDirective];
+//# sourceMappingURL=/usr/local/google/home/jelbourn/material2/tmp/broccoli_type_script_compiler-input_base_path-OxHzApZr.tmp/0/core/portal/portal-directives.js.map

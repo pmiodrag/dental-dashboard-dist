@@ -8,12 +8,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 var core_1 = require('@angular/core');
 var grid_tile_1 = require('./grid-tile');
 var tile_coordinator_1 = require('./tile-coordinator');
 var tile_styler_1 = require('./tile-styler');
 var grid_list_errors_1 = require('./grid-list-errors');
 var dir_1 = require('@angular2-material/core/rtl/dir');
+var line_1 = require('@angular2-material/core/line/line');
 // TODO(kara): Conditional (responsive) column count / row size.
 // TODO(kara): Re-layout on window resize / media change (debounced).
 // TODO(kara): gridTileHeader and gridTileFooter.
@@ -55,7 +59,7 @@ var MdGridList = (function () {
         enumerable: true,
         configurable: true
     });
-    /** @internal */
+    /** TODO: internal */
     MdGridList.prototype.ngOnInit = function () {
         this._checkCols();
         this._checkRowHeight();
@@ -63,7 +67,7 @@ var MdGridList = (function () {
     /**
      * The layout calculation is fairly cheap if nothing changes, so there's little cost
      * to run it frequently.
-     * @internal
+     * TODO: internal
      */
     MdGridList.prototype.ngAfterContentChecked = function () {
         this._layoutTiles();
@@ -96,7 +100,8 @@ var MdGridList = (function () {
     MdGridList.prototype._layoutTiles = function () {
         var tiles = this._tiles.toArray();
         var tracker = new tile_coordinator_1.TileCoordinator(this.cols, tiles);
-        this._tileStyler.init(this.gutterSize, tracker, this.cols, this._dir);
+        var direction = this._dir ? this._dir.value : 'ltr';
+        this._tileStyler.init(this.gutterSize, tracker, this.cols, direction);
         for (var i = 0; i < tiles.length; i++) {
             var pos = tracker.positions[i];
             var tile = tiles[i];
@@ -132,12 +137,13 @@ var MdGridList = (function () {
     ], MdGridList.prototype, "rowHeight", null);
     MdGridList = __decorate([
         core_1.Component({
+            moduleId: module.id,
             selector: 'md-grid-list',
-            host: { 'role': 'list' },
-            template: "\n              <div class=\"md-grid-list\">\n                <ng-content></ng-content>\n              </div>\n            ",
-            styles: ["\n              md-grid-list {\n                display: block;\n                position: relative; }\n\n              md-grid-tile {\n                display: block;\n                position: absolute; }\n                md-grid-tile figure {\n                  display: -webkit-box;\n                  display: -webkit-flex;\n                  display: -ms-flexbox;\n                  display: flex;\n                  position: absolute;\n                  -webkit-box-align: center;\n                  -webkit-align-items: center;\n                      -ms-flex-align: center;\n                          align-items: center;\n                  -webkit-box-pack: center;\n                  -webkit-justify-content: center;\n                      -ms-flex-pack: center;\n                          justify-content: center;\n                  height: 100%;\n                  top: 0;\n                  right: 0;\n                  bottom: 0;\n                  left: 0;\n                  padding: 0;\n                  margin: 0; }\n                md-grid-tile md-grid-tile-header,\n                md-grid-tile md-grid-tile-footer {\n                  display: -webkit-box;\n                  display: -webkit-flex;\n                  display: -ms-flexbox;\n                  display: flex;\n                  -webkit-box-orient: horizontal;\n                  -webkit-box-direction: normal;\n                  -webkit-flex-direction: row;\n                      -ms-flex-direction: row;\n                          flex-direction: row;\n                  -webkit-box-align: center;\n                  -webkit-align-items: center;\n                      -ms-flex-align: center;\n                          align-items: center;\n                  height: 48px;\n                  color: #fff;\n                  background: rgba(0, 0, 0, 0.18);\n                  overflow: hidden;\n                  position: absolute;\n                  left: 0;\n                  right: 0; }\n                  md-grid-tile md-grid-tile-header h3,\n                  md-grid-tile md-grid-tile-header h4,\n                  md-grid-tile md-grid-tile-footer h3,\n                  md-grid-tile md-grid-tile-footer h4 {\n                    font-weight: 400;\n                    margin: 0 0 0 16px; }\n                  md-grid-tile md-grid-tile-header h3,\n                  md-grid-tile md-grid-tile-footer h3 {\n                    font-size: 14px; }\n                  md-grid-tile md-grid-tile-header h4,\n                  md-grid-tile md-grid-tile-footer h4 {\n                    font-size: 12px; }\n                md-grid-tile md-grid-tile-header {\n                  top: 0; }\n                md-grid-tile md-grid-tile-footer {\n                  bottom: 0; }\n            "],
+            template: "<div class=\"md-grid-list\"> <ng-content></ng-content> </div>",
+            styles: ["/** * This mixin provides all md-line styles, changing secondary font size * based on whether the list is in dense mode. */ /** * This mixin provides base styles for the wrapper around md-line * elements in a list. */ /** * This mixin normalizes default element styles, e.g. font weight for heading text. */ /* height of tile header or footer if it has one line */ /* height of tile header or footer if it has two lines */ /* side padding for text in tile headers and footers */ /* font styles for text in tile headers and footers */ md-grid-list { display: block; position: relative; } md-grid-tile { display: block; position: absolute; } md-grid-tile figure { display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; position: absolute; -webkit-box-align: center; -webkit-align-items: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: center; -webkit-justify-content: center; -ms-flex-pack: center; justify-content: center; height: 100%; top: 0; right: 0; bottom: 0; left: 0; padding: 0; margin: 0; } md-grid-tile md-grid-tile-header, md-grid-tile md-grid-tile-footer { display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-box-align: center; -webkit-align-items: center; -ms-flex-align: center; align-items: center; height: 48px; color: #fff; background: rgba(0, 0, 0, 0.18); overflow: hidden; padding: 0 16px; font-size: 16px; position: absolute; left: 0; right: 0; } md-grid-tile md-grid-tile-header [md-line], md-grid-tile md-grid-tile-footer [md-line] { display: block; white-space: nowrap; overflow-x: hidden; text-overflow: ellipsis; box-sizing: border-box; } md-grid-tile md-grid-tile-header [md-line]:nth-child(n+2), md-grid-tile md-grid-tile-footer [md-line]:nth-child(n+2) { font-size: 12px; } md-grid-tile md-grid-tile-header > *, md-grid-tile md-grid-tile-footer > * { margin: 0; padding: 0; font-weight: normal; font-size: inherit; } md-grid-tile md-grid-tile-header.md-2-line, md-grid-tile md-grid-tile-footer.md-2-line { height: 68px; } md-grid-tile .md-grid-list-text { display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -webkit-flex-direction: column; -ms-flex-direction: column; flex-direction: column; width: 100%; box-sizing: border-box; overflow: hidden; } md-grid-tile .md-grid-list-text > * { margin: 0; padding: 0; font-weight: normal; font-size: inherit; } md-grid-tile .md-grid-list-text:empty { display: none; } md-grid-tile md-grid-tile-header { top: 0; } md-grid-tile md-grid-tile-footer { bottom: 0; } md-grid-tile [md-grid-avatar] { padding-right: 16px; } [dir='rtl'] md-grid-tile [md-grid-avatar] { padding-right: 0; padding-left: 16px; } md-grid-tile [md-grid-avatar]:empty { display: none; } "],
             encapsulation: core_1.ViewEncapsulation.None,
-        }), 
+        }),
+        __param(2, core_1.Optional()), 
         __metadata('design:paramtypes', [core_1.Renderer, core_1.ElementRef, dir_1.Dir])
     ], MdGridList);
     return MdGridList;
@@ -159,5 +165,5 @@ function coerceToNumber(value) {
     return typeof value === 'string' ? parseInt(value, 10) : value;
 }
 exports.coerceToNumber = coerceToNumber;
-exports.MD_GRID_LIST_DIRECTIVES = [MdGridList, grid_tile_1.MdGridTile];
-//# sourceMappingURL=grid-list.js.map
+exports.MD_GRID_LIST_DIRECTIVES = [MdGridList, grid_tile_1.MdGridTile, line_1.MdLine, grid_tile_1.MdGridTileText];
+//# sourceMappingURL=/usr/local/google/home/jelbourn/material2/tmp/broccoli_type_script_compiler-input_base_path-OxHzApZr.tmp/0/components/grid-list/grid-list.js.map

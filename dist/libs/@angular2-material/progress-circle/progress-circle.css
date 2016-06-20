@@ -7,41 +7,22 @@
   height: 100px;
   width: 100px;
   /** SVG's viewBox is defined as 0 0 100 100, this means that all SVG children will placed
-      based on a 100px by 100px box.
-
-      The SVG and Circle dimensions/location:
-        SVG
-          Height: 100px
-          Width: 100px
-        Circle
-          Radius: 40px
-          Circumference: 251.3274px
-          Center x: 50px
-          Center y: 50px
+      based on a 100px by 100px box.  Additionally all SVG sizes and locations are in reference to
+      this viewBox.
   */ }
   :host svg {
     height: 100%;
     width: 100%;
-    -webkit-transform: rotate(-90deg);
-            transform: rotate(-90deg);
     -webkit-transform-origin: center;
             transform-origin: center; }
-  :host circle {
+  :host path {
     fill: transparent;
     stroke: #00897b;
     /** Stroke width of 10px defines stroke as 10% of the viewBox */
-    stroke-width: 10px;
-    /** SVG circle rotations begin rotated 90deg clockwise from the circle's center top */
-    -webkit-transition: stroke-dashoffset 0.225s linear;
-    transition: stroke-dashoffset 0.225s linear;
-    /** The dash array of the circle is defined as the circumference of the circle. */
-    stroke-dasharray: 251.32741px;
-    /** The stroke dashoffset is used to "fill" the circle, 0px represents an full circle,
-        while the circles full circumference represents an empty circle. */
-    stroke-dashoffset: 0px; }
-  :host[color="accent"] circle {
+    stroke-width: 10px; }
+  :host[color="accent"] path {
     stroke: #8e24aa; }
-  :host[color="warn"] circle {
+  :host[color="warn"] path {
     stroke: #e53935; }
   :host[mode="indeterminate"] {
     -webkit-animation-duration: 5.25s, 2.8875s;
@@ -54,17 +35,6 @@
             animation-iteration-count: infinite;
     -webkit-transition: none;
     transition: none; }
-    :host[mode="indeterminate"] circle {
-      -webkit-animation-duration: 1.3125s;
-              animation-duration: 1.3125s;
-      -webkit-animation-name: md-progress-circle-value-change;
-              animation-name: md-progress-circle-value-change;
-      -webkit-animation-timing-function: cubic-bezier(0.35, 0, 0.25, 1);
-              animation-timing-function: cubic-bezier(0.35, 0, 0.25, 1);
-      -webkit-animation-iteration-count: infinite;
-              animation-iteration-count: infinite;
-      -webkit-transition: none;
-      transition: none; }
 
 /** Animations for indeterminate mode */
 @-webkit-keyframes md-progress-circle-linear-rotate {
@@ -133,15 +103,3 @@
   100% {
     -webkit-transform: rotate(1080deg);
             transform: rotate(1080deg); } }
-
-@-webkit-keyframes md-progress-circle-value-change {
-  0% {
-    stroke-dashoffset: 261.3274px; }
-  100% {
-    stroke-dashoffset: -241.3274px; } }
-
-@keyframes md-progress-circle-value-change {
-  0% {
-    stroke-dashoffset: 261.3274px; }
-  100% {
-    stroke-dashoffset: -241.3274px; } }

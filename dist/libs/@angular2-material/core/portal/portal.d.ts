@@ -80,3 +80,5 @@ export declare abstract class BasePortalHost implements PortalHost {
     dispose(): void;
     setDisposeFn(fn: () => void): void;
 }
+export { PORTAL_DIRECTIVES, TemplatePortalDirective, PortalHostDirective } from './portal-directives';
+export { DomPortalHost } from './dom-portal-host';

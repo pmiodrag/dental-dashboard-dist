@@ -1,4 +1,4 @@
-import { DynamicComponentLoader, ComponentRef } from '@angular/core';
+import { ComponentResolver, ComponentRef } from '@angular/core';
 import { BasePortalHost, ComponentPortal, TemplatePortal } from './portal';
 /**
  * A PortalHost for attaching portals to an arbitrary DOM element outside of the Angular
@@ -8,9 +8,9 @@ import { BasePortalHost, ComponentPortal, TemplatePortal } from './portal';
  */
 export declare class DomPortalHost extends BasePortalHost {
     private _hostDomElement;
-    private _componentLoader;
-    constructor(_hostDomElement: Element, _componentLoader: DynamicComponentLoader);
-    /** Attach the given ComponentPortal to DOM element using the DynamicComponentLoader. */
+    private _componentResolver;
+    constructor(_hostDomElement: Element, _componentResolver: ComponentResolver);
+    /** Attach the given ComponentPortal to DOM element using the ComponentResolver. */
     attachComponentPortal(portal: ComponentPortal): Promise<ComponentRef<any>>;
     attachTemplatePortal(portal: TemplatePortal): Promise<Map<string, any>>;
     dispose(): void;

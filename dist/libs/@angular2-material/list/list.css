@@ -1,11 +1,18 @@
+/**
+ * This mixin provides all md-line styles, changing secondary font size
+ * based on whether the list is in dense mode.
+ */
+/**
+ * This mixin provides base styles for the wrapper around md-line
+ * elements in a list.
+ */
+/**
+ * This mixin normalizes default element styles, e.g. font weight for heading text.
+ */
 /*  Normal list variables */
 /* Dense list variables */
-/*  
-This mixin provides all list-item styles, changing font size and height
-based on whether the list is in dense mode.
-*/
 /*
-This mixin provides all md-line styles, changing secondary font size 
+This mixin provides all list-item styles, changing font size and height
 based on whether the list is in dense mode.
 */
 /*
@@ -62,18 +69,18 @@ md-list, md-nav-list {
         -ms-flex-direction: column;
             flex-direction: column;
     width: 100%;
-    padding: 0 16px;
     box-sizing: border-box;
-    overflow: hidden; }
-    md-list md-list-item .md-list-text:first-child, md-list a[md-list-item] .md-list-text:first-child, md-nav-list md-list-item .md-list-text:first-child, md-nav-list a[md-list-item] .md-list-text:first-child {
-      padding: 0; }
-    md-list md-list-item .md-list-text:empty, md-list a[md-list-item] .md-list-text:empty, md-nav-list md-list-item .md-list-text:empty, md-nav-list a[md-list-item] .md-list-text:empty {
-      display: none; }
+    overflow: hidden;
+    padding: 0 16px; }
     md-list md-list-item .md-list-text > *, md-list a[md-list-item] .md-list-text > *, md-nav-list md-list-item .md-list-text > *, md-nav-list a[md-list-item] .md-list-text > * {
       margin: 0;
       padding: 0;
       font-weight: normal;
       font-size: inherit; }
+    md-list md-list-item .md-list-text:empty, md-list a[md-list-item] .md-list-text:empty, md-nav-list md-list-item .md-list-text:empty, md-nav-list a[md-list-item] .md-list-text:empty {
+      display: none; }
+    md-list md-list-item .md-list-text:first-child, md-list a[md-list-item] .md-list-text:first-child, md-nav-list md-list-item .md-list-text:first-child, md-nav-list a[md-list-item] .md-list-text:first-child {
+      padding: 0; }
   md-list md-list-item [md-list-avatar], md-list a[md-list-item] [md-list-avatar], md-nav-list md-list-item [md-list-avatar], md-nav-list a[md-list-item] [md-list-avatar] {
     width: 40px;
     height: 40px;
@@ -142,18 +149,18 @@ md-list[dense], md-nav-list[dense] {
         -ms-flex-direction: column;
             flex-direction: column;
     width: 100%;
-    padding: 0 16px;
     box-sizing: border-box;
-    overflow: hidden; }
-    md-list[dense] md-list-item .md-list-text:first-child, md-list[dense] a[md-list-item] .md-list-text:first-child, md-nav-list[dense] md-list-item .md-list-text:first-child, md-nav-list[dense] a[md-list-item] .md-list-text:first-child {
-      padding: 0; }
-    md-list[dense] md-list-item .md-list-text:empty, md-list[dense] a[md-list-item] .md-list-text:empty, md-nav-list[dense] md-list-item .md-list-text:empty, md-nav-list[dense] a[md-list-item] .md-list-text:empty {
-      display: none; }
+    overflow: hidden;
+    padding: 0 16px; }
     md-list[dense] md-list-item .md-list-text > *, md-list[dense] a[md-list-item] .md-list-text > *, md-nav-list[dense] md-list-item .md-list-text > *, md-nav-list[dense] a[md-list-item] .md-list-text > * {
       margin: 0;
       padding: 0;
       font-weight: normal;
       font-size: inherit; }
+    md-list[dense] md-list-item .md-list-text:empty, md-list[dense] a[md-list-item] .md-list-text:empty, md-nav-list[dense] md-list-item .md-list-text:empty, md-nav-list[dense] a[md-list-item] .md-list-text:empty {
+      display: none; }
+    md-list[dense] md-list-item .md-list-text:first-child, md-list[dense] a[md-list-item] .md-list-text:first-child, md-nav-list[dense] md-list-item .md-list-text:first-child, md-nav-list[dense] a[md-list-item] .md-list-text:first-child {
+      padding: 0; }
   md-list[dense] md-list-item [md-list-avatar], md-list[dense] a[md-list-item] [md-list-avatar], md-nav-list[dense] md-list-item [md-list-avatar], md-nav-list[dense] a[md-list-item] [md-list-avatar] {
     width: 40px;
     height: 40px;
@@ -183,5 +190,6 @@ md-nav-list a {
 
 md-nav-list .md-list-item {
   cursor: pointer; }
-  md-nav-list .md-list-item:hover {
+  md-nav-list .md-list-item:hover, md-nav-list .md-list-item.md-list-item-focus {
+    outline: none;
     background: rgba(0, 0, 0, 0.04); }

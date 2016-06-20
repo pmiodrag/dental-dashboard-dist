@@ -1,4 +1,4 @@
-import { ComponentRef, TemplateRef, DynamicComponentLoader, ViewContainerRef } from '@angular/core';
+import { ComponentRef, TemplateRef, ComponentResolver, ViewContainerRef } from '@angular/core';
 import { Portal, TemplatePortal, ComponentPortal, BasePortalHost } from './portal';
 /**
  * Directive version of a `TemplatePortal`. Because the directive *is* a TemplatePortal,
@@ -20,16 +20,17 @@ export declare class TemplatePortalDirective extends TemplatePortal {
  * <template [portalHost]="greeting"></template>
  */
 export declare class PortalHostDirective extends BasePortalHost {
-    private _dynamicComponentLoader;
+    private _componentResolver;
     private _viewContainerRef;
     /** The attached portal. */
     private _portal;
-    constructor(_dynamicComponentLoader: DynamicComponentLoader, _viewContainerRef: ViewContainerRef);
+    constructor(_componentResolver: ComponentResolver, _viewContainerRef: ViewContainerRef);
     portal: Portal<any>;
-    /** Attach the given ComponentPortal to this PortlHost using the DynamicComponentLoader. */
+    /** Attach the given ComponentPortal to this PortlHost using the ComponentResolver. */
     attachComponentPortal(portal: ComponentPortal): Promise<ComponentRef<any>>;
     /** Attach the given TemplatePortal to this PortlHost as an embedded View. */
     attachTemplatePortal(portal: TemplatePortal): Promise<Map<string, any>>;
     /** Detatches the currently attached Portal (if there is one) and attaches the given Portal. */
     private _replaceAttachedPortal(p);
 }
+export declare const PORTAL_DIRECTIVES: (typeof TemplatePortalDirective | typeof PortalHostDirective)[];

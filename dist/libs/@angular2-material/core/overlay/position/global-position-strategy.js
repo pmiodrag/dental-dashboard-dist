@@ -1,4 +1,5 @@
 "use strict";
+var apply_transform_1 = require('@angular2-material/core/style/apply-transform');
 /**
  * A strategy for positioning overlays. Using this strategy, an overlay is given an
  * explicit position relative to the browser's viewport.
@@ -75,7 +76,10 @@ var GlobalPositionStrategy = (function () {
         this._translateY = ['-50%', offset];
         return this;
     };
-    /** Apply the position to the element. */
+    /**
+     * Apply the position to the element.
+     * TODO: internal
+     */
     GlobalPositionStrategy.prototype.apply = function (element) {
         element.style.position = this._cssPosition;
         element.style.top = this._top;
@@ -86,9 +90,7 @@ var GlobalPositionStrategy = (function () {
         // because it will need to be used for animations.
         var tranlateX = this._reduceTranslateValues('translateX', this._translateX);
         var translateY = this._reduceTranslateValues('translateY', this._translateY);
-        // It's important to trim the result, because the browser will ignore the set operation
-        // if the string contains only whitespace.
-        element.style.transform = (tranlateX + " " + translateY).trim();
+        apply_transform_1.applyCssTransform(element, tranlateX + " " + translateY);
         return Promise.resolve();
     };
     /** Reduce a list of translate values to a string that can be used in the transform property */
@@ -98,4 +100,4 @@ var GlobalPositionStrategy = (function () {
     return GlobalPositionStrategy;
 }());
 exports.GlobalPositionStrategy = GlobalPositionStrategy;
-//# sourceMappingURL=global-position-strategy.js.map
+//# sourceMappingURL=/usr/local/google/home/jelbourn/material2/tmp/broccoli_type_script_compiler-input_base_path-OxHzApZr.tmp/0/core/overlay/position/global-position-strategy.js.map

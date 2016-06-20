@@ -14,14 +14,20 @@ var core_1 = require('@angular/core');
  * Intended to be consumed as an Angular service.
  * This service is needed because native radio change events are only fired on the item currently
  * being selected, and we still need to uncheck the previous selection.
+ *
+ * This service does not *store* any IDs and names because they may change at any time, so it is
+ * less error-prone if they are simply passed through when the events occur.
  */
 var MdRadioDispatcher = (function () {
     function MdRadioDispatcher() {
         this._listeners = [];
     }
     /** Notify other radio buttons that selection for the given name has been set. */
-    MdRadioDispatcher.prototype.notify = function (name) {
-        this._listeners.forEach(function (listener) { return listener(name); });
+    MdRadioDispatcher.prototype.notify = function (id, name) {
+        for (var _i = 0, _a = this._listeners; _i < _a.length; _i++) {
+            var listener = _a[_i];
+            listener(id, name);
+        }
     };
     /** Listen for future changes to radio button selection. */
     MdRadioDispatcher.prototype.listen = function (listener) {
@@ -34,4 +40,4 @@ var MdRadioDispatcher = (function () {
     return MdRadioDispatcher;
 }());
 exports.MdRadioDispatcher = MdRadioDispatcher;
-//# sourceMappingURL=radio_dispatcher.js.map
+//# sourceMappingURL=/usr/local/google/home/jelbourn/material2/tmp/broccoli_type_script_compiler-input_base_path-OxHzApZr.tmp/0/components/radio/radio_dispatcher.js.map

@@ -1,9 +1,8 @@
-import { AfterContentInit, ElementRef, Type, EventEmitter, Renderer } from '@angular/core';
+import { AfterContentInit, ElementRef, EventEmitter, Renderer } from '@angular/core';
 import { Dir } from '@angular2-material/core/rtl/dir';
-/**
- * Exception thrown when two MdSidenav are matching the same side.
- */
-export declare class MdDuplicatedSidenavError extends Error {
+import { MdError } from '@angular2-material/core/errors/error';
+/** Exception thrown when two MdSidenav are matching the same side. */
+export declare class MdDuplicatedSidenavError extends MdError {
     constructor(align: string);
 }
 /**
@@ -53,14 +52,6 @@ export declare class MdSidenav {
      * @param isOpen
      */
     toggle(isOpen?: boolean): Promise<void>;
-    /**
-     * When transition has finished, set the internal state for classes and emit the proper event.
-     * The event passed is actually of type TransitionEvent, but that type is not available in
-     * Android so we use any.
-     * @param e The event.
-     * @private
-     */
-    onTransitionEnd(e: any): void;
     private _isClosing;
     private _isOpening;
     private _isClosed;
@@ -69,12 +60,6 @@ export declare class MdSidenav {
     private _modeSide;
     private _modeOver;
     private _modePush;
-    /**
-     * This is public because we need it from MdSidenavLayout, but it's undocumented and should
-     * not be used outside.
-     * @private
-     */
-    _width: any;
     private _transition;
     private _openPromise;
     private _openPromiseResolve;
@@ -96,10 +81,6 @@ export declare class MdSidenavLayout implements AfterContentInit {
     private _sidenavs;
     start: MdSidenav;
     end: MdSidenav;
-    constructor(_dir: Dir, _element: ElementRef, _renderer: Renderer);
-    ngAfterContentInit(): void;
-    private _watchSidenavToggle(sidenav);
-    private _setLayoutClass(sidenav, bool);
     /** The sidenav at the start/end alignment, independent of direction. */
     private _start;
     private _end;
@@ -111,13 +92,12 @@ export declare class MdSidenavLayout implements AfterContentInit {
      */
     private _left;
     private _right;
-    /**
-     * Validate the state of the sidenav children components.
-     * @private
-     */
+    constructor(_dir: Dir, _element: ElementRef, _renderer: Renderer);
+    /** TODO: internal */
+    ngAfterContentInit(): void;
+    private _setLayoutClass(sidenav, bool);
+    /** Validate the state of the sidenav children components. */
     private _validateDrawers();
-    closeModalSidenav(): void;
-    isShowingBackdrop(): boolean;
     private _isSidenavOpen(side);
     /**
      * Return the width of the sidenav, if it's in the proper mode and opened.
@@ -126,9 +106,5 @@ export declare class MdSidenavLayout implements AfterContentInit {
      * @param mode
      */
     private _getSidenavEffectiveWidth(sidenav, mode);
-    getMarginLeft(): number;
-    getMarginRight(): number;
-    getPositionLeft(): number;
-    getPositionRight(): number;
 }
-export declare const MD_SIDENAV_DIRECTIVES: Type[];
+export declare const MD_SIDENAV_DIRECTIVES: (typeof MdSidenavLayout | typeof MdSidenav)[];

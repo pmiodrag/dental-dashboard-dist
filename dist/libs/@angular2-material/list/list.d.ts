@@ -1,19 +1,17 @@
 import { QueryList, ElementRef, Renderer, AfterContentInit } from '@angular/core';
+import { MdLine, MdLineSetter } from '@angular2-material/core/line/line';
 export declare class MdList {
-}
-export declare class MdLine {
 }
 export declare class MdListAvatar {
 }
 export declare class MdListItem implements AfterContentInit {
     private _renderer;
     private _element;
+    _lineSetter: MdLineSetter;
     _lines: QueryList<MdLine>;
-    ngAfterContentInit(): void;
-    _hasAvatar: MdListAvatar;
+    private _hasAvatar;
     constructor(_renderer: Renderer, _element: ElementRef);
-    _setLineClass(count: number): void;
-    _resetClasses(): void;
-    _setClass(className: string, bool: boolean): void;
+    /** TODO: internal */
+    ngAfterContentInit(): void;
 }
-export declare const MD_LIST_DIRECTIVES: any[];
+export declare const MD_LIST_DIRECTIVES: (typeof MdList | typeof MdListItem)[];

@@ -1,11 +1,8 @@
-import { DynamicComponentLoader, OpaqueToken, ElementRef } from '@angular/core';
+import { ComponentResolver, OpaqueToken } from '@angular/core';
 import { OverlayState } from './overlay-state';
 import { OverlayRef } from './overlay-ref';
-import { GlobalPositionStrategy } from './position/global-position-strategy';
-import { RelativePositionStrategy } from './position/relative-position-strategy';
-export { OverlayState } from './overlay-state';
-export { OverlayRef } from './overlay-ref';
-export { createOverlayContainer } from './overlay-container';
+import { OverlayPositionBuilder } from './position/overlay-position-builder';
+import { ViewportRuler } from './position/viewport-ruler';
 /** Token used to inject the DOM element that serves as the overlay container. */
 export declare const OVERLAY_CONTAINER_TOKEN: OpaqueToken;
 /**
@@ -18,8 +15,9 @@ export declare const OVERLAY_CONTAINER_TOKEN: OpaqueToken;
  */
 export declare class Overlay {
     private _overlayContainerElement;
-    private _dynamicComponentLoader;
-    constructor(_overlayContainerElement: HTMLElement, _dynamicComponentLoader: DynamicComponentLoader);
+    private _componentResolver;
+    private _positionBuilder;
+    constructor(_overlayContainerElement: HTMLElement, _componentResolver: ComponentResolver, _positionBuilder: OverlayPositionBuilder);
     /**
      * Creates an overlay.
      * @param state State to apply to the overlay.
@@ -32,17 +30,10 @@ export declare class Overlay {
      */
     position(): OverlayPositionBuilder;
     /**
-     * Creates the DOM element for an overlay.
-     * @param state State to apply to the created element.
+     * Creates the DOM element for an overlay and appends it to the overlay container.
      * @returns Promise resolving to the created element.
      */
-    private _createPaneElement(state);
-    /**
-     * Applies a given state to the given pane element.
-     * @param pane The pane to modify.
-     * @param state The state to apply.
-     */
-    applyState(pane: HTMLElement, state: OverlayState): void;
+    private _createPaneElement();
     /**
      * Create a DomPortalHost into which the overlay content can be loaded.
      * @param pane The DOM element to turn into a portal host.
@@ -52,14 +43,14 @@ export declare class Overlay {
     /**
      * Creates an OverlayRef for an overlay in the given DOM element.
      * @param pane DOM element for the overlay
+     * @param state
      * @returns {OverlayRef}
      */
-    private _createOverlayRef(pane);
+    private _createOverlayRef(pane, state);
 }
-/** Builder for overlay position strategy. */
-export declare class OverlayPositionBuilder {
-    /** Creates a global position strategy. */
-    global(): GlobalPositionStrategy;
-    /** Creates a relative position strategy. */
-    relativeTo(elementRef: ElementRef): RelativePositionStrategy;
-}
+/** Providers for Overlay and its related injectables. */
+export declare const OVERLAY_PROVIDERS: (typeof ViewportRuler | typeof OverlayPositionBuilder | typeof Overlay)[];
+export { OverlayState } from './overlay-state';
+export { OverlayRef } from './overlay-ref';
+export { createOverlayContainer } from './overlay-container';
+export { OVERLAY_DIRECTIVES, ConnectedOverlayDirective, OverlayOrigin } from './overlay-directives';

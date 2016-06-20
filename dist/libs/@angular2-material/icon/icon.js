@@ -95,7 +95,7 @@ var MdIcon = (function () {
                 throw new MdIconInvalidNameError(iconName);
         }
     };
-    /** @internal */
+    /** TODO: internal */
     MdIcon.prototype.ngOnChanges = function (changes) {
         var _this = this;
         var changedInputs = Object.keys(changes);
@@ -114,7 +114,7 @@ var MdIcon = (function () {
         }
         this._updateAriaLabel();
     };
-    /** @internal */
+    /** TODO: internal */
     MdIcon.prototype.ngOnInit = function () {
         // Update font classes because ngOnChanges won't be called if none of the inputs are present,
         // e.g. <md-icon>arrow</md-icon>. In this case we need to add a CSS class for the default font.
@@ -122,7 +122,7 @@ var MdIcon = (function () {
             this._updateFontIconClasses();
         }
     };
-    /** @internal */
+    /** TODO: internal */
     MdIcon.prototype.ngAfterViewChecked = function () {
         // Update aria label here because it may depend on the projected text content.
         // (e.g. <md-icon>home</md-icon> should use 'home').
@@ -235,4 +235,4 @@ var MdIcon = (function () {
 }());
 exports.MdIcon = MdIcon;
 exports.MD_ICON_DIRECTIVES = [MdIcon];
-//# sourceMappingURL=/usr/local/google/home/jelbourn/material2/tmp/broccoli_type_script_compiler-input_base_path-IydvmmBU.tmp/0/components/icon/icon.js.map
+//# sourceMappingURL=/usr/local/google/home/jelbourn/material2/tmp/broccoli_type_script_compiler-input_base_path-OxHzApZr.tmp/0/components/icon/icon.js.map

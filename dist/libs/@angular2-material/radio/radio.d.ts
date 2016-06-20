@@ -8,7 +8,12 @@ export declare class MdRadioChange {
     value: any;
 }
 export declare class MdRadioGroup implements AfterContentInit, ControlValueAccessor {
-    /** The value for the radio group. Should match currently selected button. */
+    /**
+     * Selected value for group. Should equal the value of the selected radio button if there *is*
+     * a corresponding radio button with a matching value. If there is *not* such a corresponding
+     * radio button, this value persists to be applied in case a new radio button is added with a
+     * matching value.
+     */
     private _value;
     /** The HTML name attribute applied to radio buttons in this group. */
     private _name;
@@ -16,32 +21,45 @@ export declare class MdRadioGroup implements AfterContentInit, ControlValueAcces
     private _disabled;
     /** The currently selected radio button. Should match value. */
     private _selected;
-    /** Change event subscription set up by registerOnChange (ControlValueAccessor). */
-    private _changeSubscription;
+    /** Whether the `value` has been set to its initial value. */
+    private _isInitialized;
+    /** The method to be called in order to update ngModel */
+    private _controlValueAccessorChangeFn;
+    /** onTouch function registered via registerOnTouch (ControlValueAccessor). */
     onTouched: () => any;
     /** Event emitted when the group value changes. */
     change: EventEmitter<MdRadioChange>;
     /** Child radio buttons. */
     private _radios;
+    name: string;
+    disabled: boolean;
+    value: any;
+    selected: MdRadioButton;
     /**
      * Initialize properties once content children are available.
      * This allows us to propagate relevant attributes to associated buttons.
+     * TODO: internal
      */
     ngAfterContentInit(): void;
-    name: string;
-    /** Propagate name attribute to radio buttons. */
-    private _updateChildRadioNames();
-    disabled: boolean;
-    value: any;
+    private _updateRadioButtonNames();
+    /** Updates the `selected` radio button from the internal _value state. */
     private _updateSelectedRadioFromValue();
     /** Dispatch change event with current selection and group value. */
     private _emitChangeEvent();
-    selected: MdRadioButton;
-    /** Implemented as part of ControlValueAccessor. */
+    /**
+      * Implemented as part of ControlValueAccessor.
+      * TODO: internal
+      */
     writeValue(value: any): void;
-    /** Implemented as part of ControlValueAccessor. */
-    registerOnChange(fn: any): void;
-    /** Implemented as part of ControlValueAccessor. */
+    /**
+     * Implemented as part of ControlValueAccessor.
+     * TODO: internal
+     */
+    registerOnChange(fn: (value: any) => void): void;
+    /**
+     * Implemented as part of ControlValueAccessor.
+     * TODO: internal
+     */
     registerOnTouched(fn: any): void;
 }
 export declare class MdRadioButton implements OnInit {
@@ -62,17 +80,14 @@ export declare class MdRadioButton implements OnInit {
     /** Event emitted when the group value changes. */
     change: EventEmitter<MdRadioChange>;
     constructor(radioGroup: MdRadioGroup, radioDispatcher: MdRadioDispatcher);
-    ngOnInit(): void;
-    onInputFocus(): void;
-    onInputBlur(): void;
-    /** Input change handler, called only on keyboard selection. */
-    onInputChange(): void;
     inputId: string;
     checked: boolean;
     /** MdRadioGroup reads this to assign its own value. */
     value: any;
+    disabled: boolean;
+    /** TODO: internal */
+    ngOnInit(): void;
     /** Dispatch change event with current value. */
     private _emitChangeEvent();
-    disabled: boolean;
-    onClick(event: Event): void;
 }
+export declare const MD_RADIO_DIRECTIVES: (typeof MdRadioGroup | typeof MdRadioButton)[];

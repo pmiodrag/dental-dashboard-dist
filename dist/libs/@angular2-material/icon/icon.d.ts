@@ -1,4 +1,4 @@
-import { ElementRef, Renderer } from '@angular/core';
+import { ElementRef, OnChanges, OnInit, Renderer, SimpleChange, AfterViewChecked } from '@angular/core';
 import { MdError } from '@angular2-material/core/errors/error';
 import { MdIconRegistry } from './icon-registry';
 export { MdIconRegistry } from './icon-registry';
@@ -39,7 +39,7 @@ export declare class MdIconInvalidNameError extends MdError {
  *   Example:
  *     <md-icon fontSet="fa" fontIcon="alarm"></md-icon>
  */
-export declare class MdIcon {
+export declare class MdIcon implements OnChanges, OnInit, AfterViewChecked {
     private _element;
     private _renderer;
     private _mdIconRegistry;
@@ -66,6 +66,14 @@ export declare class MdIcon {
      *   'a:b:c' -> (throws MdIconInvalidNameError)
      */
     private _splitIconName(iconName);
+    /** TODO: internal */
+    ngOnChanges(changes: {
+        [propertyName: string]: SimpleChange;
+    }): void;
+    /** TODO: internal */
+    ngOnInit(): void;
+    /** TODO: internal */
+    ngAfterViewChecked(): void;
     private _updateAriaLabel();
     private _getAriaLabel();
     private _usingFontIcon();

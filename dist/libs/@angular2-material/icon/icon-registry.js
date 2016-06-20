@@ -378,4 +378,4 @@ exports.MdIconRegistry = MdIconRegistry;
 function cloneSvg(svg) {
     return svg.cloneNode(true);
 }
-//# sourceMappingURL=/usr/local/google/home/jelbourn/material2/tmp/broccoli_type_script_compiler-input_base_path-IydvmmBU.tmp/0/components/icon/icon-registry.js.map
+//# sourceMappingURL=/usr/local/google/home/jelbourn/material2/tmp/broccoli_type_script_compiler-input_base_path-OxHzApZr.tmp/0/components/icon/icon-registry.js.map

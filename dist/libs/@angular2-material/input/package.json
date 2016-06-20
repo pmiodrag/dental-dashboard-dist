@@ -1,42 +1,49 @@
 {
   "_args": [
     [
-      "@angular2-material/input@^2.0.0-alpha.4",
-      "c:\\development\\TWINSOFT\\git\\dental-dashboard-rc-1"
+      {
+        "name": "@angular2-material/input",
+        "raw": "@angular2-material/input@^2.0.0-alpha.5-2",
+        "rawSpec": "^2.0.0-alpha.5-2",
+        "scope": "@angular2-material",
+        "spec": ">=2.0.0-alpha.5-2 <3.0.0",
+        "type": "range"
+      },
+      "C:\\development\\TWINSOFT\\git\\dental-dashboard-rc-1"
     ]
   ],
-  "_from": "@angular2-material/input@>=2.0.0-alpha.4 <3.0.0",
-  "_id": "@angular2-material/input@2.0.0-alpha.4",
+  "_from": "@angular2-material/input@>=2.0.0-alpha.5-2 <3.0.0",
+  "_id": "@angular2-material/input@2.0.0-alpha.5-2",
   "_inCache": true,
   "_installable": true,
   "_location": "/@angular2-material/input",
-  "_nodeVersion": "5.10.0",
+  "_nodeVersion": "5.7.0",
   "_npmOperationalInternal": {
     "host": "packages-12-west.internal.npmjs.com",
-    "tmp": "tmp/input-2.0.0-alpha.4.tgz_1462344272521_0.5259332496207207"
+    "tmp": "tmp/input-2.0.0-alpha.5-2.tgz_1464814645521_0.30344088934361935"
   },
   "_npmUser": {
     "email": "angular-core+npm@google.com",
     "name": "angular2-material"
   },
-  "_npmVersion": "3.8.3",
+  "_npmVersion": "3.7.5",
   "_phantomChildren": {},
   "_requested": {
     "name": "@angular2-material/input",
-    "raw": "@angular2-material/input@^2.0.0-alpha.4",
-    "rawSpec": "^2.0.0-alpha.4",
+    "raw": "@angular2-material/input@^2.0.0-alpha.5-2",
+    "rawSpec": "^2.0.0-alpha.5-2",
     "scope": "@angular2-material",
-    "spec": ">=2.0.0-alpha.4 <3.0.0",
+    "spec": ">=2.0.0-alpha.5-2 <3.0.0",
     "type": "range"
   },
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/@angular2-material/input/-/input-2.0.0-alpha.4.tgz",
-  "_shasum": "8ef9994bf451c17755ffbe6d35894cd8b7472055",
+  "_resolved": "https://registry.npmjs.org/@angular2-material/input/-/input-2.0.0-alpha.5-2.tgz",
+  "_shasum": "c6bc3a88a44c22f36bc9638a4a1da58818fe57cf",
   "_shrinkwrap": null,
-  "_spec": "@angular2-material/input@^2.0.0-alpha.4",
-  "_where": "c:\\development\\TWINSOFT\\git\\dental-dashboard-rc-1",
+  "_spec": "@angular2-material/input@^2.0.0-alpha.5-2",
+  "_where": "C:\\development\\TWINSOFT\\git\\dental-dashboard-rc-1",
   "bugs": {
     "url": "https://github.com/angular/material2/issues"
   },
@@ -45,8 +52,8 @@
   "devDependencies": {},
   "directories": {},
   "dist": {
-    "shasum": "8ef9994bf451c17755ffbe6d35894cd8b7472055",
-    "tarball": "https://registry.npmjs.org/@angular2-material/input/-/input-2.0.0-alpha.4.tgz"
+    "shasum": "c6bc3a88a44c22f36bc9638a4a1da58818fe57cf",
+    "tarball": "https://registry.npmjs.org/@angular2-material/input/-/input-2.0.0-alpha.5-2.tgz"
   },
   "homepage": "https://github.com/angular/material2#readme",
   "keywords": [
@@ -69,7 +76,7 @@
   "name": "@angular2-material/input",
   "optionalDependencies": {},
   "peerDependencies": {
-    "@angular2-material/core": "2.0.0-alpha.4"
+    "@angular2-material/core": "2.0.0-alpha.5-2"
   },
   "readme": "ERROR: No README data found!",
   "repository": {
@@ -78,5 +85,5 @@
   },
   "scripts": {},
   "typings": "./input.d.ts",
-  "version": "2.0.0-alpha.4"
+  "version": "2.0.0-alpha.5-2"
 }

@@ -15,15 +15,8 @@ var core_1 = require('@angular/core');
 var overlay_state_1 = require('./overlay-state');
 var dom_portal_host_1 = require('../portal/dom-portal-host');
 var overlay_ref_1 = require('./overlay-ref');
-var global_position_strategy_1 = require('./position/global-position-strategy');
-var relative_position_strategy_1 = require('./position/relative-position-strategy');
-// Re-export overlay-related modules so they can be imported directly from here.
-var overlay_state_2 = require('./overlay-state');
-exports.OverlayState = overlay_state_2.OverlayState;
-var overlay_ref_2 = require('./overlay-ref');
-exports.OverlayRef = overlay_ref_2.OverlayRef;
-var overlay_container_1 = require('./overlay-container');
-exports.createOverlayContainer = overlay_container_1.createOverlayContainer;
+var overlay_position_builder_1 = require('./position/overlay-position-builder');
+var viewport_ruler_1 = require('./position/viewport-ruler');
 /** Token used to inject the DOM element that serves as the overlay container. */
 exports.OVERLAY_CONTAINER_TOKEN = new core_1.OpaqueToken('overlayContainer');
 /** Next overlay unique ID. */
@@ -39,9 +32,10 @@ var defaultState = new overlay_state_1.OverlayState();
  * An overlay *is* a PortalHost, so any kind of Portal can be loaded into one.
  */
 var Overlay = (function () {
-    function Overlay(_overlayContainerElement, _dynamicComponentLoader) {
+    function Overlay(_overlayContainerElement, _componentResolver, _positionBuilder) {
         this._overlayContainerElement = _overlayContainerElement;
-        this._dynamicComponentLoader = _dynamicComponentLoader;
+        this._componentResolver = _componentResolver;
+        this._positionBuilder = _positionBuilder;
     }
     /**
      * Creates an overlay.
@@ -51,37 +45,25 @@ var Overlay = (function () {
     Overlay.prototype.create = function (state) {
         var _this = this;
         if (state === void 0) { state = defaultState; }
-        return this._createPaneElement(state).then(function (pane) { return _this._createOverlayRef(pane); });
+        return this._createPaneElement().then(function (pane) { return _this._createOverlayRef(pane, state); });
     };
     /**
      * Returns a position builder that can be used, via fluent API,
      * to construct and configure a position strategy.
      */
     Overlay.prototype.position = function () {
-        return POSITION_BUILDER;
+        return this._positionBuilder;
     };
     /**
-     * Creates the DOM element for an overlay.
-     * @param state State to apply to the created element.
+     * Creates the DOM element for an overlay and appends it to the overlay container.
      * @returns Promise resolving to the created element.
      */
-    Overlay.prototype._createPaneElement = function (state) {
+    Overlay.prototype._createPaneElement = function () {
         var pane = document.createElement('div');
         pane.id = "md-overlay-" + nextUniqueId++;
         pane.classList.add('md-overlay-pane');
-        this.applyState(pane, state);
         this._overlayContainerElement.appendChild(pane);
         return Promise.resolve(pane);
-    };
-    /**
-     * Applies a given state to the given pane element.
-     * @param pane The pane to modify.
-     * @param state The state to apply.
-     */
-    Overlay.prototype.applyState = function (pane, state) {
-        if (state.positionStrategy != null) {
-            state.positionStrategy.apply(pane);
-        }
     };
     /**
      * Create a DomPortalHost into which the overlay content can be loaded.
@@ -89,39 +71,40 @@ var Overlay = (function () {
      * @returns A portal host for the given DOM element.
      */
     Overlay.prototype._createPortalHost = function (pane) {
-        return new dom_portal_host_1.DomPortalHost(pane, this._dynamicComponentLoader);
+        return new dom_portal_host_1.DomPortalHost(pane, this._componentResolver);
     };
     /**
      * Creates an OverlayRef for an overlay in the given DOM element.
      * @param pane DOM element for the overlay
+     * @param state
      * @returns {OverlayRef}
      */
-    Overlay.prototype._createOverlayRef = function (pane) {
-        return new overlay_ref_1.OverlayRef(this._createPortalHost(pane));
+    Overlay.prototype._createOverlayRef = function (pane, state) {
+        return new overlay_ref_1.OverlayRef(this._createPortalHost(pane), pane, state);
     };
     Overlay = __decorate([
         core_1.Injectable(),
         __param(0, core_1.Inject(exports.OVERLAY_CONTAINER_TOKEN)), 
-        __metadata('design:paramtypes', [HTMLElement, core_1.DynamicComponentLoader])
+        __metadata('design:paramtypes', [HTMLElement, core_1.ComponentResolver, overlay_position_builder_1.OverlayPositionBuilder])
     ], Overlay);
     return Overlay;
 }());
 exports.Overlay = Overlay;
-/** Builder for overlay position strategy. */
-var OverlayPositionBuilder = (function () {
-    function OverlayPositionBuilder() {
-    }
-    /** Creates a global position strategy. */
-    OverlayPositionBuilder.prototype.global = function () {
-        return new global_position_strategy_1.GlobalPositionStrategy();
-    };
-    /** Creates a relative position strategy. */
-    OverlayPositionBuilder.prototype.relativeTo = function (elementRef) {
-        return new relative_position_strategy_1.RelativePositionStrategy(elementRef);
-    };
-    return OverlayPositionBuilder;
-}());
-exports.OverlayPositionBuilder = OverlayPositionBuilder;
-// We only ever need one position builder.
-var POSITION_BUILDER = new OverlayPositionBuilder();
-//# sourceMappingURL=overlay.js.map
+/** Providers for Overlay and its related injectables. */
+exports.OVERLAY_PROVIDERS = [
+    viewport_ruler_1.ViewportRuler,
+    overlay_position_builder_1.OverlayPositionBuilder,
+    Overlay,
+];
+// Re-export overlay-related modules so they can be imported directly from here.
+var overlay_state_2 = require('./overlay-state');
+exports.OverlayState = overlay_state_2.OverlayState;
+var overlay_ref_2 = require('./overlay-ref');
+exports.OverlayRef = overlay_ref_2.OverlayRef;
+var overlay_container_1 = require('./overlay-container');
+exports.createOverlayContainer = overlay_container_1.createOverlayContainer;
+var overlay_directives_1 = require('./overlay-directives');
+exports.OVERLAY_DIRECTIVES = overlay_directives_1.OVERLAY_DIRECTIVES;
+exports.ConnectedOverlayDirective = overlay_directives_1.ConnectedOverlayDirective;
+exports.OverlayOrigin = overlay_directives_1.OverlayOrigin;
+//# sourceMappingURL=/usr/local/google/home/jelbourn/material2/tmp/broccoli_type_script_compiler-input_base_path-OxHzApZr.tmp/0/core/overlay/overlay.js.map

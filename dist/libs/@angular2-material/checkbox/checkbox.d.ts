@@ -1,5 +1,9 @@
-import { ElementRef, EventEmitter, Renderer } from '@angular/core';
+import { ElementRef, EventEmitter, Renderer, AfterContentInit } from '@angular/core';
 import { ControlValueAccessor } from '@angular/common';
+export declare class MdCheckboxChange {
+    source: MdCheckbox;
+    checked: boolean;
+}
 /**
  * A material design checkbox component. Supports all of the functionality of an HTML5 checkbox,
  * and exposes a similar API. An MdCheckbox can be either checked, unchecked, indeterminate, or
@@ -8,7 +12,7 @@ import { ControlValueAccessor } from '@angular/common';
  * have the checkbox be accessible, you may supply an [aria-label] input.
  * See: https://www.google.com/design/spec/components/selection-controls.html
  */
-export declare class MdCheckbox implements ControlValueAccessor {
+export declare class MdCheckbox implements AfterContentInit, ControlValueAccessor {
     private _renderer;
     private _elementRef;
     /**
@@ -16,8 +20,14 @@ export declare class MdCheckbox implements ControlValueAccessor {
      * take precedence so this may be omitted.
      */
     ariaLabel: string;
+    /**
+     * Users can specify the `aria-labelledby` attribute which will be forwarded to the input element
+     */
+    ariaLabelledby: string;
     /** A unique id for the checkbox. If one is not supplied, it is auto-generated. */
     id: string;
+    /** ID to be applied to the `input` element */
+    inputId: string;
     /** Whether or not the checkbox should come before or after the label. */
     align: 'start' | 'end';
     /**
@@ -30,8 +40,10 @@ export declare class MdCheckbox implements ControlValueAccessor {
      * on the host element will be removed. It will be placed back when the checkbox is re-enabled.
      */
     tabindex: number;
+    /** Name value will be applied to the input element if present */
+    name: string;
     /** Event emitted when the checkbox's `checked` value changes. */
-    change: EventEmitter<boolean>;
+    change: EventEmitter<MdCheckboxChange>;
     /** Called when the checkbox is blurred. Needed to properly implement ControlValueAccessor. */
     onTouched: () => any;
     /** Whether the `checked` state has been set to its initial value. */
@@ -41,12 +53,15 @@ export declare class MdCheckbox implements ControlValueAccessor {
     private _checked;
     private _indeterminate;
     private _changeSubscription;
+    hasFocus: boolean;
     constructor(_renderer: Renderer, _elementRef: ElementRef);
     /**
      * Whether the checkbox is checked. Note that setting `checked` will immediately set
      * `indeterminate` to false.
      */
     checked: boolean;
+    /** TODO: internal */
+    ngAfterContentInit(): void;
     /**
      * Whether the checkbox is indeterminate. This is also known as "mixed" mode and can be used to
      * represent a checkbox with three states, e.g. a checkbox that represents a nested list of
@@ -57,27 +72,27 @@ export declare class MdCheckbox implements ControlValueAccessor {
      * to the way consumers would envision using this component.
      */
     indeterminate: boolean;
-    /** The id that is attached to the checkbox's label. */
-    labelId: string;
-    /** Returns the proper aria-checked attribute value based on the checkbox's state. */
-    getAriaChecked(): string;
-    /** Toggles the checked state of the checkbox. If the checkbox is disabled, this does nothing. */
-    toggle(): void;
     /**
-     * Event handler used for both (click) and (keyup.space) events. Delegates to toggle().
+     * Implemented as part of ControlValueAccessor.
+     * TODO: internal
      */
-    onInteractionEvent(event: Event): void;
-    /**
-     * Event handler used for (keydown.space) events. Used to prevent spacebar events from bubbling
-     * when the component is focused, which prevents side effects like page scrolling from happening.
-     */
-    onSpaceDown(evt: Event): void;
-    /** Implemented as part of ControlValueAccessor. */
     writeValue(value: any): void;
-    /** Implemented as part of ControlValueAccessor. */
+    /**
+     * Implemented as part of ControlValueAccessor.
+     * TODO: internal
+     */
     registerOnChange(fn: any): void;
-    /** Implemented as part of ControlValueAccessor. */
+    /**
+     * Implemented as part of ControlValueAccessor.
+     * TODO: internal
+     */
     registerOnTouched(fn: any): void;
     private _transitionCheckState(newState);
+    private _emitChangeEvent();
+    /**
+     * Toggles the `checked` value between true and false
+     */
+    toggle(): void;
     private _getAnimationClassForCheckStateTransition(oldState, newState);
 }
+export declare const MD_CHECKBOX_DIRECTIVES: typeof MdCheckbox[];

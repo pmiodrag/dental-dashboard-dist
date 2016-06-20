@@ -2,18 +2,10 @@
  * <md-progress-bar> component.
  */
 export declare class MdProgressBar {
-    /**
-     * Value of the progressbar.
-     *
-     * Defaults to zero. Mirrored to aria-valuenow.
-     */
+    /** Value of the progressbar. Defaults to zero. Mirrored to aria-valuenow. */
     private _value;
     value: number;
-    /**
-     * Buffer value of the progress bar.
-     *
-     * Defaults to zero.
-     */
+    /** Buffer value of the progress bar. Defaults to zero. */
     private _bufferValue;
     bufferValue: number;
     /**
@@ -24,13 +16,5 @@ export declare class MdProgressBar {
      * Mirrored to mode attribute.
      */
     mode: 'determinate' | 'indeterminate' | 'buffer' | 'query';
-    /** Gets the current transform value for the progress bar's primary indicator. */
-    primaryTransform(): string;
-    /**
-     * Gets the current transform value for the progress bar's buffer indicator.  Only used if the
-     * progress mode is set to buffer, otherwise returns an undefined, causing no transformation.
-     */
-    bufferTransform(): string;
-    /** Clamps a value to be between two numbers, by default 0 and 100. */
-    static clamp(v: number, min?: number, max?: number): number;
 }
+export declare const MD_PROGRESS_BAR_DIRECTIVES: typeof MdProgressBar[];

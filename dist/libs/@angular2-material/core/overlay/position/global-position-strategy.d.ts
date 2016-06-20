@@ -35,7 +35,10 @@ export declare class GlobalPositionStrategy implements PositionStrategy {
      * Clears any previously set vertical position.
      */
     centerVertically(offset?: string): this;
-    /** Apply the position to the element. */
+    /**
+     * Apply the position to the element.
+     * TODO: internal
+     */
     apply(element: HTMLElement): Promise<void>;
     /** Reduce a list of translate values to a string that can be used in the transform property */
     private _reduceTranslateValues(translateFn, values);

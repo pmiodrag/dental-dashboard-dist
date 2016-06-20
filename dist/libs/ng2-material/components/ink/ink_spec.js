@@ -64,6 +64,13 @@ function main() {
                     index_1.Ink.rippleEvent = save;
                 });
             })));
+            testing_1.it('should ink ripple without assertion mock', testing_1.async(function () {
+                setup().then(function (fixture) {
+                    var element = fixture.debugElement.query(platform_browser_1.By.css('[md-ink]'));
+                    var event = createEvent();
+                    element.triggerEventHandler('mousedown', event);
+                });
+            }));
             testing_1.it('should not ink ripple with md-no-ink attribute', testing_1.async(testing_1.inject([], function () {
                 var template = "<div md-ink md-no-ink></div>";
                 setup(template).then(function (fixture) {
