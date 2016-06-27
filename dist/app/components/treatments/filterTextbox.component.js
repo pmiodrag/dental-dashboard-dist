@@ -24,32 +24,37 @@ System.register(['@angular/core', '@angular/common', '@angular2-material/input']
                 input_1 = input_1_1;
             }],
         execute: function() {
-            FilterTextboxComponent = (function () {
-                function FilterTextboxComponent() {
+            let FilterTextboxComponent = class FilterTextboxComponent {
+                constructor() {
                     this.model = { filter: null };
                     this.changed = new core_1.EventEmitter();
                 }
-                FilterTextboxComponent.prototype.filterChanged = function (event) {
+                filterChanged(event) {
                     event.preventDefault();
                     this.changed.emit(this.model.filter); //Raise changed event
-                };
-                __decorate([
-                    core_1.Output(), 
-                    __metadata('design:type', core_1.EventEmitter)
-                ], FilterTextboxComponent.prototype, "changed", void 0);
-                FilterTextboxComponent = __decorate([
-                    core_1.Component({
-                        selector: 'filter-textbox',
-                        template: "\n    <form>\n         <input type=\"text\" \n                [(ngModel)]=\"model.filter\" \n                (keyup)=\"filterChanged($event)\"  />\n    </form>\n  ",
-                        directives: [common_1.FORM_DIRECTIVES, input_1.MD_INPUT_DIRECTIVES]
-                    }), 
-                    __metadata('design:paramtypes', [])
-                ], FilterTextboxComponent);
-                return FilterTextboxComponent;
-            }());
+                }
+            };
+            __decorate([
+                core_1.Output(), 
+                __metadata('design:type', core_1.EventEmitter)
+            ], FilterTextboxComponent.prototype, "changed", void 0);
+            FilterTextboxComponent = __decorate([
+                core_1.Component({
+                    selector: 'filter-textbox',
+                    template: `
+    <form>
+         <input type="text" 
+                [(ngModel)]="model.filter" 
+                (keyup)="filterChanged($event)"  />
+    </form>
+  `,
+                    directives: [common_1.FORM_DIRECTIVES, input_1.MD_INPUT_DIRECTIVES]
+                }), 
+                __metadata('design:paramtypes', [])
+            ], FilterTextboxComponent);
             exports_1("FilterTextboxComponent", FilterTextboxComponent);
         }
     }
 });
 
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNvbXBvbmVudHMvdHJlYXRtZW50cy9maWx0ZXJUZXh0Ym94LmNvbXBvbmVudC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztZQWNBO2dCQUFBO29CQUdJLFVBQUssR0FBdUIsRUFBRSxNQUFNLEVBQUUsSUFBSSxFQUFFLENBQUM7b0JBRzdDLFlBQU8sR0FBc0IsSUFBSSxtQkFBWSxFQUFFLENBQUM7Z0JBTXBELENBQUM7Z0JBSkcsOENBQWEsR0FBYixVQUFjLEtBQVU7b0JBQ3BCLEtBQUssQ0FBQyxjQUFjLEVBQUUsQ0FBQztvQkFDdkIsSUFBSSxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQyxNQUFNLENBQUMsQ0FBQyxDQUFDLHFCQUFxQjtnQkFDL0QsQ0FBQztnQkFORDtvQkFBQyxhQUFNLEVBQUU7O3VFQUFBO2dCQWhCYjtvQkFBQyxnQkFBUyxDQUFDO3dCQUNULFFBQVEsRUFBRSxnQkFBZ0I7d0JBQzFCLFFBQVEsRUFBRSxxS0FNVDt3QkFDRCxVQUFVLEVBQUUsQ0FBQyx3QkFBZSxFQUFFLDJCQUFtQixDQUFDO3FCQUNuRCxDQUFDOzswQ0FBQTtnQkFhRiw2QkFBQztZQUFELENBWkEsQUFZQyxJQUFBO1lBWkQsMkRBWUMsQ0FBQSIsImZpbGUiOiJjb21wb25lbnRzL3RyZWF0bWVudHMvZmlsdGVyVGV4dGJveC5jb21wb25lbnQuanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBDb21wb25lbnQsIE91dHB1dCwgRXZlbnRFbWl0dGVyIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XHJcbmltcG9ydCB7IEZPUk1fRElSRUNUSVZFUyB9IGZyb20gJ0Bhbmd1bGFyL2NvbW1vbic7XHJcbmltcG9ydCB7TURfSU5QVVRfRElSRUNUSVZFU30gZnJvbSAnQGFuZ3VsYXIyLW1hdGVyaWFsL2lucHV0JztcclxuQENvbXBvbmVudCh7XHJcbiAgc2VsZWN0b3I6ICdmaWx0ZXItdGV4dGJveCcsXHJcbiAgdGVtcGxhdGU6IGBcclxuICAgIDxmb3JtPlxyXG4gICAgICAgICA8aW5wdXQgdHlwZT1cInRleHRcIiBcclxuICAgICAgICAgICAgICAgIFsobmdNb2RlbCldPVwibW9kZWwuZmlsdGVyXCIgXHJcbiAgICAgICAgICAgICAgICAoa2V5dXApPVwiZmlsdGVyQ2hhbmdlZCgkZXZlbnQpXCIgIC8+XHJcbiAgICA8L2Zvcm0+XHJcbiAgYCxcclxuICBkaXJlY3RpdmVzOiBbRk9STV9ESVJFQ1RJVkVTLCBNRF9JTlBVVF9ESVJFQ1RJVkVTXVxyXG59KVxyXG5leHBvcnQgY2xhc3MgRmlsdGVyVGV4dGJveENvbXBvbmVudCB7XHJcblxyXG4gIFxyXG4gICAgbW9kZWw6IHsgZmlsdGVyOiBzdHJpbmcgfSA9IHsgZmlsdGVyOiBudWxsIH07XHJcbiAgICBcclxuICAgIEBPdXRwdXQoKVxyXG4gICAgY2hhbmdlZDogRXZlbnRFbWl0dGVyPGFueT4gPSBuZXcgRXZlbnRFbWl0dGVyKCk7XHJcblxyXG4gICAgZmlsdGVyQ2hhbmdlZChldmVudDogYW55KSB7XHJcbiAgICAgICAgZXZlbnQucHJldmVudERlZmF1bHQoKTtcclxuICAgICAgICB0aGlzLmNoYW5nZWQuZW1pdCh0aGlzLm1vZGVsLmZpbHRlcik7IC8vUmFpc2UgY2hhbmdlZCBldmVudFxyXG4gICAgfVxyXG59XHJcbiJdLCJzb3VyY2VSb290IjoiL3NvdXJjZS8ifQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNvbXBvbmVudHMvdHJlYXRtZW50cy9maWx0ZXJUZXh0Ym94LmNvbXBvbmVudC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztZQWNBO2dCQUFBO29CQUdJLFVBQUssR0FBdUIsRUFBRSxNQUFNLEVBQUUsSUFBSSxFQUFFLENBQUM7b0JBRzdDLFlBQU8sR0FBc0IsSUFBSSxtQkFBWSxFQUFFLENBQUM7Z0JBTXBELENBQUM7Z0JBSkcsYUFBYSxDQUFDLEtBQVU7b0JBQ3BCLEtBQUssQ0FBQyxjQUFjLEVBQUUsQ0FBQztvQkFDdkIsSUFBSSxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQyxNQUFNLENBQUMsQ0FBQyxDQUFDLHFCQUFxQjtnQkFDL0QsQ0FBQztZQUNMLENBQUM7WUFQRztnQkFBQyxhQUFNLEVBQUU7O21FQUFBO1lBaEJiO2dCQUFDLGdCQUFTLENBQUM7b0JBQ1QsUUFBUSxFQUFFLGdCQUFnQjtvQkFDMUIsUUFBUSxFQUFFOzs7Ozs7R0FNVDtvQkFDRCxVQUFVLEVBQUUsQ0FBQyx3QkFBZSxFQUFFLDJCQUFtQixDQUFDO2lCQUNuRCxDQUFDOztzQ0FBQTtZQUNGLDJEQVlDLENBQUEiLCJmaWxlIjoiY29tcG9uZW50cy90cmVhdG1lbnRzL2ZpbHRlclRleHRib3guY29tcG9uZW50LmpzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQ29tcG9uZW50LCBPdXRwdXQsIEV2ZW50RW1pdHRlciB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xyXG5pbXBvcnQgeyBGT1JNX0RJUkVDVElWRVMgfSBmcm9tICdAYW5ndWxhci9jb21tb24nO1xyXG5pbXBvcnQge01EX0lOUFVUX0RJUkVDVElWRVN9IGZyb20gJ0Bhbmd1bGFyMi1tYXRlcmlhbC9pbnB1dCc7XHJcbkBDb21wb25lbnQoe1xyXG4gIHNlbGVjdG9yOiAnZmlsdGVyLXRleHRib3gnLFxyXG4gIHRlbXBsYXRlOiBgXHJcbiAgICA8Zm9ybT5cclxuICAgICAgICAgPGlucHV0IHR5cGU9XCJ0ZXh0XCIgXHJcbiAgICAgICAgICAgICAgICBbKG5nTW9kZWwpXT1cIm1vZGVsLmZpbHRlclwiIFxyXG4gICAgICAgICAgICAgICAgKGtleXVwKT1cImZpbHRlckNoYW5nZWQoJGV2ZW50KVwiICAvPlxyXG4gICAgPC9mb3JtPlxyXG4gIGAsXHJcbiAgZGlyZWN0aXZlczogW0ZPUk1fRElSRUNUSVZFUywgTURfSU5QVVRfRElSRUNUSVZFU11cclxufSlcclxuZXhwb3J0IGNsYXNzIEZpbHRlclRleHRib3hDb21wb25lbnQge1xyXG5cclxuICBcclxuICAgIG1vZGVsOiB7IGZpbHRlcjogc3RyaW5nIH0gPSB7IGZpbHRlcjogbnVsbCB9O1xyXG4gICAgXHJcbiAgICBAT3V0cHV0KClcclxuICAgIGNoYW5nZWQ6IEV2ZW50RW1pdHRlcjxhbnk+ID0gbmV3IEV2ZW50RW1pdHRlcigpO1xyXG5cclxuICAgIGZpbHRlckNoYW5nZWQoZXZlbnQ6IGFueSkge1xyXG4gICAgICAgIGV2ZW50LnByZXZlbnREZWZhdWx0KCk7XHJcbiAgICAgICAgdGhpcy5jaGFuZ2VkLmVtaXQodGhpcy5tb2RlbC5maWx0ZXIpOyAvL1JhaXNlIGNoYW5nZWQgZXZlbnRcclxuICAgIH1cclxufVxyXG4iXSwic291cmNlUm9vdCI6Ii9zb3VyY2UvIn0=

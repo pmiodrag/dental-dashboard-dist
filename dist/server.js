@@ -10,8 +10,9 @@ var port = process.env.PORT || 3000;
 var app = express();
 //var router = express.Router();
 var multer = require("multer");
+var mkdirp = require('mkdirp');
 // upload destination directory
-var DIR = './uploads/';
+var DIR = __dirname + '/uploads';
 /* GET users listing. */
 //router.get('/', function(req, res, next) {
 //  res.send('respond with a resource');
@@ -19,6 +20,7 @@ var DIR = './uploads/';
 app.use('/app', express.static(path.resolve(__dirname, 'app')));
 app.use('/libs', express.static(path.resolve(__dirname, 'libs')));
 app.use('/assets', express.static(path.resolve(__dirname, 'assets')));
+app.use('/uploads', express.static(path.resolve(__dirname, 'uploads')));
 app.use('/styles', express.static(path.resolve(__dirname, 'styles')));
 app.use('/fonts', express.static(path.resolve(__dirname, 'assets/fonts')));
 app.use(bodyParser.json());
@@ -42,6 +44,7 @@ app.get('/patient', patients.index);
 app.post('/patient', patients.create);
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
+        mkdirp.sync(DIR);
         cb(null, DIR);
     },
     filename: function (req, file, cb) {
@@ -57,14 +60,14 @@ app.get('/patient/:id/:firstname/:lastname/treatments', treatments.index);
 // Doctor
 app.get('/doctor', doctors.index);
 app.post('/doctor', doctors.create);
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, DIR);
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    }
-});
+//var storage = multer.diskStorage({
+//  destination: function (req, file, cb) {
+//    cb(null, DIR)
+//  },
+//  filename: function (req, file, cb) {
+//    cb(null, file.originalname)
+//  }
+//})
 var upload = multer({ storage: storage }).single('file');
 app.post('/doctor/upload', upload, doctors.uploadFile);
 app.put('/doctor/:id', doctors.update);
