@@ -134,4 +134,4 @@ var TestList = (function () {
     ], TestList);
     return TestList;
 }());
-//# sourceMappingURL=/usr/local/google/home/jelbourn/material2/tmp/broccoli_type_script_compiler-input_base_path-OxHzApZr.tmp/0/components/list/list.spec.js.map
+//# sourceMappingURL=list.spec.js.map

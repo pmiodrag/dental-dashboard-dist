@@ -59,4 +59,6 @@ export declare class FromEventPatternObservable<T, R> extends Observable<T> {
     static create<T>(addHandler: (handler: Function) => any, removeHandler: (handler: Function) => void, selector?: (...args: Array<any>) => T): FromEventPatternObservable<T, {}>;
     constructor(addHandler: (handler: Function) => any, removeHandler: (handler: Function) => void, selector?: (...args: Array<any>) => T);
     protected _subscribe(subscriber: Subscriber<T>): void;
+    private _callSelector(subscriber, args);
+    private _callAddHandler(handler, errorSubscriber);
 }

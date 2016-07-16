@@ -2,10 +2,11 @@
   "_args": [
     [
       {
-        "name": "@angular2-material/grid-list",
         "raw": "@angular2-material/grid-list@2.0.0-alpha.5-2",
-        "rawSpec": "2.0.0-alpha.5-2",
         "scope": "@angular2-material",
+        "escapedName": "@angular2-material%2fgrid-list",
+        "name": "@angular2-material/grid-list",
+        "rawSpec": "2.0.0-alpha.5-2",
         "spec": "2.0.0-alpha.5-2",
         "type": "version"
       },
@@ -23,16 +24,17 @@
     "tmp": "tmp/grid-list-2.0.0-alpha.5-2.tgz_1464814634863_0.2926776581443846"
   },
   "_npmUser": {
-    "email": "angular-core+npm@google.com",
-    "name": "angular2-material"
+    "name": "angular2-material",
+    "email": "angular-core+npm@google.com"
   },
   "_npmVersion": "3.7.5",
   "_phantomChildren": {},
   "_requested": {
-    "name": "@angular2-material/grid-list",
     "raw": "@angular2-material/grid-list@2.0.0-alpha.5-2",
-    "rawSpec": "2.0.0-alpha.5-2",
     "scope": "@angular2-material",
+    "escapedName": "@angular2-material%2fgrid-list",
+    "name": "@angular2-material/grid-list",
+    "rawSpec": "2.0.0-alpha.5-2",
     "spec": "2.0.0-alpha.5-2",
     "type": "version"
   },
@@ -69,8 +71,8 @@
   "main": "./grid-list.js",
   "maintainers": [
     {
-      "email": "angular-core+npm@google.com",
-      "name": "angular2-material"
+      "name": "angular2-material",
+      "email": "angular-core+npm@google.com"
     }
   ],
   "name": "@angular2-material/grid-list",

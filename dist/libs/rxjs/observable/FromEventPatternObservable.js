@@ -6,8 +6,6 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var Observable_1 = require('../Observable');
 var Subscription_1 = require('../Subscription');
-var tryCatch_1 = require('../util/tryCatch');
-var errorObject_1 = require('../util/errorObject');
 /**
  * We need this JSDoc comment for affecting ESDoc.
  * @extends {Ignored}
@@ -72,26 +70,37 @@ var FromEventPatternObservable = (function (_super) {
         return new FromEventPatternObservable(addHandler, removeHandler, selector);
     };
     FromEventPatternObservable.prototype._subscribe = function (subscriber) {
-        var addHandler = this.addHandler;
+        var _this = this;
         var removeHandler = this.removeHandler;
-        var selector = this.selector;
-        var handler = selector ? function (e) {
-            var result = tryCatch_1.tryCatch(selector).apply(null, arguments);
-            if (result === errorObject_1.errorObject) {
-                subscriber.error(result.e);
+        var handler = !!this.selector ? function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i - 0] = arguments[_i];
             }
-            else {
-                subscriber.next(result);
-            }
+            _this._callSelector(subscriber, args);
         } : function (e) { subscriber.next(e); };
-        var result = tryCatch_1.tryCatch(addHandler)(handler);
-        if (result === errorObject_1.errorObject) {
-            subscriber.error(result.e);
-        }
+        this._callAddHandler(handler, subscriber);
         subscriber.add(new Subscription_1.Subscription(function () {
             //TODO: determine whether or not to forward to error handler
             removeHandler(handler);
         }));
+    };
+    FromEventPatternObservable.prototype._callSelector = function (subscriber, args) {
+        try {
+            var result = this.selector.apply(this, args);
+            subscriber.next(result);
+        }
+        catch (e) {
+            subscriber.error(e);
+        }
+    };
+    FromEventPatternObservable.prototype._callAddHandler = function (handler, errorSubscriber) {
+        try {
+            this.addHandler(handler);
+        }
+        catch (e) {
+            errorSubscriber.error(e);
+        }
     };
     return FromEventPatternObservable;
 }(Observable_1.Observable));

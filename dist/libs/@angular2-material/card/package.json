@@ -2,17 +2,18 @@
   "_args": [
     [
       {
-        "name": "@angular2-material/card",
-        "raw": "@angular2-material/card@^2.0.0-alpha.5-2",
-        "rawSpec": "^2.0.0-alpha.5-2",
+        "raw": "@angular2-material/card@2.0.0-alpha.5-2",
         "scope": "@angular2-material",
-        "spec": ">=2.0.0-alpha.5-2 <3.0.0",
-        "type": "range"
+        "escapedName": "@angular2-material%2fcard",
+        "name": "@angular2-material/card",
+        "rawSpec": "2.0.0-alpha.5-2",
+        "spec": "2.0.0-alpha.5-2",
+        "type": "version"
       },
       "C:\\development\\TWINSOFT\\git\\dental-dashboard-rc-1"
     ]
   ],
-  "_from": "@angular2-material/card@>=2.0.0-alpha.5-2 <3.0.0",
+  "_from": "@angular2-material/card@2.0.0-alpha.5-2",
   "_id": "@angular2-material/card@2.0.0-alpha.5-2",
   "_inCache": true,
   "_installable": true,
@@ -23,18 +24,19 @@
     "tmp": "tmp/card-2.0.0-alpha.5-2.tgz_1464814622070_0.7167190611362457"
   },
   "_npmUser": {
-    "email": "angular-core+npm@google.com",
-    "name": "angular2-material"
+    "name": "angular2-material",
+    "email": "angular-core+npm@google.com"
   },
   "_npmVersion": "3.7.5",
   "_phantomChildren": {},
   "_requested": {
-    "name": "@angular2-material/card",
-    "raw": "@angular2-material/card@^2.0.0-alpha.5-2",
-    "rawSpec": "^2.0.0-alpha.5-2",
+    "raw": "@angular2-material/card@2.0.0-alpha.5-2",
     "scope": "@angular2-material",
-    "spec": ">=2.0.0-alpha.5-2 <3.0.0",
-    "type": "range"
+    "escapedName": "@angular2-material%2fcard",
+    "name": "@angular2-material/card",
+    "rawSpec": "2.0.0-alpha.5-2",
+    "spec": "2.0.0-alpha.5-2",
+    "type": "version"
   },
   "_requiredBy": [
     "/"
@@ -42,7 +44,7 @@
   "_resolved": "https://registry.npmjs.org/@angular2-material/card/-/card-2.0.0-alpha.5-2.tgz",
   "_shasum": "780c25be75312a844e7b33333e9ce3a48464a296",
   "_shrinkwrap": null,
-  "_spec": "@angular2-material/card@^2.0.0-alpha.5-2",
+  "_spec": "@angular2-material/card@2.0.0-alpha.5-2",
   "_where": "C:\\development\\TWINSOFT\\git\\dental-dashboard-rc-1",
   "bugs": {
     "url": "https://github.com/angular/material2/issues"
@@ -67,8 +69,8 @@
   "main": "./card.js",
   "maintainers": [
     {
-      "email": "angular-core+npm@google.com",
-      "name": "angular2-material"
+      "name": "angular2-material",
+      "email": "angular-core+npm@google.com"
     }
   ],
   "name": "@angular2-material/card",

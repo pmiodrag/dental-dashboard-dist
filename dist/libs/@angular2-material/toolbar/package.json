@@ -2,10 +2,11 @@
   "_args": [
     [
       {
-        "name": "@angular2-material/toolbar",
         "raw": "@angular2-material/toolbar@2.0.0-alpha.5-2",
-        "rawSpec": "2.0.0-alpha.5-2",
         "scope": "@angular2-material",
+        "escapedName": "@angular2-material%2ftoolbar",
+        "name": "@angular2-material/toolbar",
+        "rawSpec": "2.0.0-alpha.5-2",
         "spec": "2.0.0-alpha.5-2",
         "type": "version"
       },
@@ -23,16 +24,17 @@
     "tmp": "tmp/toolbar-2.0.0-alpha.5-2.tgz_1464814681817_0.9310965635813773"
   },
   "_npmUser": {
-    "email": "angular-core+npm@google.com",
-    "name": "angular2-material"
+    "name": "angular2-material",
+    "email": "angular-core+npm@google.com"
   },
   "_npmVersion": "3.7.5",
   "_phantomChildren": {},
   "_requested": {
-    "name": "@angular2-material/toolbar",
     "raw": "@angular2-material/toolbar@2.0.0-alpha.5-2",
-    "rawSpec": "2.0.0-alpha.5-2",
     "scope": "@angular2-material",
+    "escapedName": "@angular2-material%2ftoolbar",
+    "name": "@angular2-material/toolbar",
+    "rawSpec": "2.0.0-alpha.5-2",
     "spec": "2.0.0-alpha.5-2",
     "type": "version"
   },
@@ -68,8 +70,8 @@
   "main": "./toolbar.js",
   "maintainers": [
     {
-      "email": "angular-core+npm@google.com",
-      "name": "angular2-material"
+      "name": "angular2-material",
+      "email": "angular-core+npm@google.com"
     }
   ],
   "name": "@angular2-material/toolbar",

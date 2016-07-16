@@ -2,10 +2,11 @@
   "_args": [
     [
       {
-        "name": "@angular2-material/progress-bar",
         "raw": "@angular2-material/progress-bar@2.0.0-alpha.5-2",
-        "rawSpec": "2.0.0-alpha.5-2",
         "scope": "@angular2-material",
+        "escapedName": "@angular2-material%2fprogress-bar",
+        "name": "@angular2-material/progress-bar",
+        "rawSpec": "2.0.0-alpha.5-2",
         "spec": "2.0.0-alpha.5-2",
         "type": "version"
       },
@@ -23,16 +24,17 @@
     "tmp": "tmp/progress-bar-2.0.0-alpha.5-2.tgz_1464814655786_0.465027357917279"
   },
   "_npmUser": {
-    "email": "angular-core+npm@google.com",
-    "name": "angular2-material"
+    "name": "angular2-material",
+    "email": "angular-core+npm@google.com"
   },
   "_npmVersion": "3.7.5",
   "_phantomChildren": {},
   "_requested": {
-    "name": "@angular2-material/progress-bar",
     "raw": "@angular2-material/progress-bar@2.0.0-alpha.5-2",
-    "rawSpec": "2.0.0-alpha.5-2",
     "scope": "@angular2-material",
+    "escapedName": "@angular2-material%2fprogress-bar",
+    "name": "@angular2-material/progress-bar",
+    "rawSpec": "2.0.0-alpha.5-2",
     "spec": "2.0.0-alpha.5-2",
     "type": "version"
   },
@@ -69,8 +71,8 @@
   "main": "./progress-bar.js",
   "maintainers": [
     {
-      "email": "angular-core+npm@google.com",
-      "name": "angular2-material"
+      "name": "angular2-material",
+      "email": "angular-core+npm@google.com"
     }
   ],
   "name": "@angular2-material/progress-bar",

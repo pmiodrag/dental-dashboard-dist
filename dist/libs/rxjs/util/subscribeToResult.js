@@ -5,7 +5,7 @@ var isPromise_1 = require('./isPromise');
 var Observable_1 = require('../Observable');
 var iterator_1 = require('../symbol/iterator');
 var InnerSubscriber_1 = require('../InnerSubscriber');
-var $$observable = require('symbol-observable');
+var symbol_observable_1 = require('symbol-observable');
 function subscribeToResult(outerSubscriber, result, outerValue, outerIndex) {
     var destination = new InnerSubscriber_1.InnerSubscriber(outerSubscriber, outerValue, outerIndex);
     if (destination.isUnsubscribed) {
@@ -54,8 +54,8 @@ function subscribeToResult(outerSubscriber, result, outerValue, outerIndex) {
             destination.complete();
         }
     }
-    else if (typeof result[$$observable] === 'function') {
-        var obs = result[$$observable]();
+    else if (typeof result[symbol_observable_1.default] === 'function') {
+        var obs = result[symbol_observable_1.default]();
         if (typeof obs.subscribe !== 'function') {
             destination.error('invalid observable');
         }

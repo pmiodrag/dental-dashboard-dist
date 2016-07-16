@@ -2,17 +2,18 @@
   "_args": [
     [
       {
-        "name": "@angular2-material/radio",
-        "raw": "@angular2-material/radio@^2.0.0-alpha.5-2",
-        "rawSpec": "^2.0.0-alpha.5-2",
+        "raw": "@angular2-material/radio@2.0.0-alpha.5-2",
         "scope": "@angular2-material",
-        "spec": ">=2.0.0-alpha.5-2 <3.0.0",
-        "type": "range"
+        "escapedName": "@angular2-material%2fradio",
+        "name": "@angular2-material/radio",
+        "rawSpec": "2.0.0-alpha.5-2",
+        "spec": "2.0.0-alpha.5-2",
+        "type": "version"
       },
       "C:\\development\\TWINSOFT\\git\\dental-dashboard-rc-1"
     ]
   ],
-  "_from": "@angular2-material/radio@>=2.0.0-alpha.5-2 <3.0.0",
+  "_from": "@angular2-material/radio@2.0.0-alpha.5-2",
   "_id": "@angular2-material/radio@2.0.0-alpha.5-2",
   "_inCache": true,
   "_installable": true,
@@ -23,18 +24,19 @@
     "tmp": "tmp/radio-2.0.0-alpha.5-2.tgz_1464814665809_0.29535300889983773"
   },
   "_npmUser": {
-    "email": "angular-core+npm@google.com",
-    "name": "angular2-material"
+    "name": "angular2-material",
+    "email": "angular-core+npm@google.com"
   },
   "_npmVersion": "3.7.5",
   "_phantomChildren": {},
   "_requested": {
-    "name": "@angular2-material/radio",
-    "raw": "@angular2-material/radio@^2.0.0-alpha.5-2",
-    "rawSpec": "^2.0.0-alpha.5-2",
+    "raw": "@angular2-material/radio@2.0.0-alpha.5-2",
     "scope": "@angular2-material",
-    "spec": ">=2.0.0-alpha.5-2 <3.0.0",
-    "type": "range"
+    "escapedName": "@angular2-material%2fradio",
+    "name": "@angular2-material/radio",
+    "rawSpec": "2.0.0-alpha.5-2",
+    "spec": "2.0.0-alpha.5-2",
+    "type": "version"
   },
   "_requiredBy": [
     "/"
@@ -42,7 +44,7 @@
   "_resolved": "https://registry.npmjs.org/@angular2-material/radio/-/radio-2.0.0-alpha.5-2.tgz",
   "_shasum": "8e7a14110a3fd75c86ed03fe88a54f7fe784c53d",
   "_shrinkwrap": null,
-  "_spec": "@angular2-material/radio@^2.0.0-alpha.5-2",
+  "_spec": "@angular2-material/radio@2.0.0-alpha.5-2",
   "_where": "C:\\development\\TWINSOFT\\git\\dental-dashboard-rc-1",
   "bugs": {
     "url": "https://github.com/angular/material2/issues"
@@ -67,8 +69,8 @@
   "main": "./radio.js",
   "maintainers": [
     {
-      "email": "angular-core+npm@google.com",
-      "name": "angular2-material"
+      "name": "angular2-material",
+      "email": "angular-core+npm@google.com"
     }
   ],
   "name": "@angular2-material/radio",

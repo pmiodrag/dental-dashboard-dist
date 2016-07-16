@@ -2,10 +2,11 @@
   "_args": [
     [
       {
-        "name": "@angular2-material/sidenav",
         "raw": "@angular2-material/sidenav@2.0.0-alpha.5-2",
-        "rawSpec": "2.0.0-alpha.5-2",
         "scope": "@angular2-material",
+        "escapedName": "@angular2-material%2fsidenav",
+        "name": "@angular2-material/sidenav",
+        "rawSpec": "2.0.0-alpha.5-2",
         "spec": "2.0.0-alpha.5-2",
         "type": "version"
       },
@@ -23,16 +24,17 @@
     "tmp": "tmp/sidenav-2.0.0-alpha.5-2.tgz_1464814670895_0.2615452567115426"
   },
   "_npmUser": {
-    "email": "angular-core+npm@google.com",
-    "name": "angular2-material"
+    "name": "angular2-material",
+    "email": "angular-core+npm@google.com"
   },
   "_npmVersion": "3.7.5",
   "_phantomChildren": {},
   "_requested": {
-    "name": "@angular2-material/sidenav",
     "raw": "@angular2-material/sidenav@2.0.0-alpha.5-2",
-    "rawSpec": "2.0.0-alpha.5-2",
     "scope": "@angular2-material",
+    "escapedName": "@angular2-material%2fsidenav",
+    "name": "@angular2-material/sidenav",
+    "rawSpec": "2.0.0-alpha.5-2",
     "spec": "2.0.0-alpha.5-2",
     "type": "version"
   },
@@ -70,8 +72,8 @@
   "main": "./sidenav.js",
   "maintainers": [
     {
-      "email": "angular-core+npm@google.com",
-      "name": "angular2-material"
+      "name": "angular2-material",
+      "email": "angular-core+npm@google.com"
     }
   ],
   "name": "@angular2-material/sidenav",

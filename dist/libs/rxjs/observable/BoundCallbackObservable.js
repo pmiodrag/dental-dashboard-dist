@@ -109,49 +109,49 @@ var BoundCallbackObservable = (function (_super) {
             return subject.subscribe(subscriber);
         }
         else {
-            return scheduler.schedule(dispatch, 0, { source: this, subscriber: subscriber });
+            return scheduler.schedule(BoundCallbackObservable.dispatch, 0, { source: this, subscriber: subscriber });
         }
+    };
+    BoundCallbackObservable.dispatch = function (state) {
+        var self = this;
+        var source = state.source, subscriber = state.subscriber;
+        var callbackFunc = source.callbackFunc, args = source.args, scheduler = source.scheduler;
+        var subject = source.subject;
+        if (!subject) {
+            subject = source.subject = new AsyncSubject_1.AsyncSubject();
+            var handler = function handlerFn() {
+                var innerArgs = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    innerArgs[_i - 0] = arguments[_i];
+                }
+                var source = handlerFn.source;
+                var selector = source.selector, subject = source.subject;
+                if (selector) {
+                    var result_2 = tryCatch_1.tryCatch(selector).apply(this, innerArgs);
+                    if (result_2 === errorObject_1.errorObject) {
+                        self.add(scheduler.schedule(dispatchError, 0, { err: errorObject_1.errorObject.e, subject: subject }));
+                    }
+                    else {
+                        self.add(scheduler.schedule(dispatchNext, 0, { value: result_2, subject: subject }));
+                    }
+                }
+                else {
+                    var value = innerArgs.length === 1 ? innerArgs[0] : innerArgs;
+                    self.add(scheduler.schedule(dispatchNext, 0, { value: value, subject: subject }));
+                }
+            };
+            // use named function to pass values in without closure
+            handler.source = source;
+            var result = tryCatch_1.tryCatch(callbackFunc).apply(this, args.concat(handler));
+            if (result === errorObject_1.errorObject) {
+                subject.error(errorObject_1.errorObject.e);
+            }
+        }
+        self.add(subject.subscribe(subscriber));
     };
     return BoundCallbackObservable;
 }(Observable_1.Observable));
 exports.BoundCallbackObservable = BoundCallbackObservable;
-function dispatch(state) {
-    var self = this;
-    var source = state.source, subscriber = state.subscriber;
-    var callbackFunc = source.callbackFunc, args = source.args, scheduler = source.scheduler;
-    var subject = source.subject;
-    if (!subject) {
-        subject = source.subject = new AsyncSubject_1.AsyncSubject();
-        var handler = function handlerFn() {
-            var innerArgs = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                innerArgs[_i - 0] = arguments[_i];
-            }
-            var source = handlerFn.source;
-            var selector = source.selector, subject = source.subject;
-            if (selector) {
-                var result_2 = tryCatch_1.tryCatch(selector).apply(this, innerArgs);
-                if (result_2 === errorObject_1.errorObject) {
-                    self.add(scheduler.schedule(dispatchError, 0, { err: errorObject_1.errorObject.e, subject: subject }));
-                }
-                else {
-                    self.add(scheduler.schedule(dispatchNext, 0, { value: result_2, subject: subject }));
-                }
-            }
-            else {
-                var value = innerArgs.length === 1 ? innerArgs[0] : innerArgs;
-                self.add(scheduler.schedule(dispatchNext, 0, { value: value, subject: subject }));
-            }
-        };
-        // use named function to pass values in without closure
-        handler.source = source;
-        var result = tryCatch_1.tryCatch(callbackFunc).apply(this, args.concat(handler));
-        if (result === errorObject_1.errorObject) {
-            subject.error(errorObject_1.errorObject.e);
-        }
-    }
-    self.add(subject.subscribe(subscriber));
-}
 function dispatchNext(arg) {
     var value = arg.value, subject = arg.subject;
     subject.next(value);

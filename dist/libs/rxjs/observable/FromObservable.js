@@ -15,7 +15,7 @@ var ArrayLikeObservable_1 = require('./ArrayLikeObservable');
 var iterator_1 = require('../symbol/iterator');
 var Observable_1 = require('../Observable');
 var observeOn_1 = require('../operator/observeOn');
-var $$observable = require('symbol-observable');
+var symbol_observable_1 = require('symbol-observable');
 var isArrayLike = (function (x) { return x && typeof x.length === 'number'; });
 /**
  * We need this JSDoc comment for affecting ESDoc.
@@ -95,7 +95,7 @@ var FromObservable = (function (_super) {
             scheduler = mapFnOrScheduler;
         }
         if (ish != null) {
-            if (typeof ish[$$observable] === 'function') {
+            if (typeof ish[symbol_observable_1.default] === 'function') {
                 if (ish instanceof Observable_1.Observable && !scheduler) {
                     return ish;
                 }
@@ -120,10 +120,10 @@ var FromObservable = (function (_super) {
         var ish = this.ish;
         var scheduler = this.scheduler;
         if (scheduler == null) {
-            return ish[$$observable]().subscribe(subscriber);
+            return ish[symbol_observable_1.default]().subscribe(subscriber);
         }
         else {
-            return ish[$$observable]().subscribe(new observeOn_1.ObserveOnSubscriber(subscriber, scheduler, 0));
+            return ish[symbol_observable_1.default]().subscribe(new observeOn_1.ObserveOnSubscriber(subscriber, scheduler, 0));
         }
     };
     return FromObservable;

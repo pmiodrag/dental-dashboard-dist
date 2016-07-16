@@ -82,16 +82,19 @@ var FromEventObservable = (function (_super) {
             }
         }
         else if (isEventTarget(sourceObj)) {
+            var source_1 = sourceObj;
             sourceObj.addEventListener(eventName, handler);
-            unsubscribe = function () { return sourceObj.removeEventListener(eventName, handler); };
+            unsubscribe = function () { return source_1.removeEventListener(eventName, handler); };
         }
         else if (isJQueryStyleEventEmitter(sourceObj)) {
+            var source_2 = sourceObj;
             sourceObj.on(eventName, handler);
-            unsubscribe = function () { return sourceObj.off(eventName, handler); };
+            unsubscribe = function () { return source_2.off(eventName, handler); };
         }
         else if (isNodeStyleEventEmmitter(sourceObj)) {
+            var source_3 = sourceObj;
             sourceObj.addListener(eventName, handler);
-            unsubscribe = function () { return sourceObj.removeListener(eventName, handler); };
+            unsubscribe = function () { return source_3.removeListener(eventName, handler); };
         }
         subscriber.add(new Subscription_1.Subscription(unsubscribe));
     };
