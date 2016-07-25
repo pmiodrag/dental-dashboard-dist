@@ -29,7 +29,7 @@
         <tbody>
             <tr *ngFor="let treatment of treatmentStore.treatments | async"  md-data-table-selectable-row [selectable-value]="treatment.id">
                 <td class="md-text-cell"><h6 class="text-teal">{{treatment.therapy}}</h6></td>
-                <td class="md-text-cell"><h6 class="text-teal">{{treatment.diagnose}}</h6></td>   
+                <td class="md-text-cell"><h6 class="text-teal">{{treatment.diagnose.name}}</h6></td>   
                 <td class="md-text-cell"><h6 class="text-teal">{{treatment.price}}</h6></td> 
                 <td class="md-text-cell"> 
                     <a  md-button class="md-icon-button" (click)="editTreatment(treatment);" [ngClass]="iconClass" aria-label="Edit patient">
