@@ -8,16 +8,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var media_1 = require('../../core/util/media');
-var viewport_1 = require('../../core/util/viewport');
+var core_1 = require("@angular/core");
+var media_1 = require("../../core/util/media");
+var util_1 = require("../../core/util/util");
+var viewport_1 = require("../../core/util/viewport");
 var MdPeekaboo = (function () {
-    function MdPeekaboo(media, element, viewport, zone) {
+    function MdPeekaboo(media, element, viewport, _app) {
         var _this = this;
         this.media = media;
         this.element = element;
         this.viewport = viewport;
-        this.zone = zone;
+        this._app = _app;
         this.break = 100;
         this._active = false;
         this._breakXs = -1;
@@ -36,6 +37,11 @@ var MdPeekaboo = (function () {
             }
         });
         this.evaluate();
+        this._scrollTick = util_1.debounce(function () {
+            if (!!_this._app.tick) {
+                _this._app.tick();
+            }
+        }, 100, this);
     }
     MdPeekaboo.MakeNumber = function (value) {
         return typeof value === 'string' ? parseInt(value, 10) : value;
@@ -139,7 +145,6 @@ var MdPeekaboo = (function () {
         this._mediaListeners.push(l);
     };
     MdPeekaboo.prototype.evaluate = function () {
-        var _this = this;
         var top = this._scroller ? this._scroller.scrollTop : this.viewport.scrollTop();
         var bp = this.break;
         switch (this._breakpoint) {
@@ -170,14 +175,12 @@ var MdPeekaboo = (function () {
                 }
         }
         if (top >= bp && !this._active) {
-            this.zone.run(function () {
-                _this._active = true;
-            });
+            this._active = true;
+            this._scrollTick();
         }
         else if (top < bp && this._active) {
-            this.zone.run(function () {
-                _this._active = false;
-            });
+            this._active = false;
+            this._scrollTick();
         }
         return bp;
     };
@@ -229,7 +232,7 @@ var MdPeekaboo = (function () {
                 '(window:scroll)': '_windowScroll($event)'
             }
         }), 
-        __metadata('design:paramtypes', [media_1.Media, core_1.ElementRef, viewport_1.ViewportHelper, core_1.NgZone])
+        __metadata('design:paramtypes', [media_1.Media, core_1.ElementRef, viewport_1.ViewportHelper, core_1.ApplicationRef])
     ], MdPeekaboo);
     return MdPeekaboo;
 }());

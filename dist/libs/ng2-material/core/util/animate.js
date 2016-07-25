@@ -101,6 +101,35 @@ var Animate = (function () {
             }
         }
     };
+    Animate.animateStyles = function (element, styles, durationMs) {
+        var saveDuration = Animate.getTransitionDuration(element);
+        Animate.setTransitionDuration(element, durationMs);
+        return new Promise(function (animResolve, animReject) {
+            var callTimeout = setTimeout(function () { return done(true); }, durationMs);
+            var removeListener = function () { return done(false); };
+            var done = function (timeout) {
+                if (!removeListener) {
+                    return;
+                }
+                if (timeout) {
+                    clearTimeout(callTimeout);
+                }
+                element.removeEventListener(Animate.TRANSITION_EVENT, removeListener);
+                removeListener = null;
+                if (saveDuration !== -1) {
+                    Animate.setTransitionDuration(element, saveDuration);
+                }
+                else {
+                    element.style['transition-duration'] = null;
+                }
+                animResolve();
+            };
+            element.addEventListener(Animate.TRANSITION_EVENT, removeListener);
+            Object.keys(styles).forEach(function (key) {
+                element.style[key] = "" + styles[key];
+            });
+        });
+    };
     Animate.setStyles = function (element, styles) {
         var saveDuration = Animate.getTransitionDuration(element);
         Animate.setTransitionDuration(element, 0);

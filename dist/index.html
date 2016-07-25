@@ -1,165 +1,246 @@
 <html>
-<head>
-    <base href="/">
-    <title>Smiletime Dashboard</title>
-    
-<!--    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Angular 2 JumpStart">
-     Auth0 Lock script 
-     Setting the right viewport 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >   
-   -->
-     <script>document.write('<script src="http://' + ('localhost').split(':')[0] + ':35729/livereload.js"></' + 'script>')</script>
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:300,400,600' rel='stylesheet' type='text/css'>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" >
-    <link href="styles/styles.css" rel="stylesheet" >
-    <link rel="stylesheet" type="text/css" href="styles/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="styles/font-awesome/css/font-awesome.min.css">
-    <!--Import Google Icon Font-->
-    <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
-<!--    Import materialize.css
-    <link type="text/css" rel="stylesheet" href="styles/materialize/css/materialize.min.css"  media="screen,projection"/>-->
-    <link rel="stylesheet" type="text/css" href="styles/rdash.css">
-    <link rel="stylesheet" type="text/css" href="styles/app.css">
-    <link rel="stylesheet" href="styles/ng2-material/ng2-material.css">
-    <link rel="stylesheet" href="styles/ng2-material/font/font.css">
-    <link rel="stylesheet" type="text/css" href="styles/primeui/themes/omega/theme.css" />
-<link rel="stylesheet" type="text/css" href="styles/primeui/primeui-ng-all.min.css" />
-   
-</head>
-<body>
-  <app-container>
-            Loading...
-        </app-container>
+    <head>
+        <base href="/">
+        <title>Smiletime Dashboard</title>
 
-    <footer>
-        <div class="navbar navbar-fixed-bottom">
-            <div class="navbar-inner footer">
-                <div class="container">
-                    <footer>
-                        <div class="row">
-                            <div class="col-md-12">
-                                Created by <a href="http://twitter.com/DanWahlin" target="_blank">Twinsoft</a>
+        <!--    <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="description" content="Angular 2 JumpStart">
+             Auth0 Lock script 
+             Setting the right viewport 
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >   
+        -->
+        <script>document.write('<script src="http://' + ('localhost').split(':')[0] + ':35729/livereload.js"></' + 'script>')</script>
+        <link href='//fonts.googleapis.com/css?family=Open+Sans:300,400,600' rel='stylesheet' type='text/css'>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" >
+        <link href="styles/styles.css" rel="stylesheet" >
+        <link rel="stylesheet" type="text/css" href="styles/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="styles/font-awesome/css/font-awesome.min.css">
+        <!--Import Google Icon Font-->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
+        <!--    Import materialize.css
+            <link type="text/css" rel="stylesheet" href="styles/materialize/css/materialize.min.css"  media="screen,projection"/>-->
+        <link rel="stylesheet" type="text/css" href="styles/rdash.css">
+        <link rel="stylesheet" type="text/css" href="styles/app.css">
+        <link rel="stylesheet" href="styles/ng2-material/ng2-material.css">
+        <link rel="stylesheet" href="styles/ng2-material/font/font.css">
+        <link rel="stylesheet" type="text/css" href="styles/primeui/themes/omega/theme.css" />
+        <link rel="stylesheet" type="text/css" href="styles/primeui/primeui-ng-all.min.css" />
+        <link rel="stylesheet" type="text/css" href="libs/fullcalendar/dist/fullcalendar.min.css" />
+    </head>
+    <body>
+        <app-container></app-container>
+        <div id="pre-bootstrap-container">
+            <style type="text/css">
+                #pre-bootstrap {
+                    background-color: #262626 ;
+                    bottom: 0px ;
+                    left: 0px ;
+                    opacity: 1.0 ;
+                    position: fixed ;
+                    right: 0px ;
+                    top: 0px ;
+                    transition: all linear 300ms ;
+                        -webkit-transition: all linear 300ms ;
+                    z-index: 999999 ;
+                }
+                #pre-bootstrap.loaded {
+                    opacity: 0.0 ;
+                }
+                #pre-bootstrap div.messaging {
+                    color: #FFFFFF ;
+                    font-family: monospace ;
+                    left: 0px ;
+                    margin-top: -37px ;
+                    position: absolute ;
+                    right: 0px ;
+                    text-align: center ;
+                    top: 50% ;
+                }
+                #pre-bootstrap h1 {
+                    font-size: 26px ;
+                    line-height: 35px ;
+                    margin: 0px 0px 20px 0px ;
+                }
+                #pre-bootstrap p {
+                    font-size: 18px ;
+                    line-height: 14px ;
+                    margin: 0px 0px 0px 0px ;
+                }
+            </style>
+            <div id="pre-bootstrap">
+                <div class="messaging">
+                    <h1>
+                        Smiletime Dashboard application is Loading.. 
+                    </h1>
+                    <p>
+                        Please stand by for your ticket to awesome-town!
+                    </p>
+
+                </div>
+            </div>  
+        </div>
+        <footer>
+            <div class="navbar navbar-fixed-bottom">
+                <div class="navbar-inner footer">
+                    <div class="container">
+                        <footer>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    Created by <a href="http://twitter.com/DanWahlin" target="_blank">Twinsoft</a>
+                                </div>
                             </div>
-                        </div>
-                    </footer>
+                        </footer>
+                    </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
+        <!-- 1. Load libraries -->
+        <!-- Polyfill(s) for older browsers -->
+        <script src="libs/es6-shim/es6-shim.min.js"></script>
 
+        <script src="libs/zone.js/dist/zone.js"></script>
+        <script src="libs/reflect-metadata/Reflect.js"></script>
+        <script src="libs/systemjs/dist/system.src.js"></script>
 
-    <!-- 1. Load libraries -->
-     <!-- Polyfill(s) for older browsers -->
-    <script src="libs/es6-shim/es6-shim.min.js"></script>
+        <script src="https://cdn.auth0.com/js/lock-9.1.min.js"></script>
+        <script src="libs/rxjs/bundles/Rx.js"></script>
+        <script src="libs/ng2-bootstrap/bundles/ng2-bootstrap.js"></script>
+        <script src="libs/ng2-file-upload/bundles/ng2-file-upload.js"></script>
+        
+        <!-- Datetimepicker, Slider, Schedule -->
+        <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.1/jquery-ui-timepicker-addon.min.js"></script>
+        <script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
+        <script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
+        <script src='libs/fullcalendar/dist/fullcalendar.min.js'></script>
+        <!--     <script src="script.js"></script>-->
+        <script>
+            (function (global) {
+                // wildcard paths
+                var paths = {
+                    'n:*': 'libs/*'
+                };
 
-    <script src="libs/zone.js/dist/zone.js"></script>
-    <script src="libs/reflect-metadata/Reflect.js"></script>
-    <script src="libs/systemjs/dist/system.src.js"></script>
-    
-    <script src="https://cdn.auth0.com/js/lock-9.1.min.js"></script>
-    <script src="libs/rxjs/bundles/Rx.js"></script>
-     <script src="libs/ng2-bootstrap/bundles/ng2-bootstrap.js"></script>
-     <script src="libs/ng2-file-upload/bundles/ng2-file-upload.js"></script>
-<!--     <script src="script.js"></script>-->
-<script>
-        (function(global) {
-    // wildcard paths
-    var paths = {
-        'n:*': 'libs/*'
-    };
+                // map tells the System loader where to look for things
+                var map = {
+                    // 'app': 'dist',
+                    'test': 'test',
+                    'rxjs': 'n:rxjs',
+                    'zone.js': 'n:zone.js',
+                    '@angular': 'n:@angular',
+                    'reflect-metadata': 'n:reflect-metadata',
+                    'angular2-jwt': 'n:angular2-jwt',
+                    'ng2-material': 'n:ng2-material',
+                    'moment': 'n:moment/moment.js',
+                    'immutable': 'n:immutable/dist/immutable.js',
+                    '@angular2-material': 'n:@angular2-material',
+                    'primeng': 'n:primeng',
+                    'fullcalendar': 'n:fullcalendar',                    
+                    'symbol-observable': 'n:symbol-observable'
+                            // 'lodash': 'n:lodash'
+                };
 
-    // map tells the System loader where to look for things
-    var map = {
-       // 'app': 'dist',
-        'test': 'test',
-        'rxjs': 'n:rxjs',
-        'zone.js': 'n:zone.js',
-        '@angular': 'n:@angular',
-         'reflect-metadata':             'n:reflect-metadata',
-    'angular2-jwt':               'n:angular2-jwt',
-    'ng2-material':               'n:ng2-material',
-    'moment':                     'n:moment/moment.js',  
-     'immutable':                     'n:immutable/dist/immutable.js',
-     '@angular2-material': 'n:@angular2-material',
-     'primeng': 'n:primeng',
-      'symbol-observable': 'n:symbol-observable'
-       // 'lodash': 'n:lodash'
-    };
+                // packages tells the System loader how to load when no filename and/or no extension
+                var packages = {
+                    'app': {
+                        format: 'register',
+                        defaultExtension: 'js'
+                    },
+                    'test': {
+                        defaultExtension: 'js'
+                    },
+                    'rxjs': {
+                        defaultExtension: 'js'
+                    },
+                    'angular2-jwt': {
+                        defaultExtension: 'js'
+                    },
+                    'ng2-material': {
+                        defaultExtension: 'js'
+                    },
+                    'primeng': {
+                        defaultExtension: 'js'
+                    },
+                    'fullcalendar': {
+                        defaultExtension: 'js'
+                    },
+                    'symbol-observable': {
+                        defaultExtension: 'js',
+                        main: 'index.js'}
+                };
 
-    // packages tells the System loader how to load when no filename and/or no extension
-    var packages = {
-        'app': {
-            format: 'register',
-            defaultExtension: 'js'
-        },
-        'test': {
-            defaultExtension: 'js'
-        },
-        'rxjs': {
-            defaultExtension: 'js'
-        },
-        'angular2-jwt': { 
-            defaultExtension: 'js' 
-        },
-        'ng2-material': { 
-            defaultExtension: 'js' 
-        },
-        'primeng': { 
-            defaultExtension: 'js' 
-        },
-         'symbol-observable': {
-             defaultExtension: 'js',
-             main: 'index.js'}
-    };
+                var packageNames = [
+                    '@angular/common',
+                    '@angular/compiler',
+                    '@angular/core',
+                    '@angular/http',
+                    '@angular/forms',
+                    '@angular/platform-browser',
+                    '@angular/platform-browser-dynamic',
+                    '@angular/router',
+                    '@angular/router-deprecated',
+                ];
+                // Angular Material 2 Packages to load.
+                var _materialPackages = [
+                    'core', 'toolbar', 'button', 'card', 'checkbox', 'icon', 'input', 'list', 'progress-bar',
+                    'progress-circle', 'radio', 'sidenav'
+                ];
 
-    var packageNames = [
-        '@angular/common',
-        '@angular/compiler',
-        '@angular/core',
-        '@angular/http',
-        '@angular/forms',
-        '@angular/platform-browser',
-        '@angular/platform-browser-dynamic',
-        '@angular/router',
-        '@angular/router-deprecated',
-    ];
-    // Angular Material 2 Packages to load.
-    var _materialPackages = [
-      'core', 'toolbar', 'button', 'card', 'checkbox', 'icon', 'input', 'list', 'progress-bar',
-      'progress-circle', 'radio', 'sidenav'
-    ];
-    
-    _materialPackages.forEach(function(item) {
-        // All Material 2 components are prefixed with  @angular2-material and use
-        // the components name as entry point.
-              packages['@angular2-material/' + item] = { main: item };
-      });
-    // add package entries for angular packages in the form '@angular/common': { main: 'index.js', defaultExtension: 'js' }
-    packageNames.forEach(function(pkgName) {
-        packages[pkgName] = { main: 'index.js', defaultExtension: 'js' };
-    });
+                _materialPackages.forEach(function (item) {
+                    // All Material 2 components are prefixed with  @angular2-material and use
+                    // the components name as entry point.
+                    packages['@angular2-material/' + item] = {main: item};
+                });
+                // add package entries for angular packages in the form '@angular/common': { main: 'index.js', defaultExtension: 'js' }
+                packageNames.forEach(function (pkgName) {
+                    packages[pkgName] = {main: 'index.js', defaultExtension: 'js'};
+                });
 
-    var config = {
-        map: map,
-        packages: packages,
-        paths: paths
-    };
+                var config = {
+                    map: map,
+                    packages: packages,
+                    paths: paths
+                };
 
-    // filterSystemConfig - index.html's chance to modify config before we register it.
-    if (global.filterSystemConfig) { global.filterSystemConfig(config); }
+                // filterSystemConfig - index.html's chance to modify config before we register it.
+                if (global.filterSystemConfig) {
+                    global.filterSystemConfig(config);
+                }
 
-    System.config(config);
-
-})(this);
-
-</script>
-    <script>
-      System.import('app/main.js')
-            .then(null, console.error.bind(console));
-    </script>
-   
-
-</body>
+                System.config(config);
+                // Load "./app/main.ts" (gets full path from package configuration above).
+                // --
+                // NOTE: We are attaching the resultant promise to the global scope so that other
+                // scripts may listen for the successful loading of the application.
+                global.bootstrapping = System.import( "app/main.js" )
+                    .then(
+                        function handleResolve() {
+                            var preBootstrapContainer = document.getElementById( "pre-bootstrap-container" );
+                            var preBootstrap = document.getElementById( "pre-bootstrap" );
+                            // Add the class-name to initiate the transitions.
+                            preBootstrap.className = "loaded";
+                            // Remove the bootstrap container after the transition has
+                            // completed (based on the known transition time).
+                            setTimeout(
+                                function removeLoadingScreen() {
+                                    preBootstrapContainer
+                                        .parentNode
+                                            .removeChild( preBootstrapContainer )
+                                    ;
+                                },
+                                300
+                            );
+                            console.info( "System.js successfully bootstrapped app." );
+                        },
+                        function handleReject( error ) {
+                            console.warn( "System.js could not bootstrap the app." );
+                            console.error( error );
+                            return( Promise.reject( error ) );
+                        }
+                    );
+            })(this );
+        </script>
+    </body>
 </html>

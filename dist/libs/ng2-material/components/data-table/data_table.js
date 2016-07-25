@@ -19,7 +19,6 @@ var MdDataTable = (function () {
     function MdDataTable() {
         this.onSelectableAll = new core_1.EventEmitter(false);
         this.onSelectableChange = new core_1.EventEmitter(false);
-        this._listeners = [];
         this.selected = [];
         this.onSelectableChange.share();
     }
@@ -54,34 +53,17 @@ var MdDataTable = (function () {
         return this._rows.toArray()
             .map(function (tr) { return tr.selectableValue; });
     };
-    MdDataTable.prototype._unsubscribeChildren = function () {
-        this.selected = [];
-        if (this._listeners.length) {
-            this._listeners.forEach(function (listener) {
-                listener.unsubscribe();
-            });
-            this._listeners = [];
-        }
-    };
-    MdDataTable.prototype._updateChildrenListener = function (list) {
-        var _this = this;
-        this._unsubscribeChildren();
-        list.toArray()
-            .map(function (tr) {
-            tr.onChange.subscribe(_this.change.bind(_this));
-        });
-    };
     MdDataTable.prototype.ngAfterContentInit = function () {
+        var _this = this;
         if (this.selectable === true) {
             if (!!this._masterRow) {
                 this._masterRow.onChange.subscribe(this.change.bind(this));
             }
-            this._rows.changes.subscribe(this._updateChildrenListener.bind(this));
-            this._updateChildrenListener(this._rows);
+            this._rows.toArray()
+                .map(function (tr) {
+                tr.onChange.subscribe(_this.change.bind(_this));
+            });
         }
-    };
-    MdDataTable.prototype.ngOnDestroy = function () {
-        this._unsubscribeChildren();
     };
     __decorate([
         core_1.Input(), 

@@ -25,13 +25,12 @@ function main() {
         function TestComponent() {
             this.isChecked = false;
             this.isDisabled = false;
-            this.tabIndex = "1";
         }
         TestComponent = __decorate([
             core_1.Component({
                 selector: 'test-app',
                 directives: [switch_1.MdSwitch],
-                template: "<md-switch [(checked)]=\"isChecked\" [disabled]=\"isDisabled\" [tabindex]=\"tabIndex\"></md-switch>"
+                template: "<md-switch [(checked)]=\"isChecked\" [disabled]=\"isDisabled\"></md-switch>"
             }), 
             __metadata('design:paramtypes', [])
         ], TestComponent);

@@ -107,7 +107,7 @@ var MdDialog = (function () {
         core_1.Component({
             selector: 'md-dialog',
             directives: [dialog_title_1.MdDialogTitle, dialog_actions_1.MdDialogActions, dialog_portal_1.MdDialogPortal],
-            providers: [overlay_1.Overlay, overlay_1.OVERLAY_PROVIDERS],
+            providers: [overlay_1.Overlay],
             encapsulation: core_1.ViewEncapsulation.None,
             template: "\n<template mdDialogPortal>\n  <div class=\"md-dialog\" [class.md-active]=\"active\">\n    <ng-content select=\"md-dialog-title\"></ng-content>\n    <ng-content></ng-content>\n    <ng-content select=\"md-dialog-actions\"></ng-content>  \n  </div>\n</template>\n",
             host: {

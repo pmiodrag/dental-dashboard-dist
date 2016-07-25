@@ -13,10 +13,10 @@ var ink_1 = require("./components/ink/ink");
 var validators_1 = require("./components/form/validators");
 var messages_1 = require("./components/form/messages");
 var list_1 = require("./components/list/list");
-var index_3 = require("./components/pagination/index");
 var peekaboo_1 = require("./components/peekaboo/peekaboo");
 var switch_1 = require("./components/switch/switch");
 var subheader_1 = require("./components/subheader/subheader");
+var tabs_1 = require("./components/tabs/tabs");
 var media_1 = require("./core/util/media");
 var viewport_1 = require("./core/util/viewport");
 var overlay_1 = require("@angular2-material/core/overlay/overlay");
@@ -32,10 +32,10 @@ __export(require('./components/ink/ink'));
 __export(require('./components/form/validators'));
 __export(require('./components/form/messages'));
 __export(require('./components/list/list'));
-__export(require('./components/pagination/index'));
 __export(require('./components/peekaboo/peekaboo'));
 __export(require('./components/switch/switch'));
 __export(require('./components/subheader/subheader'));
+__export(require('./components/tabs/tabs'));
 __export(require('./core/util/media'));
 __export(require('./core/util/ink'));
 __export(require('./core/util/viewport'));
@@ -54,15 +54,14 @@ exports.MATERIAL_DIRECTIVES = [
     validators_1.MdNumberRequiredValidator,
     messages_1.MdMessage, messages_1.MdMessages,
     list_1.MdList, list_1.MdListItem,
-    index_3.MdPagination, index_3.MdPaginationControls, index_3.MdPaginationItemsPerPage, index_3.MdPaginationRange,
     peekaboo_1.MdPeekaboo,
     subheader_1.MdSubheader,
-    switch_1.MdSwitch
+    switch_1.MdSwitch,
+    tabs_1.MdTab, tabs_1.MdTabs
 ];
 exports.MATERIAL_NODE_PROVIDERS = [
     core_1.provide(viewport_1.ViewportHelper, { useClass: viewport_1.NodeViewportHelper }),
-    media_1.Media,
-    index_3.PaginationService
+    media_1.Media
 ].concat(validators_1.INPUT_VALIDATORS);
 exports.MATERIAL_BROWSER_PROVIDERS = exports.MATERIAL_NODE_PROVIDERS.concat([
     core_1.provide(viewport_1.ViewportHelper, { useClass: viewport_1.BrowserViewportHelper }),

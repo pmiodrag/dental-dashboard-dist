@@ -7,6 +7,7 @@ var doctors = require("./api/doctor/controller");
 var treatments = require("./api/treatment/controller");
 var diagnoses = require("./api/diagnose/controller");
 var gallery = require("./api/gallery/controller");
+var agenda = require("./api/agenda/controller");
 var port = process.env.PORT || 3000;
 var app = express();
 //var router = express.Router();
@@ -90,6 +91,12 @@ app.get('/diagnose', diagnoses.index);
 app.post('/diagnose', diagnoses.create);
 app.put('/diagnose/:id', diagnoses.update);
 app.delete('/diagnose/:id', diagnoses.destroy);
+// Agenda
+app.get('/events', agenda.index);
+app.post('/events', agenda.create);
+app.put('/events/:id', agenda.update);
+//app.get('/events/:id', agenda.show);
+app.delete('/events/:id', agenda.destroy);
 var renderIndex = function (req, res) {
     console.log("renderIndex __dirname", __dirname);
     res.sendFile(path.resolve(__dirname, 'index.html'));
